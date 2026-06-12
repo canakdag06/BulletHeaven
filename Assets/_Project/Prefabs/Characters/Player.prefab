@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 222964267130699676}
   - component: {fileID: 8347903929733621289}
   - component: {fileID: 4675789560060695743}
+  - component: {fileID: 98552867473073938}
+  - component: {fileID: 4964893753460716801}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -122,13 +124,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
   rotationSpeed: 15
-  currentTarget: {fileID: 0}
+  targetingSystem: {fileID: 4964893753460716801}
+  joystick: {fileID: 0}
+--- !u!114 &98552867473073938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657208915989901591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cba8c5fbc4984f40801707b4e507ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.ShootingController
+  firePoint: {fileID: 5735549437616136427}
+  fireRate: 0.2
+  weaponRange: 50
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  bulletTrailPrefab: {fileID: 0}
+  hitEffectPrefab: {fileID: 0}
+  targetingSystem: {fileID: 4964893753460716801}
+--- !u!114 &4964893753460716801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657208915989901591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ca9de26f963d349bb6dbc3ce0bfbb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Control.TargetingSystem
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
   detectionRadius: 10
   targetCheckInterval: 0.2
-  joystick: {fileID: 0}
 --- !u!1001 &164230141438835011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -548,6 +583,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d593c9a6618a6e24989140c3a479d013, type: 3}
+--- !u!4 &5735549437616136427 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6025281174397543249, guid: d593c9a6618a6e24989140c3a479d013, type: 3}
+  m_PrefabInstance: {fileID: 2019541851892958138}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9071482700017738361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7053406600307270083, guid: d593c9a6618a6e24989140c3a479d013, type: 3}
