@@ -83,8 +83,8 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!95 &8347903929733621289
 Animator:
@@ -95,7 +95,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6657208915989901591}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 4810154fb2a5eba4d831bea8a59cf823, type: 3}
   m_Controller: {fileID: 9100000, guid: ca9d088eea634e343952e494941c9971, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -120,6 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d19528955442ad499292501a151cc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  moveSpeed: 5
+  rotationSpeed: 15
+  currentTarget: {fileID: 0}
+  joystick: {fileID: 0}
 --- !u!1001 &164230141438835011
 PrefabInstance:
   m_ObjectHideFlags: 0
