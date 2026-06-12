@@ -8,8 +8,13 @@ namespace BulletHeaven.Control
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationSpeed = 15f;
 
-        [Header("Combat Settings")]
+
+        [Header("Targeting Settings")]
         public Transform currentTarget;
+        [SerializeField] private LayerMask enemyLayer;
+        [SerializeField] private float detectionRadius = 10f;
+        [SerializeField] private float targetCheckInterval = 0.2f;
+        private float _targetCheckTimer;
 
         [Header("Dependencies")]
         public Joystick joystick;
@@ -31,6 +36,7 @@ namespace BulletHeaven.Control
         {
             GatherInput();
             UpdateAnimations();
+            HandleTargeting();
         }
 
         private void FixedUpdate()
@@ -83,6 +89,46 @@ namespace BulletHeaven.Control
 
             animator.SetFloat(moveXHash, localMovement.x);
             animator.SetFloat(moveZHash, localMovement.z);
+        }
+
+        private void HandleTargeting()
+        {
+            _targetCheckTimer -= Time.deltaTime;
+            if (_targetCheckTimer <= 0f)
+            {
+                FindClosestTarget();
+                _targetCheckTimer = targetCheckInterval;
+            }
+        }
+
+        private void FindClosestTarget()
+        {
+            Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, detectionRadius, enemyLayer);
+
+            float closestDistance = Mathf.Infinity;
+            Transform closestEnemy = null;
+
+            foreach (Collider enemy in enemiesInRange)
+            {
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = enemy.transform;
+                }
+            }
+            currentTarget = closestEnemy;
+
+            if (currentTarget != null)
+            {
+                Debug.Log("TARGET: " + currentTarget.name);
+            }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, detectionRadius);
         }
     }
 }

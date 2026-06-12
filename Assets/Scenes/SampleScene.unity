@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 548217965}
   - component: {fileID: 548217964}
   - component: {fileID: 548217963}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -968,10 +968,6 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 631475724855750724}
-    - target: {fileID: 4675789560060695743, guid: 2002efb8b260b744baf114f8d335b6f3, type: 3}
-      propertyPath: currentTarget
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4850451740682219768, guid: 2002efb8b260b744baf114f8d335b6f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
