@@ -2,21 +2,23 @@ using UnityEngine;
 
 public abstract class PoolableBehaviour : MonoBehaviour, IPoolable
 {
-    public bool inPool = false;
+    public bool InPool { get; private set; }
     public abstract EPoolType PoolType { get; }
-    protected virtual void Awake()
-    {
-    }
+
+    protected virtual void Awake() { }
+
     public virtual void OnGet()
     {
-        inPool = false;
-        gameObject.SetActive(true);
+        InPool = false;
     }
 
     public virtual void OnRelease()
     {
-        inPool = true;
-        gameObject.SetActive(false);
+        InPool = true;
     }
 
+    public void Release()
+    {
+        PoolManager.Instance.Release(this);
+    }
 }

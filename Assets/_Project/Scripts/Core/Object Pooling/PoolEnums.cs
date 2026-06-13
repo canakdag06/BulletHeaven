@@ -2,5 +2,5 @@
 public enum EPoolType
 {
     None = 0,
-    Enemy = 1,
+    BulletTrail = 1,
 }

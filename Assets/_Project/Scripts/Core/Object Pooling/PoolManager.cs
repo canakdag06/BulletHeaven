@@ -41,47 +41,47 @@ public class PoolManager : SingletonLocal<PoolManager>
     {
         if (poolDict.TryGetValue(type, out var queue))
         {
-            if (queue.Count > 0)
-            {
-                PoolableBehaviour obj = queue.Dequeue();
-                obj.gameObject.SetActive(true);
-                obj.OnGet();
-                return obj;
-            }
-            else
-            {
-                if (poolDataDict.TryGetValue(type, out var data))
-                {
-                    PoolableBehaviour obj = Instantiate(data.prefab, GetContainer(type));
-                    obj.OnGet();
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
+            PoolableBehaviour obj = queue.Count > 0
+                ? queue.Dequeue()
+                : SpawnNew(type);
 
-                Debug.LogError($"Pool is empty and autoExpand is false: {type}");
-                return null;
-            }
+            if (obj == null) return null;
+
+            obj.gameObject.SetActive(true);
+            obj.OnGet();
+            return obj;
         }
 
         Debug.LogError($"Pool not found: {type}");
         return null;
     }
 
-    public void Release(PoolableBehaviour obj, EPoolType type)
+    public void Release(PoolableBehaviour obj)
     {
-        if (obj.inPool) return;
+        if (obj.InPool) return;
         obj.OnRelease();
         obj.gameObject.SetActive(false);
-        obj.transform.SetParent(GetContainer(type));
+        obj.transform.SetParent(GetContainer(obj.PoolType));
 
-        if (poolDict.TryGetValue(type, out var queue))
+        if (poolDict.TryGetValue(obj.PoolType, out var queue))
         {
             queue.Enqueue(obj);
         }
         else
         {
-            Debug.LogError($"Pool not found: {type}");
+            Debug.LogError($"Pool not found: {obj.PoolType}");
         }
+    }
+
+    private PoolableBehaviour SpawnNew(EPoolType type)
+    {
+        if (poolDataDict.TryGetValue(type, out var data))
+        {
+            return Instantiate(data.prefab, GetContainer(type));
+        }
+
+        Debug.LogError($"Pool data not found for auto-expand: {type}");
+        return null;
     }
 
     private Transform GetContainer(EPoolType type)
