@@ -105,7 +105,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!195 &4026045358593667572
 NavMeshAgent:
@@ -145,8 +145,6 @@ MonoBehaviour:
   damage: 10
   attackInterval: 1
   destinationUpdateInterval: 0.4
-  deathParticlePrefab: {fileID: 0}
-  hitParticlePrefab: {fileID: 0}
 --- !u!1001 &4556926990915290257
 PrefabInstance:
   m_ObjectHideFlags: 0
