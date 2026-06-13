@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4651134159947991107}
   - component: {fileID: 3285004494212417481}
+  - component: {fileID: 8569752977879919264}
   m_Layer: 0
   m_Name: BulletTrail
   m_TagString: Untagged
@@ -142,3 +143,16 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &8569752977879919264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311609350864370526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0dced70716c91f4ca993b8d758d231d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletTrail
+  duration: 0.05
