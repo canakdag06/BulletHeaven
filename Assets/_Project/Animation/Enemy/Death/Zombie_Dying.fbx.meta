@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a29aa2e605456e24ea1820fbfb52d94a
+guid: 1eac08b5b6ca38f418d924f02ee38596
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
+      name: Zombie_Dying
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 89
+      lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
