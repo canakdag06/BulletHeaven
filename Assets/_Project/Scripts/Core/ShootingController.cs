@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using BulletHeaven.Core;
 
 namespace BulletHeaven.Control
 {
@@ -9,6 +10,7 @@ namespace BulletHeaven.Control
         [SerializeField] private Transform firePoint;
         [SerializeField] private float fireRate = 0.2f;
         [SerializeField] private float weaponRange = 50f;
+        [SerializeField] private float weaponDamage = 10f;
         [SerializeField] private LayerMask enemyLayer;
 
         [Header("Visuals")]
@@ -39,13 +41,13 @@ namespace BulletHeaven.Control
 
         private void PerformHitscan(Transform target)
         {
-            Vector3 targetCenter = target.position;
+            Vector3 targetCenter = target.position + Vector3.up * 1f;
             Vector3 direction = targetCenter - firePoint.position;
 
             if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, weaponRange, enemyLayer))
             {
-                // hit.collider.GetComponent<Enemy>().TakeDamage(10);)
-                // Destroy(hit.collider.gameObject);
+                if (hit.collider.TryGetComponent(out IDamageable damageable))
+                    damageable.TakeDamage(weaponDamage);
 
                 if (hitEffectPrefab)
                 {

@@ -20,54 +20,54 @@ namespace BulletHeaven.Enemy
         [SerializeField] private float destinationUpdateInterval = 0.4f;   // ~2-3 per second
 
         private static readonly int SpeedHash = Animator.StringToHash("Speed");
-        private static readonly int DeadHash  = Animator.StringToHash("Dead");
+        private static readonly int DeadHash = Animator.StringToHash("Dead");
 
-        private NavMeshAgent  _agent;
-        private Animator      _animator;
-        private Transform     _playerTransform;
+        private NavMeshAgent agent;
+        private Animator animator;
+        private Transform playerTransform;
 
-        private int   _currentHealth;
-        private bool  _isDead;
-        private float _destinationTimer;
-        private float _attackTimer;
+        private float currentHealth;
+        private bool isDead;
+        private float destinationTimer;
+        private float attackTimer;
 
-        public bool IsDead => _isDead;
+        public bool IsDead => isDead;
 
         protected override void Awake()
         {
             base.Awake();
-            _agent    = GetComponent<NavMeshAgent>();
-            _animator = GetComponent<Animator>();
+            agent = GetComponent<NavMeshAgent>();
+            animator = GetComponent<Animator>();
 
-            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-            _agent.autoBraking = false;
+            agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+            agent.autoBraking = false;
         }
 
         private void Update()
         {
-            if (_isDead || _playerTransform == null) return;
+            if (isDead || playerTransform == null) return;
 
             TickDestination();
             UpdateAnimator();
 
-            if (_attackTimer > 0f)
-                _attackTimer -= Time.deltaTime;
+            if (attackTimer > 0f)
+                attackTimer -= Time.deltaTime;
         }
 
         // ------------------ Pool Callbacks --------------------
         public override void OnGet()
         {
             base.OnGet();
-            _isDead            = false;
-            _currentHealth     = maxHealth;
-            _destinationTimer  = 0f;
-            _attackTimer       = 0f;
+            isDead = false;
+            currentHealth = maxHealth;
+            destinationTimer = 0f;
+            attackTimer = 0f;
 
-            _agent.enabled    = true;
-            _agent.isStopped  = false;
+            agent.enabled = true;
+            agent.isStopped = false;
 
-            _animator.ResetTrigger(DeadHash);
-            _animator.SetFloat(SpeedHash, 0f);
+            animator.ResetTrigger(DeadHash);
+            animator.SetFloat(SpeedHash, 0f);
 
             CachePlayer();
         }
@@ -76,27 +76,27 @@ namespace BulletHeaven.Enemy
         {
             base.OnRelease();
 
-            if (_agent.enabled)
+            if (agent.enabled)
             {
-                _agent.isStopped = true;
-                _agent.enabled   = false;
+                agent.isStopped = true;
+                agent.enabled = false;
             }
         }
 
         public void Configure(int health, float speed, int dmg)
         {
-            maxHealth  = health;
-            damage     = dmg;
-            _agent.speed = speed;
+            maxHealth = health;
+            damage = dmg;
+            agent.speed = speed;
         }
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(float amount)
         {
-            if (_isDead) return;
+            if (isDead) return;
 
-            _currentHealth -= amount;
+            currentHealth -= amount;
 
-            if (_currentHealth <= 0)
+            if (currentHealth <= 0)
                 Die();
         }
 
@@ -105,29 +105,29 @@ namespace BulletHeaven.Enemy
         {
             GameObject player = GameObject.FindWithTag("Player");
             if (player != null)
-                _playerTransform = player.transform;
+                playerTransform = player.transform;
             else
                 Debug.LogWarning("[Enemy] Player not found.");
         }
 
         private void TickDestination()
         {
-            _destinationTimer -= Time.deltaTime;
-            if (_destinationTimer > 0f) return;
+            destinationTimer -= Time.deltaTime;
+            if (destinationTimer > 0f) return;
 
-            _destinationTimer = destinationUpdateInterval;
+            destinationTimer = destinationUpdateInterval;
 
-            if (_agent.enabled && _agent.isOnNavMesh)
-                _agent.SetDestination(_playerTransform.position);
+            if (agent.enabled && agent.isOnNavMesh)
+                agent.SetDestination(playerTransform.position);
         }
 
         private void OnCollisionStay(Collision collision)
         {
-            if (_isDead) return;
+            if (isDead) return;
             if (!collision.gameObject.CompareTag("Player")) return;
-            if (_attackTimer > 0f) return;
+            if (attackTimer > 0f) return;
 
-            _attackTimer = attackInterval;
+            attackTimer = attackInterval;
 
             if (collision.gameObject.TryGetComponent(out IDamageable damageable))
                 damageable.TakeDamage(damage);
@@ -135,10 +135,10 @@ namespace BulletHeaven.Enemy
 
         private void Die()
         {
-            _isDead = true;
+            isDead = true;
 
-            _agent.isStopped = true;
-            _animator.SetTrigger(DeadHash);
+            agent.isStopped = true;
+            animator.SetTrigger(DeadHash);
 
             // Notify GameManager
             GameManager.Instance?.OnEnemyDefeated();
@@ -156,7 +156,7 @@ namespace BulletHeaven.Enemy
 
         private void UpdateAnimator()
         {
-            _animator.SetFloat(SpeedHash, _agent.velocity.magnitude);
+            animator.SetFloat(SpeedHash, agent.velocity.magnitude);
         }
 
 
