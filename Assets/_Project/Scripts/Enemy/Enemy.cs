@@ -38,6 +38,7 @@ namespace BulletHeaven.Enemy
             base.Awake();
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
+            currentHealth = maxHealth;
 
             agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
             agent.autoBraking = false;
@@ -86,6 +87,7 @@ namespace BulletHeaven.Enemy
         public void Configure(int health, float speed, int dmg)
         {
             maxHealth = health;
+            currentHealth = health;
             damage = dmg;
             agent.speed = speed;
         }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using BulletHeaven.Core;
 
 namespace BulletHeaven.Control
 {
@@ -31,6 +32,8 @@ namespace BulletHeaven.Control
 
             foreach (Collider enemy in enemiesInRange)
             {
+                if (enemy.TryGetComponent(out IDamageable damageable) && damageable.IsDead) continue;
+
                 float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
                 if (distanceToEnemy < closestDistance)
                 {
