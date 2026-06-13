@@ -12,7 +12,6 @@ namespace BulletHeaven.Control
         [SerializeField] private LayerMask enemyLayer;
 
         [Header("Visuals")]
-        [SerializeField] private LineRenderer bulletTrailPrefab;
         [SerializeField] private GameObject hitEffectPrefab;
 
         [Header("Dependencies")]
@@ -40,7 +39,7 @@ namespace BulletHeaven.Control
 
         private void PerformHitscan(Transform target)
         {
-            Vector3 targetCenter = target.position + Vector3.up * 1f;
+            Vector3 targetCenter = target.position;
             Vector3 direction = targetCenter - firePoint.position;
 
             if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, weaponRange, enemyLayer))
@@ -53,17 +52,14 @@ namespace BulletHeaven.Control
                     GameObject effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(effect, 1f);
                 }
-                StartCoroutine(DrawLine(firePoint.position, hit.point));
+                SpawnBulletTrail(firePoint.position, hit.point);
             }
         }
 
-        private IEnumerator DrawLine(Vector3 start, Vector3 end)
+        private void SpawnBulletTrail(Vector3 start, Vector3 end)
         {
-            LineRenderer trail = Instantiate(bulletTrailPrefab);
-            trail.SetPosition(0, start);
-            trail.SetPosition(1, end);
-            yield return new WaitForSeconds(0.05f);
-            Destroy(trail.gameObject);
+            BulletTrail trail = PoolManager.Instance.Get(EPoolType.BulletTrail) as BulletTrail;
+            trail?.SetUpTrail(start, end);
         }
     }
 }
