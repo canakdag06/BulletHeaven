@@ -146,8 +146,8 @@ namespace BulletHeaven.Enemy
             GameManager.Instance?.OnEnemyDefeated();
 
             // Do not return to pool before death animation finishes;
-            // if no animation event, automatically return after 1.5 seconds.
-            StartCoroutine(ReturnAfterDelay(1.5f));
+            // if no animation event, automatically return after 2 seconds.
+            StartCoroutine(ReturnAfterDelay(2f));
         }
 
         private IEnumerator ReturnAfterDelay(float delay)
