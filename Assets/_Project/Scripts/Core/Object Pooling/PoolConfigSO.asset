@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08560c376e3b3914ebf0b4bf8c6e59e3, type: 3}
   m_Name: PoolConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::PoolConfigSO
-  poolObjects: []
+  poolObjects:
+  - name: BulletTrail
+    type: 1
+    prefab: {fileID: 8569752977879919264, guid: 2fa8910d98853de46b4c9d667c711dbc, type: 3}
+    initialSize: 30
