@@ -1,4 +1,5 @@
 using UnityEngine;
+using BulletHeaven.Core;
 
 namespace BulletHeaven.Control
 {
@@ -23,6 +24,11 @@ namespace BulletHeaven.Control
         {
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
+        }
+
+        private void Start()
+        {
+            GameManager.Instance.RegisterPlayer(transform);
         }
 
         private void Update()

@@ -35,11 +35,11 @@ public class EnemySpawner : MonoBehaviour
         _activeEnemyCount = 0;
         _isRunning        = true;
 
-        _playerTransform = GameObject.FindWithTag("Player")?.transform;
+        _playerTransform = GameManager.Instance.PlayerTransform;
         _mainCamera      = Camera.main;
 
         if (_playerTransform == null)
-            Debug.LogWarning("[EnemySpawner] Player not found.");
+            Debug.LogWarning("[EnemySpawner] PlayerTransform not registered in GameManager.");
 
         ApplyStage(0);
     }
