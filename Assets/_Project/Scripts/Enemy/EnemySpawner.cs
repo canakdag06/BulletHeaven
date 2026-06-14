@@ -6,11 +6,12 @@ using BulletHeaven.Enemy;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Config")]
-    [SerializeField] private LevelData levelConfig;
+    [SerializeField] private LevelConfigSO levelConfigSO;
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnRadius = 20f;
 
+    private LevelData _levelData;
     private Transform _playerTransform;
     private Camera    _mainCamera;
     private WaveStage _currentStage;
@@ -21,15 +22,21 @@ public class EnemySpawner : MonoBehaviour
     private Coroutine _spawnCoroutine;
 
 
-    public void StartSpawning(LevelData config)
+    public void StartSpawning()
     {
-        if (config == null || config.waveStages == null || config.waveStages.Count == 0)
+        if (levelConfigSO == null)
         {
-            Debug.LogError("[EnemySpawner] LevelConfig is missing or has no wave stages.");
+            Debug.LogError("[EnemySpawner] LevelConfigSO is not assigned.");
             return;
         }
 
-        levelConfig       = config;
+        _levelData = levelConfigSO.GetLevel(GameManager.Instance.CurrentLevel);
+        if (_levelData == null || _levelData.waveStages == null || _levelData.waveStages.Count == 0)
+        {
+            Debug.LogError($"[EnemySpawner] Level {GameManager.Instance.CurrentLevel} is missing or has no wave stages.");
+            return;
+        }
+
         _elapsedTime      = 0f;
         _currentStageIndex = 0;
         _activeEnemyCount = 0;
@@ -69,12 +76,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void CheckWaveProgression()
     {
-        if (levelConfig.waveStages == null) return;
+        if (_levelData.waveStages == null) return;
 
         // pick the last stage whose startTime <= elapsedTime.
-        for (int i = levelConfig.waveStages.Count - 1; i >= 0; i--)
+        for (int i = _levelData.waveStages.Count - 1; i >= 0; i--)
         {
-            if (_elapsedTime >= levelConfig.waveStages[i].startTime)
+            if (_elapsedTime >= _levelData.waveStages[i].startTime)
             {
                 if (i != _currentStageIndex)
                     ApplyStage(i);
@@ -86,7 +93,7 @@ public class EnemySpawner : MonoBehaviour
     private void ApplyStage(int index)
     {
         _currentStageIndex = index;
-        _currentStage      = levelConfig.waveStages[index];
+        _currentStage      = _levelData.waveStages[index];
 
         if (_spawnCoroutine != null)
             StopCoroutine(_spawnCoroutine);
@@ -131,9 +138,9 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.position = spawnPos;
         enemy.transform.rotation = Quaternion.identity;
 
-        int   health = Mathf.RoundToInt(levelConfig.baseEnemyHealth * _currentStage.healthMultiplier);
-        float speed  = levelConfig.baseEnemyMoveSpeed * _currentStage.speedMultiplier;
-        int   dmg    = levelConfig.baseEnemyDamage;
+        int   health = Mathf.RoundToInt(_levelData.baseEnemyHealth * _currentStage.healthMultiplier);
+        float speed  = _levelData.baseEnemyMoveSpeed * _currentStage.speedMultiplier;
+        int   dmg    = _levelData.baseEnemyDamage;
 
         enemy.Configure(health, speed, dmg);
         enemy.OnEnemyRemoved += OnEnemyRemoved;

@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31236d8808304e4459703b5053124af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  levelConfig: {fileID: 11400000, guid: 03ffeff79f3af644f9fd428d7ea53d83, type: 2}
+  levelConfigSO: {fileID: 11400000, guid: 0d0824bf6a0a8e54195d1d0e428a5a5c, type: 2}
   spawnRadius: 20
 --- !u!1 &832575517
 GameObject:

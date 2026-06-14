@@ -17,8 +17,6 @@ namespace BulletHeaven.Core
     [System.Serializable]
     public class LevelData
     {
-        public string levelName;
-
         [Header("Base Enemy Stats")]
         public int baseEnemyHealth = 30;
         public float baseEnemyMoveSpeed = 3.5f;
@@ -31,8 +29,8 @@ namespace BulletHeaven.Core
         public GameObject mapPrefab;
     }
 
-    [CreateAssetMenu(menuName = "BulletHeaven/GameConfigSO", fileName = "GameConfig")]
-    public class GameConfigSO : ScriptableObject
+    [CreateAssetMenu(menuName = "Levels/LevelConfigSO", fileName = "LevelConfig")]
+    public class LevelConfigSO : ScriptableObject
     {
         public List<LevelData> levels;
 
@@ -42,7 +40,7 @@ namespace BulletHeaven.Core
             if (i >= 0 && i < levels.Count)
                 return levels[i];
 
-            Debug.LogError($"[GameConfigSO] Level {levelIndex} not found.");
+            Debug.LogError($"[LevelConfigSO] Level {levelIndex} not found.");
             return null;
         }
     }
