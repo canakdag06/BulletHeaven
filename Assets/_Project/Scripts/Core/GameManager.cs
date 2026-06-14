@@ -44,6 +44,22 @@ namespace BulletHeaven.Core
             StateMachine.Tick();
         }
 
+        // Player
+        public Transform PlayerTransform { get; private set; }
+
+        public void RegisterPlayer(Transform playerTransform)
+        {
+            PlayerTransform = playerTransform;
+        }
+
+        // Enemy tracking
+        public int EnemiesDefeated { get; private set; }
+
+        public void OnEnemyDefeated()
+        {
+            EnemiesDefeated++;
+        }
+
         public void GoToNextLevel()
         {
             if (CurrentLevel < MaxLevel)

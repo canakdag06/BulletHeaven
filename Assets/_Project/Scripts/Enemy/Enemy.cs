@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -32,6 +33,7 @@ namespace BulletHeaven.Enemy
         private float attackTimer;
 
         public bool IsDead => isDead;
+        public event Action OnEnemyRemoved;
 
         protected override void Awake()
         {
@@ -42,8 +44,6 @@ namespace BulletHeaven.Enemy
 
             agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
             agent.autoBraking = false;
-
-            playerTransform = GameObject.FindWithTag("Player")?.transform; // delete later
         }
 
         private void Update()
@@ -78,6 +78,7 @@ namespace BulletHeaven.Enemy
         public override void OnRelease()
         {
             base.OnRelease();
+            OnEnemyRemoved = null;
 
             if (agent.enabled)
             {
@@ -107,25 +108,20 @@ namespace BulletHeaven.Enemy
 
         private void CachePlayer()
         {
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-                playerTransform = player.transform;
-            else
-                Debug.LogWarning("[Enemy] Player not found.");
+            playerTransform = GameManager.Instance?.PlayerTransform;
+            if (playerTransform == null)
+                Debug.LogWarning("[Enemy] PlayerTransform not registered in GameManager.");
         }
 
         private void TickDestination()
         {
-            Debug.Log("destinationTimer: " + destinationTimer);
             destinationTimer -= Time.deltaTime;
             if (destinationTimer > 0f) return;
 
             destinationTimer = destinationUpdateInterval;
 
-            //if (agent.enabled && agent.isOnNavMesh)
-            //{
-            //    Debug.Log(agent.SetDestination(playerTransform.position));
-            //}
+            if (agent.enabled && agent.isOnNavMesh)
+                agent.SetDestination(playerTransform.position);
         }
 
         private void OnCollisionStay(Collision collision)
@@ -149,6 +145,7 @@ namespace BulletHeaven.Enemy
 
             // Notify GameManager
             GameManager.Instance?.OnEnemyDefeated();
+            OnEnemyRemoved?.Invoke();
 
             // Do not return to pool before death animation finishes;
             // if no animation event, automatically return after 2 seconds.

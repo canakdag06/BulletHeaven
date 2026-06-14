@@ -6,7 +6,7 @@ using BulletHeaven.Enemy;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Config")]
-    [SerializeField] private LevelConfigSO levelConfig;
+    [SerializeField] private LevelData levelConfig;
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnRadius = 20f;
@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
     private Coroutine _spawnCoroutine;
 
 
-    public void StartSpawning(LevelConfigSO config)
+    public void StartSpawning(LevelData config)
     {
         if (config == null || config.waveStages == null || config.waveStages.Count == 0)
         {

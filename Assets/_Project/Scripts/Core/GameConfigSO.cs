@@ -1,7 +1,5 @@
 using UnityEngine;
-
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BulletHeaven.Core
 {
@@ -16,11 +14,10 @@ namespace BulletHeaven.Core
         [Min(0.1f)] public float speedMultiplier = 1f;
     }
 
-    [CreateAssetMenu(menuName = "Levels/LevelConfigSO", fileName = "LevelConfig_L_New")]
-    public class LevelConfigSO : ScriptableObject
+    [System.Serializable]
+    public class LevelData
     {
-        [Header("Level Info")]
-        public int levelIndex = 1;
+        public string levelName;
 
         [Header("Base Enemy Stats")]
         public int baseEnemyHealth = 30;
@@ -32,5 +29,21 @@ namespace BulletHeaven.Core
 
         [Header("Environment")]
         public GameObject mapPrefab;
+    }
+
+    [CreateAssetMenu(menuName = "BulletHeaven/GameConfigSO", fileName = "GameConfig")]
+    public class GameConfigSO : ScriptableObject
+    {
+        public List<LevelData> levels;
+
+        public LevelData GetLevel(int levelIndex)
+        {
+            int i = levelIndex - 1;
+            if (i >= 0 && i < levels.Count)
+                return levels[i];
+
+            Debug.LogError($"[GameConfigSO] Level {levelIndex} not found.");
+            return null;
+        }
     }
 }
