@@ -42,6 +42,8 @@ namespace BulletHeaven.Enemy
 
             agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
             agent.autoBraking = false;
+
+            playerTransform = GameObject.FindWithTag("Player")?.transform; // delete later
         }
 
         private void Update()
@@ -114,13 +116,16 @@ namespace BulletHeaven.Enemy
 
         private void TickDestination()
         {
+            Debug.Log("destinationTimer: " + destinationTimer);
             destinationTimer -= Time.deltaTime;
             if (destinationTimer > 0f) return;
 
             destinationTimer = destinationUpdateInterval;
 
-            if (agent.enabled && agent.isOnNavMesh)
-                agent.SetDestination(playerTransform.position);
+            //if (agent.enabled && agent.isOnNavMesh)
+            //{
+            //    Debug.Log(agent.SetDestination(playerTransform.position));
+            //}
         }
 
         private void OnCollisionStay(Collision collision)
