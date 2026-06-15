@@ -11,6 +11,7 @@ namespace BulletHeaven.Control
         [SerializeField] private float fireRate = 0.2f;
         [SerializeField] private float weaponRange = 50f;
         [SerializeField] private float weaponDamage = 10f;
+        [SerializeField] private float maxShootAngle = 15f;
         [SerializeField] private LayerMask enemyLayer;
 
         [Header("Visuals")]
@@ -30,6 +31,7 @@ namespace BulletHeaven.Control
         private void TryShoot(Transform target)
         {
             if (target == null) return;
+            if (!IsFacingTarget(target)) return;
 
             _fireTimer -= Time.deltaTime;
             if (_fireTimer <= 0f)
@@ -37,6 +39,19 @@ namespace BulletHeaven.Control
                 PerformHitscan(target);
                 _fireTimer = fireRate;
             }
+        }
+
+        private bool IsFacingTarget(Transform target)
+        {
+            Vector3 directionToTarget = target.position - transform.position;
+            directionToTarget.y = 0f;
+
+            if (directionToTarget.sqrMagnitude < 0.01f) return true; // if the target is very close, we consider it as facing
+
+            Vector3 forward = transform.forward;
+            forward.y = 0f;
+
+            return Vector3.Angle(forward, directionToTarget) <= maxShootAngle; // if the angle is less than the max shoot angle, we consider it as facing
         }
 
         private void PerformHitscan(Transform target)
