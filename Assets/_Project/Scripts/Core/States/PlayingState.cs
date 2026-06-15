@@ -12,18 +12,17 @@ namespace BulletHeaven.Core
 
         public void Enter()
         {
-            // TODO: Oynanýþ UI'ýný aç, zamanlayýcýyý (timer) baþlat, düþman spawn sistemini tetikle.
-            UnityEngine.Debug.Log("GAME STARTED");
+            _gameManager.EnemySpawner?.StartSpawning();
         }
 
         public void Tick()
         {
-            // TODO: Timer'ý güncelle. Timer <= 0 olursa GameWonState'e geçiþ yap.
+            // TODO: Timer'? gï¿½ncelle. Timer <= 0 olursa GameWonState'e geï¿½i? yap.
         }
 
         public void Exit()
         {
-            // TODO: Düþmanlarý durdur, game UI'ýný kapat.
+            _gameManager.EnemySpawner?.StopSpawning();
         }
     }
 }

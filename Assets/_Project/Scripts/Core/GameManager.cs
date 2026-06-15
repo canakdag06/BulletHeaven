@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace BulletHeaven.Core
@@ -12,6 +13,10 @@ namespace BulletHeaven.Core
         public PlayingState PlayingState { get; private set; }
         public GameWonState GameWonState { get; private set; }
         public LevelTransitionState LevelTransitionState { get; private set; }
+
+
+        [SerializeField] private EnemySpawner enemySpawner;
+        public EnemySpawner EnemySpawner => enemySpawner;
 
         // Level tracking
         public int CurrentLevel { get; private set; } = 1;
@@ -36,6 +41,16 @@ namespace BulletHeaven.Core
 
         private void Start()
         {
+            if (enemySpawner == null)
+                enemySpawner = FindFirstObjectByType<EnemySpawner>();
+
+            StartCoroutine(BeginGame());
+        }
+
+        private IEnumerator BeginGame()
+        {
+            // PlayerController.RegisterPlayer runs in Start. Wait one frame so it is ready.
+            yield return null;
             StateMachine.Initialize(PlayingState);
         }
 
