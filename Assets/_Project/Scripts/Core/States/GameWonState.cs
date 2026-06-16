@@ -1,3 +1,4 @@
+using UnityEngine;
 
 namespace BulletHeaven.Core
 {
@@ -5,25 +6,22 @@ namespace BulletHeaven.Core
     {
         private readonly GameManager _gameManager;
 
-        public GameWonState(GameManager gameManager)
+        // Reserved for future pool cleanup
+        private readonly EnemySpawner _spawner;
+
+        public GameWonState(GameManager gameManager, EnemySpawner spawner)
         {
             _gameManager = gameManager;
+            _spawner = spawner;
         }
 
         public void Enter()
         {
-            // TODO: Game Won UI'ýný aç, öldürülen düþman sayýsýný göster ve save al.
-            UnityEngine.Debug.Log("Süre doldu! Game Won State aktif.");
+            Debug.Log($"[GameWonState] Game Won! Time is up. Enemies defeated this run: {_gameManager.EnemiesDefeatedThisRun}");
         }
 
-        public void Tick()
-        {
+        public void Tick() { }
 
-        }
-
-        public void Exit()
-        {
-            // TODO: Clear UI vs.
-        }
+        public void Exit() { }
     }
 }

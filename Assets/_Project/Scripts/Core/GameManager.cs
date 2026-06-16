@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -9,18 +10,18 @@ namespace BulletHeaven.Core
 
         public GameStateMachine StateMachine { get; private set; }
 
-        // States
-        public PlayingState PlayingState { get; private set; }
-        public GameWonState GameWonState { get; private set; }
-        public LevelTransitionState LevelTransitionState { get; private set; }
-
-
         [SerializeField] private EnemySpawner enemySpawner;
         public EnemySpawner EnemySpawner => enemySpawner;
 
         // Level tracking
         public int CurrentLevel { get; private set; } = 1;
         public const int MaxLevel = 3;
+        public int EnemiesDefeatedThisRun { get; private set; }
+        public float RoundTimer { get; set; } = 180f;   // 3 minutes
+
+        public event Action<int> OnTimerSecondChanged;
+
+        private int _lastSecondRecorded;
 
         private void Awake()
         {
@@ -34,9 +35,6 @@ namespace BulletHeaven.Core
             DontDestroyOnLoad(gameObject);
 
             StateMachine = new GameStateMachine();
-            PlayingState = new PlayingState(this);
-            GameWonState = new GameWonState(this);
-            LevelTransitionState = new LevelTransitionState(this);
         }
 
         private void Start()
@@ -47,11 +45,11 @@ namespace BulletHeaven.Core
             StartCoroutine(BeginGame());
         }
 
+        // Waits one frame so PlayerController.RegisterPlayer (Start) runs before the first state enters
         private IEnumerator BeginGame()
         {
-            // PlayerController.RegisterPlayer runs in Start. Wait one frame so it is ready.
             yield return null;
-            StateMachine.Initialize(PlayingState);
+            StateMachine.Initialize(new PlayingState(this, enemySpawner));
         }
 
         private void Update()
@@ -59,7 +57,10 @@ namespace BulletHeaven.Core
             StateMachine.Tick();
         }
 
-        // Player
+        // wrapper to keep states decoupled from StateMachine internals
+        public void ChangeState(IGameState newState) => StateMachine.ChangeState(newState);
+
+        // ── Player ──────────────────────────────────────────────────────────
         public Transform PlayerTransform { get; private set; }
 
         public void RegisterPlayer(Transform playerTransform)
@@ -67,20 +68,37 @@ namespace BulletHeaven.Core
             PlayerTransform = playerTransform;
         }
 
-        // Enemy tracking
-        public int EnemiesDefeated { get; private set; }
-
+        // ── Enemy tracking ───────────────────────────────────────────────────
         public void OnEnemyDefeated()
         {
-            EnemiesDefeated++;
+            EnemiesDefeatedThisRun++;
         }
 
+        // ── Round lifecycle ──────────────────────────────────────────────────
+
+        public void ResetRoundStats()
+        {
+            RoundTimer = 180f;
+            _lastSecondRecorded = 180;
+            EnemiesDefeatedThisRun = 0;
+        }
+
+        // Called every Tick from PlayingState; fires OnTimerSecondChanged only on a new second
+        public void EvaluateTimerChange(int currentSeconds)
+        {
+            if (currentSeconds == _lastSecondRecorded) return;
+
+            _lastSecondRecorded = currentSeconds;
+            OnTimerSecondChanged?.Invoke(currentSeconds);
+        }
+
+        // ── Level flow ───────────────────────────────────────────────────────
         public void GoToNextLevel()
         {
             if (CurrentLevel < MaxLevel)
             {
                 CurrentLevel++;
-                StateMachine.ChangeState(LevelTransitionState);
+                StateMachine.ChangeState(new LevelTransitionState(this));
             }
         }
     }
