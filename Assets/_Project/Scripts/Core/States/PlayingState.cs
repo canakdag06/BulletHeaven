@@ -19,6 +19,7 @@ namespace BulletHeaven.Core
         public void Enter()
         {
             _hasEnded = false;
+            _gameManager.SetInputEnabled(true);
             _gameManager.ResetRoundStats();
             _spawner?.StartSpawning();
         }

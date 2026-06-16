@@ -45,14 +45,16 @@ namespace BulletHeaven.Control
 
         private void GatherInput()
         {
-            if (joystick == null) return;
+            if (joystick == null || !GameManager.Instance.IsInputEnabled)
+            {
+                moveInput = Vector3.zero;
+                return;
+            }
 
             moveInput = new Vector3(joystick.Horizontal, 0f, joystick.Vertical);
 
             if (moveInput.magnitude > 1f)
-            {
                 moveInput.Normalize();
-            }
         }
 
         private void MovePlayer()

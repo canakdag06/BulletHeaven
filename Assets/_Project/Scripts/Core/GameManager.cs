@@ -32,6 +32,8 @@ namespace BulletHeaven.Core
 
         public event Action OnLevelTransitionStarted;
 
+        public bool IsInputEnabled { get; private set; } = true;
+
         private int _lastSecondRecorded;
         private GameObject _currentMapInstance;
 
@@ -73,6 +75,8 @@ namespace BulletHeaven.Core
 
         // wrapper to keep states decoupled from StateMachine internals
         public void ChangeState(IGameState newState) => StateMachine.ChangeState(newState);
+
+        public void SetInputEnabled(bool value) => IsInputEnabled = value;
 
         // ── Player ──────────────────────────────────────────────────────────
         public Transform PlayerTransform { get; private set; }
