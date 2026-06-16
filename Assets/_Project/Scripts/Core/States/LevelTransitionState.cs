@@ -1,8 +1,10 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 namespace BulletHeaven.Core
 {
+    /// <summary>
+    /// Intermediate state between GameWonState and the next PlayingState.
+    /// Delegates the visual transition sequence to LevelTransitionPanel via an event,
+    /// then waits — PlayingState is entered by GameManager.FinishTransition().
+    /// </summary>
     public class LevelTransitionState : IGameState
     {
         private readonly GameManager _gameManager;
@@ -12,12 +14,7 @@ namespace BulletHeaven.Core
             _gameManager = gameManager;
         }
 
-        public void Enter()
-        {
-            //string sceneName = "Level" + _gameManager.CurrentLevel;
-            //Debug.Log($"Loading {sceneName}...");
-            //SceneManager.LoadScene(sceneName);
-        }
+        public void Enter() => _gameManager.BeginTransition();
 
         public void Tick() { }
 

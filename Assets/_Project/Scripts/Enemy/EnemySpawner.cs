@@ -62,6 +62,17 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void ClearAllEnemies()
+    {
+        var active = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        foreach (var enemy in active)
+        {
+            if (!enemy.InPool)
+                enemy.Release();
+        }
+        _activeEnemyCount = 0;
+    }
+
     public void OnEnemyRemoved() => _activeEnemyCount--;
 
     // -- Wave Tracking --

@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6229b694b648f4cafbaa2b342bd44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Core.GameManager
+  enemySpawner: {fileID: 0}
+  levelConfig: {fileID: 11400000, guid: 0d0824bf6a0a8e54195d1d0e428a5a5c, type: 2}

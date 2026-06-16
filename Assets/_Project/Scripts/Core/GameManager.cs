@@ -13,12 +13,15 @@ namespace BulletHeaven.Core
         [SerializeField] private EnemySpawner enemySpawner;
         public EnemySpawner EnemySpawner => enemySpawner;
 
+        [SerializeField] private LevelConfigSO levelConfig;
+        public LevelConfigSO LevelConfig => levelConfig;
+
         // Level tracking
         public int CurrentLevel { get; private set; } = 1;
         public const int MaxLevel = 3;
         public int EnemiesDefeatedThisRun { get; private set; }
         public int TotalKillsAllTime { get; private set; }
-        public float RoundTimer { get; set; } = 60f;   // 1 minute
+        public float RoundTimer { get; set; }
 
         public event Action<int> OnTimerSecondChanged;
 
@@ -27,7 +30,10 @@ namespace BulletHeaven.Core
 
         public event Action OnRoundReset;
 
+        public event Action OnLevelTransitionStarted;
+
         private int _lastSecondRecorded;
+        private GameObject _currentMapInstance;
 
         private void Awake()
         {
@@ -56,6 +62,7 @@ namespace BulletHeaven.Core
         private IEnumerator BeginGame()
         {
             yield return null;
+            SpawnMap();
             StateMachine.Initialize(new PlayingState(this, enemySpawner));
         }
 
@@ -73,6 +80,24 @@ namespace BulletHeaven.Core
         public void RegisterPlayer(Transform playerTransform)
         {
             PlayerTransform = playerTransform;
+        }
+
+        /// <summary>Teleports the player's Rigidbody to the given world position and zeroes its velocity.</summary>
+        public void SetPlayerPosition(Vector3 worldPosition)
+        {
+            if (PlayerTransform == null) return;
+
+            var rb = PlayerTransform.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.position = worldPosition;
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+            else
+            {
+                PlayerTransform.position = worldPosition;
+            }
         }
 
         // ── Enemy tracking ───────────────────────────────────────────────────
@@ -93,8 +118,11 @@ namespace BulletHeaven.Core
 
         public void ResetRoundStats()
         {
-            RoundTimer = 60f;
-            _lastSecondRecorded = 60;
+            LevelData data = levelConfig != null ? levelConfig.GetLevel(CurrentLevel) : null;
+            float timer = data != null ? data.levelTimerSec : 180f;
+
+            RoundTimer = timer;
+            _lastSecondRecorded = Mathf.CeilToInt(timer);
             EnemiesDefeatedThisRun = 0;
             OnRoundReset?.Invoke();
         }
@@ -108,7 +136,24 @@ namespace BulletHeaven.Core
             OnTimerSecondChanged?.Invoke(currentSeconds);
         }
 
+        // ── Map management ───────────────────────────────────────────────────
+
+        /// <summary>Destroys the current map instance and instantiates the one for CurrentLevel.</summary>
+        public void SpawnMap()
+        {
+            if (_currentMapInstance != null)
+            {
+                Destroy(_currentMapInstance);
+                _currentMapInstance = null;
+            }
+
+            LevelData data = levelConfig != null ? levelConfig.GetLevel(CurrentLevel) : null;
+            if (data?.mapPrefab != null)
+                _currentMapInstance = Instantiate(data.mapPrefab);
+        }
+
         // ── Level flow ───────────────────────────────────────────────────────
+
         public void GoToNextLevel()
         {
             if (CurrentLevel < MaxLevel)
@@ -116,6 +161,15 @@ namespace BulletHeaven.Core
                 CurrentLevel++;
                 StateMachine.ChangeState(new LevelTransitionState(this));
             }
+        }
+
+        /// <summary>Called by LevelTransitionState to kick off the visual transition sequence.</summary>
+        public void BeginTransition() => OnLevelTransitionStarted?.Invoke();
+
+        /// <summary>Called by LevelTransitionPanel once the fade-out completes and the map is ready.</summary>
+        public void FinishTransition()
+        {
+            StateMachine.ChangeState(new PlayingState(this, enemySpawner));
         }
     }
 }

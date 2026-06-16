@@ -25,8 +25,12 @@ namespace BulletHeaven.Core
         [Header("Wave Stages")]
         public List<WaveStage> waveStages;
 
+        [Header("Timer")]
+        [Min(1f)] public float levelTimerSec = 180f;
+
         [Header("Environment")]
         public GameObject mapPrefab;
+        public Vector3 playerSpawnPoint = Vector3.zero;
     }
 
     [CreateAssetMenu(menuName = "Levels/LevelConfigSO", fileName = "LevelConfig")]
