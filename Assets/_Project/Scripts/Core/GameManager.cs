@@ -17,9 +17,15 @@ namespace BulletHeaven.Core
         public int CurrentLevel { get; private set; } = 1;
         public const int MaxLevel = 3;
         public int EnemiesDefeatedThisRun { get; private set; }
-        public float RoundTimer { get; set; } = 180f;   // 3 minutes
+        public int TotalKillsAllTime { get; private set; }
+        public float RoundTimer { get; set; } = 60f;   // 1 minute
 
         public event Action<int> OnTimerSecondChanged;
+
+        /// <summary>levelKills, totalKills, isLastLevel</summary>
+        public event Action<int, int, bool> OnLevelComplete;
+
+        public event Action OnRoundReset;
 
         private int _lastSecondRecorded;
 
@@ -35,6 +41,7 @@ namespace BulletHeaven.Core
             DontDestroyOnLoad(gameObject);
 
             StateMachine = new GameStateMachine();
+            TotalKillsAllTime = SaveSystem.TotalKills;
         }
 
         private void Start()
@@ -74,13 +81,22 @@ namespace BulletHeaven.Core
             EnemiesDefeatedThisRun++;
         }
 
+        public void CompleteLevel()
+        {
+            TotalKillsAllTime += EnemiesDefeatedThisRun;
+            SaveSystem.SaveProgress(CurrentLevel, TotalKillsAllTime);
+            bool isLastLevel = CurrentLevel >= MaxLevel;
+            OnLevelComplete?.Invoke(EnemiesDefeatedThisRun, TotalKillsAllTime, isLastLevel);
+        }
+
         // ── Round lifecycle ──────────────────────────────────────────────────
 
         public void ResetRoundStats()
         {
-            RoundTimer = 180f;
-            _lastSecondRecorded = 180;
+            RoundTimer = 60f;
+            _lastSecondRecorded = 60;
             EnemiesDefeatedThisRun = 0;
+            OnRoundReset?.Invoke();
         }
 
         // Called every Tick from PlayingState; fires OnTimerSecondChanged only on a new second

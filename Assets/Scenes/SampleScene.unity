@@ -1026,6 +1026,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &631475724855750725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6067224417307637527, guid: 67d77e8c8d313ef4d8308278e4493e8d, type: 3}
+  m_PrefabInstance: {fileID: 631475724855750723}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354c3521b69ce2e4baeef64f8545b2ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.UI.GameWonPanel
 --- !u!1001 &3302023875070353297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1327,6 +1338,10 @@ PrefabInstance:
       propertyPath: enemySpawner
       value: 
       objectReference: {fileID: 576781577}
+    - target: {fileID: 5537256923419732087, guid: 07752e7f70748084bba7b9567b131b03, type: 3}
+      propertyPath: gameWonPanel
+      value: 
+      objectReference: {fileID: 631475724855750725}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

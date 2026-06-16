@@ -17,7 +17,9 @@ namespace BulletHeaven.Core
 
         public void Enter()
         {
-            Debug.Log($"[GameWonState] Game Won! Time is up. Enemies defeated this run: {_gameManager.EnemiesDefeatedThisRun}");
+            _gameManager.CompleteLevel();
+            Debug.Log($"[GameWonState] Level {_gameManager.CurrentLevel} tamamlandı — " +
+                      $"Level kill: {_gameManager.EnemiesDefeatedThisRun}, Toplam kill: {_gameManager.TotalKillsAllTime}");
         }
 
         public void Tick() { }
