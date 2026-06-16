@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 5235540267254215515}
   - component: {fileID: 7319490559000437375}
   - component: {fileID: 8270944650652494407}
+  - component: {fileID: 7105770599623540809}
   m_Layer: 5
   m_Name: GameWon Panel
   m_TagString: Untagged
@@ -235,6 +236,21 @@ MonoBehaviour:
   totalKillsText: {fileID: 171894895936804120}
   nextLevelButton: {fileID: 467226026154381924}
   nextLevelButtonText: {fileID: 2443654087938740233}
+  showDuration: 0.35
+  hideDuration: 0.25
+  scaleFrom: 0.85
+--- !u!225 &7105770599623540809
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664374135663723314}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4302563512925442764
 GameObject:
   m_ObjectHideFlags: 0

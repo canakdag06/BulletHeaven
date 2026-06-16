@@ -115,6 +115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameWon Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 1664374135663723314, guid: e26d9335430a68042a8bbfe2ced45d7c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4436947934928664522, guid: e26d9335430a68042a8bbfe2ced45d7c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
