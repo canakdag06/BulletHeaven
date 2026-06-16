@@ -36,13 +36,49 @@ MonoBehaviour:
       healthMultiplier: 3
       speedMultiplier: 3
     mapPrefab: {fileID: 7287694583744956005, guid: b530f0f5fa517d541807e4ce79b2b712, type: 3}
-  - baseEnemyHealth: 0
-    baseEnemyMoveSpeed: 0
-    baseEnemyDamage: 0
-    waveStages: []
+  - baseEnemyHealth: 10
+    baseEnemyMoveSpeed: 1
+    baseEnemyDamage: 5
+    waveStages:
+    - startTime: 0
+      spawnInterval: 1
+      maxEnemiesAlive: 5
+      enemiesPerSpawn: 1
+      healthMultiplier: 1
+      speedMultiplier: 1
+    - startTime: 15
+      spawnInterval: 0.75
+      maxEnemiesAlive: 10
+      enemiesPerSpawn: 2
+      healthMultiplier: 2
+      speedMultiplier: 2
+    - startTime: 30
+      spawnInterval: 0.5
+      maxEnemiesAlive: 20
+      enemiesPerSpawn: 3
+      healthMultiplier: 3
+      speedMultiplier: 3
     mapPrefab: {fileID: 2833051679408542892, guid: f728f7fd165c86640a7365c8f88ebfc3, type: 3}
-  - baseEnemyHealth: 0
-    baseEnemyMoveSpeed: 0
-    baseEnemyDamage: 0
-    waveStages: []
+  - baseEnemyHealth: 10
+    baseEnemyMoveSpeed: 1
+    baseEnemyDamage: 5
+    waveStages:
+    - startTime: 0
+      spawnInterval: 1
+      maxEnemiesAlive: 5
+      enemiesPerSpawn: 1
+      healthMultiplier: 1
+      speedMultiplier: 1
+    - startTime: 15
+      spawnInterval: 0.75
+      maxEnemiesAlive: 10
+      enemiesPerSpawn: 2
+      healthMultiplier: 2
+      speedMultiplier: 2
+    - startTime: 30
+      spawnInterval: 0.5
+      maxEnemiesAlive: 20
+      enemiesPerSpawn: 3
+      healthMultiplier: 3
+      speedMultiplier: 3
     mapPrefab: {fileID: 475774088617684280, guid: 65ccc843ae279ee49b46eca8cc92ab43, type: 3}
