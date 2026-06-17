@@ -100,9 +100,19 @@ namespace BulletHeaven.Enemy
             if (isDead) return;
 
             currentHealth -= amount;
+            SpawnHitEffect();
 
             if (currentHealth <= 0)
                 Die();
+        }
+
+        private void SpawnHitEffect()
+        {
+            HitEffect effect = PoolManager.Instance.Get(EPoolType.BloodDirectional) as HitEffect;
+            if (effect == null || playerTransform == null) return;
+
+            Vector3 direction = (playerTransform.position - transform.position).normalized;
+            effect.Play(transform.position + Vector3.up, direction);
         }
 
 

@@ -16,8 +16,12 @@ MonoBehaviour:
   - name: BulletTrail
     type: 1
     prefab: {fileID: 8569752977879919264, guid: 2fa8910d98853de46b4c9d667c711dbc, type: 3}
-    initialSize: 30
+    initialSize: 20
   - name: Enemy
     type: 2
     prefab: {fileID: 8383644226005054092, guid: 46d69f0d66d1d6e45943bad697cc7ab3, type: 3}
     initialSize: 100
+  - name: BloodDirectional
+    type: 3
+    prefab: {fileID: 1550701159557239210, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
+    initialSize: 20
