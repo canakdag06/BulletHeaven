@@ -76,6 +76,10 @@ namespace BulletHeaven.UI
             Vector3 spawnPos = data != null ? data.playerSpawnPoint : Vector3.zero;
             gm.SetPlayerPosition(spawnPos);
 
+            // Reset round stats while the screen is black so TimerDisplay shows
+            // the correct value as soon as the overlay fades back in.
+            gm.ResetRoundStats();
+
             if (levelLabel != null)
             {
                 levelLabel.text  = $"Level {gm.CurrentLevel} is loading...";

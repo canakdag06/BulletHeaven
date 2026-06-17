@@ -24,6 +24,7 @@ namespace BulletHeaven.UI
             _normalFontSize = timerText.fontSize;
             _normalColor = timerText.color;
             GameManager.Instance.OnTimerSecondChanged += UpdateTimerDisplay;
+            GameManager.Instance.OnRoundReset         += OnRoundReset;
             UpdateTimerDisplay(Mathf.CeilToInt(GameManager.Instance.RoundTimer));
         }
 
@@ -32,7 +33,15 @@ namespace BulletHeaven.UI
             _pulseTween?.Kill();
 
             if (GameManager.Instance != null)
+            {
                 GameManager.Instance.OnTimerSecondChanged -= UpdateTimerDisplay;
+                GameManager.Instance.OnRoundReset         -= OnRoundReset;
+            }
+        }
+
+        private void OnRoundReset()
+        {
+            UpdateTimerDisplay(Mathf.CeilToInt(GameManager.Instance.RoundTimer));
         }
 
         private void UpdateTimerDisplay(int seconds)
