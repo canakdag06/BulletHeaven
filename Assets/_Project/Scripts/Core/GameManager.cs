@@ -63,7 +63,7 @@ namespace BulletHeaven.Core
             GameSaveData saved = _saveService.Load();
             TotalEnemiesDefeated = saved.TotalEnemiesDefeated;
             UnlockedLevelIndex   = saved.UnlockedLevelIndex;
-            CurrentLevel         = Mathf.Clamp(saved.UnlockedLevelIndex, 1, MaxLevel);
+            CurrentLevel         = Mathf.Clamp(saved.CurrentLevelIndex, 1, MaxLevel);
         }
 
         private void Start()
@@ -150,12 +150,13 @@ namespace BulletHeaven.Core
             OnLevelComplete?.Invoke(EnemiesDefeatedThisRun, TotalEnemiesDefeated, isLastLevel);
         }
 
-        private void PersistSave()
+        public void PersistSave()
         {
             _saveService.Save(new GameSaveData
             {
                 TotalEnemiesDefeated = TotalEnemiesDefeated,
-                UnlockedLevelIndex   = UnlockedLevelIndex
+                UnlockedLevelIndex   = UnlockedLevelIndex,
+                CurrentLevelIndex    = CurrentLevel
             });
         }
 
@@ -201,6 +202,7 @@ namespace BulletHeaven.Core
         public void GoToNextLevel()
         {
             CurrentLevel = CurrentLevel < MaxLevel ? CurrentLevel + 1 : 1;
+            PersistSave();
             StateMachine.ChangeState(new LevelTransitionState(this));
         }
 

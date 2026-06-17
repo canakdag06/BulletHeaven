@@ -5,5 +5,6 @@ namespace BulletHeaven.Core.Save
     {
         public int TotalEnemiesDefeated = 0;
         public int UnlockedLevelIndex   = 1;
+        public int CurrentLevelIndex    = 1;
     }
 }
