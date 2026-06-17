@@ -20,7 +20,7 @@ namespace BulletHeaven.Core
             _gameManager.SetInputEnabled(false);
             _gameManager.CompleteLevel();
             Debug.Log($"[GameWonState] Level {_gameManager.CurrentLevel} tamamlandı — " +
-                      $"Level kill: {_gameManager.EnemiesDefeatedThisRun}, Toplam kill: {_gameManager.TotalKillsAllTime}");
+                      $"Level kill: {_gameManager.EnemiesDefeatedThisRun}, Toplam kill: {_gameManager.TotalEnemiesDefeated}");
         }
 
         public void Tick() { }

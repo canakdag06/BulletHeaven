@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using BulletHeaven.Core.Save;
 
 namespace BulletHeaven.Core
 {
@@ -16,11 +17,14 @@ namespace BulletHeaven.Core
         [SerializeField] private LevelConfigSO levelConfig;
         public LevelConfigSO LevelConfig => levelConfig;
 
-        // Level tracking
+        // ── Persistent data ──────────────────────────────────────────────────
+        public int TotalEnemiesDefeated { get; private set; }
+        public int UnlockedLevelIndex   { get; private set; } = 1;
+
+        // ── Session data ─────────────────────────────────────────────────────
         public int CurrentLevel { get; private set; } = 1;
         public const int MaxLevel = 3;
         public int EnemiesDefeatedThisRun { get; private set; }
-        public int TotalKillsAllTime { get; private set; }
         public float RoundTimer { get; set; }
 
         public event Action<int> OnTimerSecondChanged;
@@ -29,13 +33,16 @@ namespace BulletHeaven.Core
         public event Action<int, int, bool> OnLevelComplete;
 
         public event Action OnRoundReset;
-
         public event Action OnLevelTransitionStarted;
 
         public bool IsInputEnabled { get; private set; } = true;
 
+        private ISaveService _saveService;
+
         private int _lastSecondRecorded;
         private GameObject _currentMapInstance;
+
+        // ── Lifecycle ────────────────────────────────────────────────────────
 
         private void Awake()
         {
@@ -49,7 +56,14 @@ namespace BulletHeaven.Core
             DontDestroyOnLoad(gameObject);
 
             StateMachine = new GameStateMachine();
-            TotalKillsAllTime = SaveSystem.TotalKills;
+
+            // Inject concrete implementation — the only place GameManager knows about JsonSaveService.
+            _saveService = new JsonSaveService();
+
+            GameSaveData saved = _saveService.Load();
+            TotalEnemiesDefeated = saved.TotalEnemiesDefeated;
+            UnlockedLevelIndex   = saved.UnlockedLevelIndex;
+            CurrentLevel         = Mathf.Clamp(saved.UnlockedLevelIndex, 1, MaxLevel);
         }
 
         private void Start()
@@ -73,7 +87,13 @@ namespace BulletHeaven.Core
             StateMachine.Tick();
         }
 
-        // wrapper to keep states decoupled from StateMachine internals
+        private void OnApplicationQuit()
+        {
+            PersistSave();
+        }
+
+        // ── Helpers ──────────────────────────────────────────────────────────
+
         public void ChangeState(IGameState newState) => StateMachine.ChangeState(newState);
 
         public void SetInputEnabled(bool value) => IsInputEnabled = value;
@@ -94,8 +114,8 @@ namespace BulletHeaven.Core
             var rb = PlayerTransform.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.position = worldPosition;
-                rb.linearVelocity = Vector3.zero;
+                rb.position        = worldPosition;
+                rb.linearVelocity  = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
             else
@@ -105,17 +125,38 @@ namespace BulletHeaven.Core
         }
 
         // ── Enemy tracking ───────────────────────────────────────────────────
+
         public void OnEnemyDefeated()
         {
             EnemiesDefeatedThisRun++;
         }
 
+        // ── Level completion ─────────────────────────────────────────────────
+
+        /// <summary>
+        /// Called by GameWonState.Enter(). Updates persistent totals, unlocks the next level,
+        /// saves to disk, and fires OnLevelComplete for the UI.
+        /// </summary>
         public void CompleteLevel()
         {
-            TotalKillsAllTime += EnemiesDefeatedThisRun;
-            SaveSystem.SaveProgress(CurrentLevel, TotalKillsAllTime);
+            TotalEnemiesDefeated += EnemiesDefeatedThisRun;
+
+            if (CurrentLevel >= UnlockedLevelIndex && CurrentLevel < MaxLevel)
+                UnlockedLevelIndex = CurrentLevel + 1;
+
+            PersistSave();
+
             bool isLastLevel = CurrentLevel >= MaxLevel;
-            OnLevelComplete?.Invoke(EnemiesDefeatedThisRun, TotalKillsAllTime, isLastLevel);
+            OnLevelComplete?.Invoke(EnemiesDefeatedThisRun, TotalEnemiesDefeated, isLastLevel);
+        }
+
+        private void PersistSave()
+        {
+            _saveService.Save(new GameSaveData
+            {
+                TotalEnemiesDefeated = TotalEnemiesDefeated,
+                UnlockedLevelIndex   = UnlockedLevelIndex
+            });
         }
 
         // ── Round lifecycle ──────────────────────────────────────────────────
@@ -142,7 +183,6 @@ namespace BulletHeaven.Core
 
         // ── Map management ───────────────────────────────────────────────────
 
-        /// <summary>Destroys the current map instance and instantiates the one for CurrentLevel.</summary>
         public void SpawnMap()
         {
             if (_currentMapInstance != null)
@@ -167,10 +207,8 @@ namespace BulletHeaven.Core
             }
         }
 
-        /// <summary>Called by LevelTransitionState to kick off the visual transition sequence.</summary>
         public void BeginTransition() => OnLevelTransitionStarted?.Invoke();
 
-        /// <summary>Called by LevelTransitionPanel once the fade-out completes and the map is ready.</summary>
         public void FinishTransition()
         {
             StateMachine.ChangeState(new PlayingState(this, enemySpawner));
