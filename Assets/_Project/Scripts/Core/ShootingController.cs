@@ -69,6 +69,7 @@ namespace BulletHeaven.Control
                     GameObject effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(effect, 1f);
                 }
+                SpawnMuzzleFlash();
                 SpawnBulletTrail(firePoint.position, hit.point);
             }
         }
@@ -77,6 +78,12 @@ namespace BulletHeaven.Control
         {
             BulletTrail trail = PoolManager.Instance.Get(EPoolType.BulletTrail) as BulletTrail;
             trail?.SetUpTrail(start, end);
+        }
+
+        private void SpawnMuzzleFlash()
+        {
+            MuzzleFlash flash = PoolManager.Instance.Get(EPoolType.MuzzleFlash) as MuzzleFlash;
+            flash?.Play(firePoint.position, firePoint.rotation);
         }
     }
 }
