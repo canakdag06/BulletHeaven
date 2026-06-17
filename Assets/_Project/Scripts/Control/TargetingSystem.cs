@@ -13,6 +13,7 @@ namespace BulletHeaven.Control
         public Transform CurrentTarget { get; private set; }
 
         private float _targetCheckTimer;
+        private readonly Collider[] _overlapBuffer = new Collider[32];
 
         private void Update()
         {
@@ -26,20 +27,21 @@ namespace BulletHeaven.Control
 
         private void FindClosestTarget()
         {
-            Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, detectionRadius, enemyLayer);
+            int count = Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, _overlapBuffer, enemyLayer);
 
-            float closestDistance = Mathf.Infinity;
+            float closestSqrDistance = Mathf.Infinity;
             Transform closestEnemy = null;
 
-            foreach (Collider enemy in enemiesInRange)
+            for (int i = 0; i < count; i++)
             {
+                Collider enemy = _overlapBuffer[i];
                 if (enemy.TryGetComponent(out IDamageable damageable) && damageable.IsDead) continue;
                 if (!HasLineOfSight(enemy.transform)) continue;
 
-                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-                if (distanceToEnemy < closestDistance)
+                float sqrDistance = (transform.position - enemy.transform.position).sqrMagnitude;
+                if (sqrDistance < closestSqrDistance)
                 {
-                    closestDistance = distanceToEnemy;
+                    closestSqrDistance = sqrDistance;
                     closestEnemy = enemy.transform;
                 }
             }
