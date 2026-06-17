@@ -42,8 +42,8 @@ namespace BulletHeaven.Enemy
             animator = GetComponent<Animator>();
             currentHealth = maxHealth;
 
-            agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-            agent.autoBraking = false;
+            //agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+            //agent.autoBraking = false;
         }
 
         private void Update()
