@@ -56,7 +56,7 @@ namespace BulletHeaven.UI
             levelKillsText.text = levelKills.ToString();
             totalKillsText.text = totalKills.ToString();
 
-            nextLevelButton.gameObject.SetActive(!isLastLevel);
+            nextLevelButton.gameObject.SetActive(true);
 
             AnimateIn();
         }

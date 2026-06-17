@@ -200,11 +200,8 @@ namespace BulletHeaven.Core
 
         public void GoToNextLevel()
         {
-            if (CurrentLevel < MaxLevel)
-            {
-                CurrentLevel++;
-                StateMachine.ChangeState(new LevelTransitionState(this));
-            }
+            CurrentLevel = CurrentLevel < MaxLevel ? CurrentLevel + 1 : 1;
+            StateMachine.ChangeState(new LevelTransitionState(this));
         }
 
         public void BeginTransition() => OnLevelTransitionStarted?.Invoke();
