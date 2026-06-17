@@ -151,6 +151,7 @@ namespace BulletHeaven.Enemy
             isDead = true;
 
             agent.isStopped = true;
+            agent.enabled = false;
             animator.SetTrigger(DeadHash);
 
             // Notify GameManager
