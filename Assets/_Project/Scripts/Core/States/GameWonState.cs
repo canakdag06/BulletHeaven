@@ -18,6 +18,9 @@ namespace BulletHeaven.Core
         public void Enter()
         {
             _gameManager.SetInputEnabled(false);
+            _gameManager.SetPlayerInvincible(true);
+            _spawner?.StopSpawning();
+            _spawner?.FreezeAllEnemies();
             _gameManager.CompleteLevel();
             Debug.Log($"[GameWonState] Level {_gameManager.CurrentLevel} tamamlandı — " +
                       $"Level kill: {_gameManager.EnemiesDefeatedThisRun}, Toplam kill: {_gameManager.TotalEnemiesDefeated}");

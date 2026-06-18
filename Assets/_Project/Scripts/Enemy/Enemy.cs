@@ -91,6 +91,23 @@ namespace BulletHeaven.Enemy
             _currentState?.Enter();
         }
 
+        // ── Freeze ────────────────────────────────────────────────────────────
+
+        /// <summary>Stops movement and state ticks when the player dies.</summary>
+        public void Freeze()
+        {
+            if (_currentState is EnemyDeadState) return;
+
+            _currentState?.Exit();
+            _currentState = null;
+
+            if (Agent.enabled)
+            {
+                Agent.isStopped = true;
+                Agent.enabled   = false;
+            }
+        }
+
         // ── Configuration ─────────────────────────────────────────────────────
 
         public void Configure(int health, float speed, int dmg)

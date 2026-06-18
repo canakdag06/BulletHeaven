@@ -62,6 +62,16 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void FreezeAllEnemies()
+    {
+        var active = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        foreach (var enemy in active)
+        {
+            if (!enemy.InPool)
+                enemy.Freeze();
+        }
+    }
+
     public void ClearAllEnemies()
     {
         var active = FindObjectsByType<Enemy>(FindObjectsSortMode.None);

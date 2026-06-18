@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using BulletHeaven.Core.Save;
+using BulletHeaven.Control;
 
 namespace BulletHeaven.Core
 {
@@ -98,6 +99,13 @@ namespace BulletHeaven.Core
         public void ChangeState(IGameState newState) => StateMachine.ChangeState(newState);
 
         public void SetInputEnabled(bool value) => IsInputEnabled = value;
+
+        public void SetPlayerInvincible(bool value)
+        {
+            if (PlayerTransform == null) return;
+            var health = PlayerTransform.GetComponent<PlayerHealth>();
+            health?.SetInvincible(value);
+        }
 
         // ── Player ──────────────────────────────────────────────────────────
         public Transform PlayerTransform { get; private set; }

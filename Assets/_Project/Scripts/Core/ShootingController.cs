@@ -20,11 +20,18 @@ namespace BulletHeaven.Control
         [Header("Dependencies")]
         [SerializeField] private TargetingSystem targetingSystem;
 
-        private float _fireTimer;
+        private float         _fireTimer;
+        private PlayerHealth  _playerHealth;
+
+        private void Awake()
+        {
+            _playerHealth = GetComponent<PlayerHealth>();
+        }
 
         private void Update()
         {
             if (targetingSystem == null) return;
+            if (_playerHealth != null && _playerHealth.IsDead) return;
             TryShoot(targetingSystem.CurrentTarget);
         }
 

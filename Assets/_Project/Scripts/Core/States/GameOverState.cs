@@ -15,6 +15,7 @@ namespace BulletHeaven.Core
         {
             _gameManager.SetInputEnabled(false);
             _spawner?.StopSpawning();
+            _spawner?.FreezeAllEnemies();
             _gameManager.NotifyGameOver();
         }
 
