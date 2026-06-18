@@ -34,6 +34,7 @@ namespace BulletHeaven.Core
 
         public event Action OnRoundReset;
         public event Action OnLevelTransitionStarted;
+        public event Action OnGameOver;
 
         public bool IsInputEnabled { get; private set; } = true;
 
@@ -204,6 +205,19 @@ namespace BulletHeaven.Core
             CurrentLevel = CurrentLevel < MaxLevel ? CurrentLevel + 1 : 1;
             PersistSave();
             StateMachine.ChangeState(new LevelTransitionState(this));
+        }
+
+        public void PlayerDied()
+        {
+            if (StateMachine.CurrentState is GameOverState) return;
+            ChangeState(new GameOverState(this, enemySpawner));
+        }
+
+        public void NotifyGameOver() => OnGameOver?.Invoke();
+
+        public void RetryLevel()
+        {
+            ChangeState(new LevelTransitionState(this));
         }
 
         public void BeginTransition() => OnLevelTransitionStarted?.Invoke();
