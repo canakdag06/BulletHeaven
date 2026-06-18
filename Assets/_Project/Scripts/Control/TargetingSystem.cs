@@ -56,11 +56,5 @@ namespace BulletHeaven.Control
             Vector3 direction = targetPos - origin;
             return !Physics.Raycast(origin, direction.normalized, direction.magnitude, obstacleMask);
         }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, detectionRadius);
-        }
     }
 }

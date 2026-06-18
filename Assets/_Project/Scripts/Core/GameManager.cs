@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using BulletHeaven.Core.Save;
-using BulletHeaven.Control;
 
 namespace BulletHeaven.Core
 {
@@ -59,7 +58,6 @@ namespace BulletHeaven.Core
 
             StateMachine = new GameStateMachine();
 
-            // Inject concrete implementation — the only place GameManager knows about JsonSaveService.
             _saveService = new JsonSaveService();
 
             GameSaveData saved = _saveService.Load();
@@ -217,7 +215,7 @@ namespace BulletHeaven.Core
 
         public void PlayerDied()
         {
-            if (StateMachine.CurrentState is GameOverState) return;
+            if (StateMachine.CurrentState is not PlayingState) return;
             ChangeState(new GameOverState(this, enemySpawner));
         }
 

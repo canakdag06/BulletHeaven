@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using BulletHeaven.Core;
 
-namespace BulletHeaven.Control
+namespace BulletHeaven.Core
 {
     public class PlayerHealth : MonoBehaviour, IDamageable
     {
