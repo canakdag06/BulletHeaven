@@ -20,8 +20,8 @@ namespace BulletHeaven.Enemy
 
         [Header("Animation")]
         [SerializeField] private AnimatedMesh animatedMesh;
-        [SerializeField] private string       walkAnimName  = "Walk";
-        [SerializeField] private string       deathAnimName = "Dead";
+        [SerializeField] private string       walkAnimName;
+        [SerializeField] private string       deathAnimName;
 
         public NavMeshAgent Agent           { get; private set; }
         public AnimatedMesh AnimatedMesh    => animatedMesh;
