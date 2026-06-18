@@ -1,5 +1,7 @@
 # Bullet Heaven - Unity Developer Case Study
 
+### APK Build -> [Link](https://github.com/canakdag06/BulletHeaven/releases/tag/prototype-apk)
+
 ## 📌 Overview
 This project is a 3D "Bullet Heaven / Survivor" style game developed as a Unity Developer Case Study. The player controls a soldier using a virtual joystick, surviving against progressively challenging waves of enemies for 3 minutes. The game tracks the number of enemies defeated and features a persistent save system.
 
