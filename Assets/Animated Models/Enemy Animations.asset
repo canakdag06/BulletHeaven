@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4f5933e4fefca43900f61f373d7c76, type: 3}
+  m_Name: Enemy Animations
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedMeshScriptableObject
+  AnimationFPS: 30
+  Animations:
+  - Name: Enemy_Walking
+    Meshes:
+    - {fileID: 4300000, guid: f5c15e46eb0fc944fa6a19f11936a53d, type: 2}
+    - {fileID: 4300000, guid: d9648392a7739b74b8e26dac4fd40f2d, type: 2}
+    - {fileID: 4300000, guid: e4e5b9f4386100940889a8bfbc350022, type: 2}
+    - {fileID: 4300000, guid: 8bf489046cee5794c8589047adee0401, type: 2}
+    - {fileID: 4300000, guid: 92a92e060135bae4cbe9d23a56c2e280, type: 2}
+    - {fileID: 4300000, guid: f79753c8b9fd70b478943d3ed546f90b, type: 2}
+    - {fileID: 4300000, guid: db26870061c546e47b2873b013b4229e, type: 2}
+    - {fileID: 4300000, guid: 1d39ed1c0c68f2d4f96a6b8f5ebdf745, type: 2}
+    - {fileID: 4300000, guid: d24d6e1549fdff444a8155f83be8a13e, type: 2}
+    - {fileID: 4300000, guid: aaa8975ad7a19214aa81e56a56c0a7ad, type: 2}
+    - {fileID: 4300000, guid: 2fa37e4e5f6e68046af8f62e8857b094, type: 2}
+    - {fileID: 4300000, guid: 484614d489370d34aac3594276f12926, type: 2}
+    - {fileID: 4300000, guid: 3a0f85fed63a1b642a91fc688c895e1b, type: 2}
+    - {fileID: 4300000, guid: ddb37c6915fafa348a6c9b9584b33b5d, type: 2}
+    - {fileID: 4300000, guid: 65e24719c5a33dd4fa71f5e90524e11d, type: 2}
+    - {fileID: 4300000, guid: f90c9af972d9cbb41ab07a38f6a5c7cd, type: 2}
+    - {fileID: 4300000, guid: 8c88c0e81af1ce84bb010d06065e63cf, type: 2}
+    - {fileID: 4300000, guid: 896f707e27b3bbd49bdb6c9d7c3dd4ef, type: 2}
+    - {fileID: 4300000, guid: bc95503b3f8b1eb44aefcfb4490a80ed, type: 2}
+    - {fileID: 4300000, guid: 849f64920e55d2e45b3fd1e53937cf9d, type: 2}
+    - {fileID: 4300000, guid: 47b856ea7359c874cbec729557a4696c, type: 2}
+    - {fileID: 4300000, guid: 527594fa0f1318a4c9db8b4ee0a5e16e, type: 2}
+    - {fileID: 4300000, guid: 0ca993954ca91124ab9f9b1165a9f766, type: 2}
+    - {fileID: 4300000, guid: aa3a1d141ba50b94aae8bf358426a932, type: 2}
+    - {fileID: 4300000, guid: aeb5f72ad517e3040b1b432981530074, type: 2}
+    - {fileID: 4300000, guid: 9ad38ed7cad65de4aa4a03edd7c31a7a, type: 2}
+    - {fileID: 4300000, guid: 49cf640e00316974e9c7b78da51a2a15, type: 2}
+    - {fileID: 4300000, guid: 1498191994095d944a54a07ab0eeba5a, type: 2}
+    - {fileID: 4300000, guid: 429f4a83618a19d448e94729f54d5275, type: 2}
+  - Name: Enemy_Dying
+    Meshes:
+    - {fileID: 4300000, guid: 32ce744eb15a23c4eb62f2d3a6a25798, type: 2}
+    - {fileID: 4300000, guid: b4e57dd259bbba44bb170fda5629c060, type: 2}
+    - {fileID: 4300000, guid: 824170fc1a254d247be8837984aef8b6, type: 2}
+    - {fileID: 4300000, guid: d0f80fd86b6079d4eb970b12e05997a2, type: 2}
+    - {fileID: 4300000, guid: 5be3045e68f950f4fbd28e18f78a12a2, type: 2}
+    - {fileID: 4300000, guid: a9bbe392138fa3d45911608feb022e6b, type: 2}
+    - {fileID: 4300000, guid: 49dbc5068fb4bf847921ddbfc6e1171d, type: 2}
+    - {fileID: 4300000, guid: 2a455b50a60536543b11ee73ae290a01, type: 2}
+    - {fileID: 4300000, guid: 0f090efede8ca1143b78aa900e5783c2, type: 2}
+    - {fileID: 4300000, guid: 0c9466c598d0b744fbde5ca530eac370, type: 2}
+    - {fileID: 4300000, guid: 3d009b673a5516744b3d2a3390b3a3d3, type: 2}
+    - {fileID: 4300000, guid: 5b4fe0b5da252614da93a9b4e5bad77a, type: 2}
+    - {fileID: 4300000, guid: 412715d33f93df341a0281fd6227f4d8, type: 2}
+    - {fileID: 4300000, guid: c6a53b7f9f320854aa452c87d4bd15dd, type: 2}
+    - {fileID: 4300000, guid: ce55f54193daec041b33d16a9706b6e8, type: 2}
+    - {fileID: 4300000, guid: 2cdf222639f151340b32a441879bf810, type: 2}
+    - {fileID: 4300000, guid: 71f02be2505fa244a9ffe3f7b2f3c16b, type: 2}
+    - {fileID: 4300000, guid: e2fd66bef15c86e4e9a1bff0c40f4184, type: 2}
+    - {fileID: 4300000, guid: 6d2ee1c7d30080e4aa22c0815781571b, type: 2}
+    - {fileID: 4300000, guid: 0c2159c3619f7c64aba664a585024860, type: 2}
+    - {fileID: 4300000, guid: e9f4bc49c08faba4da4b0b8b58acf2b2, type: 2}
+    - {fileID: 4300000, guid: 6d7700f6a1cac4545b190c17abd8aa2a, type: 2}
+    - {fileID: 4300000, guid: 4f138ea8015cd424194ac3d6063ae914, type: 2}
+    - {fileID: 4300000, guid: 211a9e27de5ed4940af1d45c9f48fdb6, type: 2}
+    - {fileID: 4300000, guid: fce11e49e2cb4ec48b0a3081cbea879b, type: 2}
+    - {fileID: 4300000, guid: a65f195c2b23fbc438ce6d0871553976, type: 2}
+    - {fileID: 4300000, guid: 250ba468e0c1bdf47bd6c77953963582, type: 2}
+    - {fileID: 4300000, guid: a84902f278002fa48a055ccd3e1b8bf8, type: 2}
+    - {fileID: 4300000, guid: 1d757958fac0dc746850b4d1b77f6b6c, type: 2}
+    - {fileID: 4300000, guid: d81b7f2b2d7bf7f44a4edb8573b3b0fe, type: 2}
+    - {fileID: 4300000, guid: 5cce65a29863ad846b136acc105097c4, type: 2}
+    - {fileID: 4300000, guid: 2a8ad271c5df5524e836e035ff4294a3, type: 2}
+    - {fileID: 4300000, guid: 704e8bc5a63f58d47ae8a5c94574b78a, type: 2}
+    - {fileID: 4300000, guid: fcc49dd925e71d246a1eda9bf0035b1d, type: 2}
+    - {fileID: 4300000, guid: 699c808907874b744b733f61eec91491, type: 2}
+    - {fileID: 4300000, guid: 6a193fe32db02e448879b4bd50b59ac7, type: 2}
+    - {fileID: 4300000, guid: bf20ba2eed4f8d548a741d769e582b7c, type: 2}
+    - {fileID: 4300000, guid: c4b00c162eae83f43beb38d6e9259030, type: 2}
+    - {fileID: 4300000, guid: 00163a86438020949a9c1312092ebed7, type: 2}
+    - {fileID: 4300000, guid: f920e96fea4136e46aaaef9942bbe1f6, type: 2}
+    - {fileID: 4300000, guid: feebf8a485f0b114ca1e3e35dad2e348, type: 2}
