@@ -19,66 +19,72 @@ MonoBehaviour:
     waveStages:
     - startTime: 0
       spawnInterval: 1
-      maxEnemiesAlive: 5
+      maxEnemiesAlive: 20
       enemiesPerSpawn: 1
       healthMultiplier: 1
       speedMultiplier: 1
-    - startTime: 15
-      spawnInterval: 0.75
-      maxEnemiesAlive: 10
-      enemiesPerSpawn: 2
-      healthMultiplier: 2
-      speedMultiplier: 2
     - startTime: 30
+      spawnInterval: 0.75
+      maxEnemiesAlive: 30
+      enemiesPerSpawn: 2
+      healthMultiplier: 1.5
+      speedMultiplier: 1.3
+    - startTime: 100
       spawnInterval: 0.5
-      maxEnemiesAlive: 20
+      maxEnemiesAlive: 40
       enemiesPerSpawn: 3
-      healthMultiplier: 3
-      speedMultiplier: 3
+      healthMultiplier: 2
+      speedMultiplier: 1.5
+    levelTimerSec: 180
     mapPrefab: {fileID: 7287694583744956005, guid: b530f0f5fa517d541807e4ce79b2b712, type: 3}
+    playerSpawnPoint: {x: 0, y: 0, z: 0}
   - baseEnemyHealth: 10
     baseEnemyMoveSpeed: 1
     baseEnemyDamage: 5
     waveStages:
     - startTime: 0
       spawnInterval: 1
-      maxEnemiesAlive: 5
+      maxEnemiesAlive: 30
       enemiesPerSpawn: 1
       healthMultiplier: 1
-      speedMultiplier: 1
-    - startTime: 15
+      speedMultiplier: 1.3
+    - startTime: 30
       spawnInterval: 0.75
-      maxEnemiesAlive: 10
-      enemiesPerSpawn: 2
+      maxEnemiesAlive: 40
+      enemiesPerSpawn: 3
+      healthMultiplier: 1.5
+      speedMultiplier: 1.5
+    - startTime: 100
+      spawnInterval: 0.5
+      maxEnemiesAlive: 50
+      enemiesPerSpawn: 4
       healthMultiplier: 2
       speedMultiplier: 2
-    - startTime: 30
-      spawnInterval: 0.5
-      maxEnemiesAlive: 20
-      enemiesPerSpawn: 3
-      healthMultiplier: 3
-      speedMultiplier: 3
+    levelTimerSec: 180
     mapPrefab: {fileID: 2833051679408542892, guid: f728f7fd165c86640a7365c8f88ebfc3, type: 3}
+    playerSpawnPoint: {x: 0, y: 0, z: 0}
   - baseEnemyHealth: 10
     baseEnemyMoveSpeed: 1
     baseEnemyDamage: 5
     waveStages:
     - startTime: 0
       spawnInterval: 1
-      maxEnemiesAlive: 5
-      enemiesPerSpawn: 1
-      healthMultiplier: 1
-      speedMultiplier: 1
-    - startTime: 15
-      spawnInterval: 0.75
-      maxEnemiesAlive: 10
+      maxEnemiesAlive: 50
       enemiesPerSpawn: 2
-      healthMultiplier: 2
-      speedMultiplier: 2
+      healthMultiplier: 1
+      speedMultiplier: 1.5
     - startTime: 30
-      spawnInterval: 0.5
-      maxEnemiesAlive: 20
+      spawnInterval: 0.75
+      maxEnemiesAlive: 60
       enemiesPerSpawn: 3
-      healthMultiplier: 3
-      speedMultiplier: 3
+      healthMultiplier: 1.5
+      speedMultiplier: 2
+    - startTime: 100
+      spawnInterval: 0.5
+      maxEnemiesAlive: 70
+      enemiesPerSpawn: 5
+      healthMultiplier: 2
+      speedMultiplier: 2.3
+    levelTimerSec: 180
     mapPrefab: {fileID: 475774088617684280, guid: 65ccc843ae279ee49b46eca8cc92ab43, type: 3}
+    playerSpawnPoint: {x: 0, y: 0, z: 0}

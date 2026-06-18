@@ -5,8 +5,6 @@ namespace BulletHeaven.Core
     public class GameWonState : IGameState
     {
         private readonly GameManager _gameManager;
-
-        // Reserved for future pool cleanup
         private readonly EnemySpawner _spawner;
 
         public GameWonState(GameManager gameManager, EnemySpawner spawner)

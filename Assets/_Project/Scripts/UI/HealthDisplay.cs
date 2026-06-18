@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
-using BulletHeaven.Control;
 using BulletHeaven.Core;
 
 namespace BulletHeaven.UI
@@ -28,7 +27,7 @@ namespace BulletHeaven.UI
 
             if (_playerHealth == null)
             {
-                Debug.LogWarning("[HealthDisplay] PlayerHealth bulunamadı.");
+                Debug.LogWarning("[HealthDisplay] PlayerHealth not found.");
                 return;
             }
 

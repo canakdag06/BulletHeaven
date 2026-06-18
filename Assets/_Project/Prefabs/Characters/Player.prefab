@@ -140,6 +140,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Control.PlayerHealth
   maxHealth: 100
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.15
+  flashCount: 2
 --- !u!114 &98552867473073938
 MonoBehaviour:
   m_ObjectHideFlags: 0

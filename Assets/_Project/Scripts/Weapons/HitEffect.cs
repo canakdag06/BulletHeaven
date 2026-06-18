@@ -32,7 +32,6 @@ public class HitEffect : PoolableBehaviour
         _ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
-    // Called by Unity when the ParticleSystem naturally finishes
     private void OnParticleSystemStopped()
     {
         if (!InPool)
