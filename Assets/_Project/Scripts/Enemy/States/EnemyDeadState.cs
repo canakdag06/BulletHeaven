@@ -15,6 +15,9 @@ namespace BulletHeaven.Enemy
 
         public void Enter()
         {
+            if (_enemy.HitCollider != null)
+                _enemy.HitCollider.enabled = false;
+
             if (_enemy.Agent.enabled)
             {
                 _enemy.Agent.isStopped = true;

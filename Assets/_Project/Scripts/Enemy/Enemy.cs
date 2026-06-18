@@ -24,6 +24,7 @@ namespace BulletHeaven.Enemy
         [SerializeField] private string       deathAnimName;
 
         public NavMeshAgent Agent           { get; private set; }
+        public Collider     HitCollider     { get; private set; }
         public AnimatedMesh AnimatedMesh    => animatedMesh;
         public Transform    PlayerTransform { get; private set; }
 
@@ -45,7 +46,8 @@ namespace BulletHeaven.Enemy
         protected override void Awake()
         {
             base.Awake();
-            Agent = GetComponent<NavMeshAgent>();
+            Agent        = GetComponent<NavMeshAgent>();
+            HitCollider  = GetComponent<Collider>();
             _currentHealth = maxHealth;
         }
 

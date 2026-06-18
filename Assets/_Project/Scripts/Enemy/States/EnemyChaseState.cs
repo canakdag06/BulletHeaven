@@ -19,6 +19,9 @@ namespace BulletHeaven.Enemy
             _destinationTimer = 0f;
             _attackTimer      = 0f;
 
+            if (_enemy.HitCollider != null)
+                _enemy.HitCollider.enabled = true;
+
             _enemy.Agent.enabled   = true;
             _enemy.Agent.isStopped = false;
 
