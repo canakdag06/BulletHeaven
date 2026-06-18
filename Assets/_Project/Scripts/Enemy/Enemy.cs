@@ -114,7 +114,7 @@ namespace BulletHeaven.Enemy
 
         // ── Unity Messages ────────────────────────────────────────────────────
 
-        private void OnTriggerStay(Collider other)
+        private void OnColliderStay(Collider other)
         {
             if (!other.CompareTag("Player")) return;
             (_currentState as EnemyChaseState)?.OnHitPlayer(other.gameObject);
