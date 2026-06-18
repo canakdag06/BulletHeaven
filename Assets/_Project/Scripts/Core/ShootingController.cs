@@ -31,7 +31,7 @@ namespace BulletHeaven.Control
         private void Update()
         {
             if (targetingSystem == null) return;
-            if (_playerHealth != null && _playerHealth.IsDead) return;
+            if (_playerHealth != null && (_playerHealth.IsDead || _playerHealth.IsInvincible)) return;
             TryShoot(targetingSystem.CurrentTarget);
         }
 
