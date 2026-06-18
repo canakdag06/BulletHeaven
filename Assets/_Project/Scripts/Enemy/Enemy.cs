@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using BulletHeaven.Core;
@@ -12,8 +11,8 @@ namespace BulletHeaven.Enemy
         public override EPoolType PoolType => EPoolType.Enemy;
 
         [Header("Combat")]
-        [SerializeField] private int maxHealth = 30;
-        [SerializeField] private int damage = 10;
+        [SerializeField] private int   maxHealth      = 30;
+        [SerializeField] private int   damage         = 10;
         [SerializeField] private float attackInterval = 1f;
 
         [Header("Navigation")]
@@ -21,36 +20,38 @@ namespace BulletHeaven.Enemy
 
         [Header("Animation")]
         [SerializeField] private AnimatedMesh animatedMesh;
-        [SerializeField] private string walkAnimName;
-        [SerializeField] private string deathAnimName;
+        [SerializeField] private string       walkAnimName  = "Walk";
+        [SerializeField] private string       deathAnimName = "Dead";
 
-        private NavMeshAgent agent;
-        private Transform playerTransform;
+        public NavMeshAgent Agent           { get; private set; }
+        public AnimatedMesh AnimatedMesh    => animatedMesh;
+        public Transform    PlayerTransform { get; private set; }
 
-        private float currentHealth;
-        private bool isDead;
-        private float destinationTimer;
-        private float attackTimer;
+        public float  DestinationUpdateInterval => destinationUpdateInterval;
+        public string WalkAnimName              => walkAnimName;
+        public string DeathAnimName             => deathAnimName;
+        public int    Damage                    => damage;
+        public float  AttackInterval            => attackInterval;
 
-        public bool IsDead => isDead;
+        public bool IsDead => _currentState is EnemyDeadState;
+
         public event Action OnEnemyRemoved;
+
+        private IEnemyState _currentState;
+        private float _currentHealth;
+
+        // ── Lifecycle ─────────────────────────────────────────────────────────
 
         protected override void Awake()
         {
             base.Awake();
-            agent = GetComponent<NavMeshAgent>();
-            currentHealth = maxHealth;
+            Agent = GetComponent<NavMeshAgent>();
+            _currentHealth = maxHealth;
         }
 
         private void Update()
         {
-            if (isDead || playerTransform == null) return;
-
-            TickDestination();
-            UpdateAnimationSpeed();
-
-            if (attackTimer > 0f)
-                attackTimer -= Time.deltaTime;
+            _currentState?.Tick();
         }
 
         // ── Pool Callbacks ────────────────────────────────────────────────────
@@ -58,21 +59,10 @@ namespace BulletHeaven.Enemy
         public override void OnGet()
         {
             base.OnGet();
-            isDead = false;
-            currentHealth = maxHealth;
-            destinationTimer = 0f;
-            attackTimer = 0f;
-
-            agent.enabled = true;
-            agent.isStopped = false;
-
-            if (animatedMesh != null)
-            {
-                animatedMesh.OnAnimationFinished = null;
-                animatedMesh.PlayAnimation(walkAnimName, true);
-            }
+            _currentHealth = maxHealth;
 
             CachePlayer();
+            ChangeState(new EnemyChaseState(this));
         }
 
         public override void OnRelease()
@@ -80,128 +70,79 @@ namespace BulletHeaven.Enemy
             base.OnRelease();
             OnEnemyRemoved = null;
 
-            if (animatedMesh != null)
-                animatedMesh.OnAnimationFinished = null;
+            _currentState?.Exit();
+            _currentState = null;
 
-            if (agent.enabled)
+            if (Agent.enabled)
             {
-                agent.isStopped = true;
-                agent.enabled = false;
+                Agent.isStopped = true;
+                Agent.enabled   = false;
             }
+        }
+
+        // ── State Machine ─────────────────────────────────────────────────────
+
+        public void ChangeState(IEnemyState newState)
+        {
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState?.Enter();
         }
 
         // ── Configuration ─────────────────────────────────────────────────────
 
         public void Configure(int health, float speed, int dmg)
         {
-            maxHealth = health;
-            currentHealth = health;
-            damage = dmg;
-            agent.speed = speed;
+            maxHealth      = health;
+            _currentHealth = health;
+            damage         = dmg;
+            Agent.speed    = speed;
         }
 
         // ── IDamageable ───────────────────────────────────────────────────────
 
         public void TakeDamage(float amount)
         {
-            if (isDead) return;
+            if (_currentState is EnemyDeadState) return;
 
-            currentHealth -= amount;
+            _currentHealth -= amount;
             SpawnHitEffect();
 
-            if (currentHealth <= 0)
+            if (_currentHealth <= 0)
                 Die();
+        }
+
+        // ── Unity Messages ────────────────────────────────────────────────────
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (!other.CompareTag("Player")) return;
+            (_currentState as EnemyChaseState)?.OnHitPlayer(other.gameObject);
         }
 
         // ── Private ───────────────────────────────────────────────────────────
 
+        private void Die()
+        {
+            GameManager.Instance?.OnEnemyDefeated();
+            OnEnemyRemoved?.Invoke();
+            ChangeState(new EnemyDeadState(this));
+        }
+
         private void SpawnHitEffect()
         {
             HitEffect effect = PoolManager.Instance.Get(EPoolType.BloodDirectional) as HitEffect;
-            if (effect == null || playerTransform == null) return;
+            if (effect == null || PlayerTransform == null) return;
 
-            Vector3 direction = (playerTransform.position - transform.position).normalized;
+            Vector3 direction = (PlayerTransform.position - transform.position).normalized;
             effect.Play(transform.position + Vector3.up, direction);
         }
 
         private void CachePlayer()
         {
-            playerTransform = GameManager.Instance?.PlayerTransform;
-            if (playerTransform == null)
+            PlayerTransform = GameManager.Instance?.PlayerTransform;
+            if (PlayerTransform == null)
                 Debug.LogWarning("[Enemy] PlayerTransform not registered in GameManager.");
-        }
-
-        private void TickDestination()
-        {
-            destinationTimer -= Time.deltaTime;
-            if (destinationTimer > 0f) return;
-
-            destinationTimer = destinationUpdateInterval;
-
-            if (agent.enabled && agent.isOnNavMesh)
-                agent.SetDestination(playerTransform.position);
-        }
-
-        private void UpdateAnimationSpeed()
-        {
-            if (animatedMesh == null || !agent.enabled) return;
-
-            float normalizedSpeed = agent.velocity.magnitude / agent.speed;
-            animatedMesh.SetSpeedMultiplier(normalizedSpeed);
-        }
-
-        private void OnCollisionStay(Collision collision)
-        {
-            if (isDead) return;
-            if (!collision.gameObject.CompareTag("Player")) return;
-            if (attackTimer > 0f) return;
-
-            attackTimer = attackInterval;
-
-            if (collision.gameObject.TryGetComponent(out IDamageable damageable))
-                damageable.TakeDamage(damage);
-        }
-
-        private Coroutine _deathFallback;
-
-        private void Die()
-        {
-            isDead = true;
-
-            agent.isStopped = true;
-            agent.enabled = false;
-
-            GameManager.Instance?.OnEnemyDefeated();
-            OnEnemyRemoved?.Invoke();
-
-            if (animatedMesh != null)
-            {
-                animatedMesh.OnAnimationFinished = OnDeathAnimationFinished;
-                animatedMesh.PlayAnimation(deathAnimName, false);
-            }
-
-            _deathFallback = StartCoroutine(ReturnAfterDelay(3f));
-        }
-
-        private void OnDeathAnimationFinished()
-        {
-            if (animatedMesh != null)
-                animatedMesh.OnAnimationFinished = null;
-
-            if (_deathFallback != null)
-            {
-                StopCoroutine(_deathFallback);
-                _deathFallback = null;
-            }
-
-            Release();
-        }
-
-        private IEnumerator ReturnAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            _deathFallback = null;
-            Release();
         }
     }
 }
