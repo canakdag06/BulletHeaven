@@ -1,0 +1,23 @@
+# Unity geçici ve build klasörleri
+Library/
+Temp/
+Logs/
+Obj/
+UserSettings/
+MemoryCaptures/
+UserSettings/
+Build/
+Builds/
+
+# Büyük binary asset dosyaları (İsteğe bağlı ama önerilir)
+*.png
+*.jpg
+*.jpeg
+*.psd
+*.fbx
+*.obj
+*.mp3
+*.wav
+*.ogg
+*.asset
+*.prefab
