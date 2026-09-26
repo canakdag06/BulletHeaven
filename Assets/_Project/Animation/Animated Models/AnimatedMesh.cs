@@ -5,23 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class AnimatedMesh : MonoBehaviour
 {
+    [Tooltip("Default animation set, used when no set is supplied at runtime.")]
     [SerializeField] private AnimatedMeshScriptableObject[] animationAssets;
 
     public Action OnAnimationFinished;
 
     private MeshFilter _meshFilter;
-
-    // Flat lookup built once in Awake — no Dictionary allocations in Update.
-    private struct ClipEntry
-    {
-        public List<Mesh> Frames;
-        public float      FPS;
-    }
-    private Dictionary<string, ClipEntry> _clipLookup;
+    private AnimatedMeshScriptableObject[] _activeSet;
 
     // Playback state
     private List<Mesh> _currentFrames;
-    private float      _currentFPS;
     private int        _currentFrame;
     private float      _timer;
     private float      _frameInterval;   // 1f / FPS — computed once per PlayAnimation call
@@ -32,27 +25,37 @@ public class AnimatedMesh : MonoBehaviour
     private void Awake()
     {
         _meshFilter = GetComponent<MeshFilter>();
-        BuildLookup();
+        _activeSet  = animationAssets;
     }
 
     // ── Public API ────────────────────────────────────────────────────────────
 
+    /// <summary>
+    /// Swaps the animation set and stops playback. Passing null or an empty
+    /// array restores the default set assigned in the Inspector.
+    /// </summary>
+    public void SetAnimationSet(AnimatedMeshScriptableObject[] set)
+    {
+        _activeSet     = set != null && set.Length > 0 ? set : animationAssets;
+        _isPlaying     = false;
+        _currentFrames = null;
+    }
+
     /// <summary>Switches to the named animation and restarts from frame 0.</summary>
     public void PlayAnimation(string animationName, bool isLooping, float speedMultiplier = 1f)
     {
-        if (!_clipLookup.TryGetValue(animationName, out ClipEntry entry))
+        if (!TryFindClip(animationName, out List<Mesh> frames, out int fps))
         {
-            Debug.LogWarning($"[AnimatedMesh] Clip '{animationName}' not found.");
+            Debug.LogWarning($"[AnimatedMesh] Clip '{animationName}' not found.", this);
             return;
         }
 
-        _currentFrames   = entry.Frames;
-        _currentFPS      = entry.FPS;
+        _currentFrames   = frames;
         _currentFrame    = 0;
         _isLooping       = isLooping;
         _isPlaying       = true;
         _timer           = 0f;
-        _frameInterval   = 1f / _currentFPS;                       // single division, never repeated
+        _frameInterval   = 1f / fps;                               // single division, never repeated
         _speedMultiplier = Mathf.Max(speedMultiplier, 0.01f);
 
         _meshFilter.sharedMesh = _currentFrames[0];
@@ -99,26 +102,25 @@ public class AnimatedMesh : MonoBehaviour
         _meshFilter.sharedMesh = _currentFrames[_currentFrame];
     }
 
-    // ── Initialisation ────────────────────────────────────────────────────────
+    // ── Private ───────────────────────────────────────────────────────────────
 
-    private void BuildLookup()
+    private bool TryFindClip(string animationName, out List<Mesh> frames, out int fps)
     {
-        _clipLookup = new Dictionary<string, ClipEntry>();
+        frames = null;
+        fps    = 0;
+        if (_activeSet == null) return false;
 
-        for (int i = 0; i < animationAssets.Length; i++)
+        for (int i = 0; i < _activeSet.Length; i++)
         {
-            AnimatedMeshScriptableObject so = animationAssets[i];
-            if (so == null) continue;
+            AnimatedMeshScriptableObject so = _activeSet[i];
+            if (so == null || !so.TryGetClip(animationName, out frames)) continue;
+            if (frames == null || frames.Count == 0) continue;
 
-            for (int j = 0; j < so.Animations.Count; j++)
-            {
-                AnimatedMeshScriptableObject.Animation anim = so.Animations[j];
-                _clipLookup[anim.Name] = new ClipEntry
-                {
-                    Frames = anim.Meshes,
-                    FPS    = so.AnimationFPS
-                };
-            }
+            fps = Mathf.Max(so.AnimationFPS, 1);
+            return true;
         }
+
+        frames = null;
+        return false;
     }
 }
