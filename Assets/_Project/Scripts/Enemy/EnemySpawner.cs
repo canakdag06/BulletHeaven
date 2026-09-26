@@ -150,6 +150,13 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnOne()
     {
+        EnemyDefinitionSO definition = _currentStage.PickEnemy();
+        if (definition == null)
+        {
+            Debug.LogError($"[EnemySpawner] Stage {_currentStageIndex} has no valid enemies assigned.");
+            return;
+        }
+
         Vector3 spawnPos = GetOffscreenSpawnPoint();
         if (spawnPos == Vector3.zero) return;
 
@@ -159,11 +166,7 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.position = spawnPos;
         enemy.transform.rotation = Quaternion.identity;
 
-        int   health = Mathf.RoundToInt(_levelData.baseEnemyHealth * _currentStage.healthMultiplier);
-        float speed  = _levelData.baseEnemyMoveSpeed * _currentStage.speedMultiplier;
-        int   dmg    = _levelData.baseEnemyDamage;
-
-        enemy.Configure(health, speed, dmg);
+        enemy.Initialize(definition, _currentStage.healthMultiplier, _currentStage.speedMultiplier);
         enemy.OnEnemyRemoved += OnEnemyRemoved;
 
         _activeEnemyCount++;

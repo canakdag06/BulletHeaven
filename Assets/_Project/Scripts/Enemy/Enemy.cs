@@ -10,45 +10,47 @@ namespace BulletHeaven.Enemy
     {
         public override EPoolType PoolType => EPoolType.Enemy;
 
-        [Header("Combat")]
-        [SerializeField] private int   maxHealth      = 30;
-        [SerializeField] private int   damage         = 10;
-        [SerializeField] private float attackInterval = 1f;
-
         [Header("Navigation")]
         [SerializeField] private float destinationUpdateInterval = 0.4f;
 
-        [Header("Animation")]
+        [Header("Visuals")]
         [SerializeField] private AnimatedMesh animatedMesh;
-        [SerializeField] private string       walkAnimName;
-        [SerializeField] private string       deathAnimName;
+        [SerializeField] private MeshRenderer meshRenderer;
 
-        public NavMeshAgent Agent           { get; private set; }
-        public Collider     HitCollider     { get; private set; }
-        public AnimatedMesh AnimatedMesh    => animatedMesh;
-        public Transform    PlayerTransform { get; private set; }
+        public NavMeshAgent      Agent           { get; private set; }
+        public Collider          HitCollider     { get; private set; }
+        public AnimatedMesh      AnimatedMesh    => animatedMesh;
+        public Transform         PlayerTransform { get; private set; }
+        public EnemyDefinitionSO Definition      { get; private set; }
 
         public float  DestinationUpdateInterval => destinationUpdateInterval;
-        public string WalkAnimName              => walkAnimName;
-        public string DeathAnimName             => deathAnimName;
-        public int    Damage                    => damage;
-        public float  AttackInterval            => attackInterval;
+        public string WalkAnimName              => Definition.WalkAnimName;
+        public string DeathAnimName             => Definition.DeathAnimName;
+        public int    Damage                    => Definition.Damage;
+        public float  AttackInterval            => Definition.AttackInterval;
 
         public bool IsDead => _currentState is EnemyDeadState;
 
         public event Action OnEnemyRemoved;
 
         private IEnemyState _currentState;
-        private float _currentHealth;
+        private float       _currentHealth;
+        private Material[]  _defaultMaterials;
+        private Vector3     _defaultScale;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
 
         protected override void Awake()
         {
             base.Awake();
-            Agent        = GetComponent<NavMeshAgent>();
-            HitCollider  = GetComponent<Collider>();
-            _currentHealth = maxHealth;
+            Agent       = GetComponent<NavMeshAgent>();
+            HitCollider = GetComponent<Collider>();
+
+            if (animatedMesh == null) animatedMesh = GetComponentInChildren<AnimatedMesh>();
+            if (meshRenderer == null) meshRenderer = GetComponentInChildren<MeshRenderer>();
+
+            _defaultMaterials = meshRenderer != null ? meshRenderer.sharedMaterials : null;
+            _defaultScale     = transform.localScale;
         }
 
         private void Update()
@@ -61,10 +63,7 @@ namespace BulletHeaven.Enemy
         public override void OnGet()
         {
             base.OnGet();
-            _currentHealth = maxHealth;
-
             CachePlayer();
-            ChangeState(new EnemyChaseState(this));
         }
 
         public override void OnRelease()
@@ -110,12 +109,19 @@ namespace BulletHeaven.Enemy
 
         // ── Configuration ─────────────────────────────────────────────────────
 
-        public void Configure(int health, float speed, int dmg)
+        /// <summary>
+        /// Applies the definition's stats and visuals, then starts chasing.
+        /// Must be called after the enemy is taken from the pool and positioned.
+        /// </summary>
+        public void Initialize(EnemyDefinitionSO definition, float healthMultiplier = 1f, float speedMultiplier = 1f)
         {
-            maxHealth      = health;
-            _currentHealth = health;
-            damage         = dmg;
-            Agent.speed    = speed;
+            Definition = definition;
+
+            _currentHealth = Mathf.Max(1, Mathf.RoundToInt(definition.MaxHealth * healthMultiplier));
+            Agent.speed    = definition.MoveSpeed * speedMultiplier;
+
+            ApplyVisuals(definition);
+            ChangeState(new EnemyChaseState(this));
         }
 
         // ── IDamageable ───────────────────────────────────────────────────────
@@ -146,6 +152,21 @@ namespace BulletHeaven.Enemy
             GameManager.Instance?.OnEnemyDefeated();
             OnEnemyRemoved?.Invoke();
             ChangeState(new EnemyDeadState(this));
+        }
+
+        private void ApplyVisuals(EnemyDefinitionSO definition)
+        {
+            transform.localScale = _defaultScale * definition.Scale;
+
+            if (meshRenderer != null)
+            {
+                Material[] materials = definition.Materials;
+                meshRenderer.sharedMaterials = materials != null && materials.Length > 0
+                    ? materials
+                    : _defaultMaterials;
+            }
+
+            animatedMesh?.SetAnimationSet(definition.AnimationSet);
         }
 
         private void SpawnHitEffect()
