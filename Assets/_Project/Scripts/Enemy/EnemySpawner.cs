@@ -170,7 +170,7 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.position = spawnPos;
         enemy.transform.rotation = Quaternion.identity;
 
-        enemy.Initialize(definition, _currentStage.healthMultiplier, _currentStage.speedMultiplier);
+        enemy.Initialize(definition);
         enemy.OnEnemyRemoved += OnEnemyRemoved;
 
         _activeEnemyCount++;

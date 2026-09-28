@@ -118,12 +118,12 @@ namespace BulletHeaven.Enemy
         /// Applies the definition's stats and visuals, then starts chasing.
         /// Must be called after the enemy is taken from the pool and positioned.
         /// </summary>
-        public void Initialize(EnemyDefinitionSO definition, float healthMultiplier = 1f, float speedMultiplier = 1f)
+        public void Initialize(EnemyDefinitionSO definition)
         {
             Definition = definition;
 
-            _currentHealth = Mathf.Max(1, Mathf.RoundToInt(definition.MaxHealth * healthMultiplier));
-            Agent.speed    = definition.MoveSpeed * speedMultiplier;
+            _currentHealth = Mathf.Max(1, Mathf.RoundToInt(definition.MaxHealth));
+            Agent.speed    = definition.MoveSpeed;
 
             ApplyBody(definition);
             ApplyVisuals(definition);

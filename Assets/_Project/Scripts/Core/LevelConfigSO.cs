@@ -18,8 +18,6 @@ namespace BulletHeaven.Core
         public float spawnInterval;
         public int maxEnemiesAlive;
         public int enemiesPerSpawn;
-        [Min(0.1f)] public float healthMultiplier = 1f;
-        [Min(0.1f)] public float speedMultiplier = 1f;
 
         [Tooltip("Enemies that can spawn during this stage, picked by weight.")]
         public List<EnemySpawnEntry> enemies = new();
