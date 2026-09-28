@@ -36,6 +36,12 @@ namespace BulletHeaven.Enemy
         [SerializeField] private string walkAnimName  = "Enemy_Walking";
         [SerializeField] private string deathAnimName = "Enemy_Dying";
 
+        [Header("Animation Speed")]
+        [Tooltip("Movement speed (units/sec) at which the walk animation plays at 1x.")]
+        [SerializeField, Min(0.01f)] private float walkAnimReferenceSpeed = 1f;
+        [Tooltip("Upper limit for the walk animation speed multiplier.")]
+        [SerializeField, Min(0.1f)]  private float maxWalkAnimSpeed = 3f;
+
         public EnemyType Type         => type;
         public int    Tier           => tier;
         public int    MaxHealth      => maxHealth;
@@ -54,6 +60,9 @@ namespace BulletHeaven.Enemy
 
         public string WalkAnimName  => walkAnimName;
         public string DeathAnimName => deathAnimName;
+
+        public float WalkAnimReferenceSpeed => walkAnimReferenceSpeed;
+        public float MaxWalkAnimSpeed       => maxWalkAnimSpeed;
     }
 
     public enum EnemyType

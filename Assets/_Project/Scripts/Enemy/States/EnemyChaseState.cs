@@ -77,8 +77,9 @@ namespace BulletHeaven.Enemy
         {
             if (_enemy.AnimatedMesh == null || !_enemy.Agent.enabled) return;
 
-            float normalizedSpeed = _enemy.Agent.velocity.magnitude / _enemy.Agent.speed;
-            _enemy.AnimatedMesh.SetSpeedMultiplier(normalizedSpeed);
+            EnemyDefinitionSO definition = _enemy.Definition;
+            float multiplier = _enemy.Agent.velocity.magnitude / definition.WalkAnimReferenceSpeed;
+            _enemy.AnimatedMesh.SetSpeedMultiplier(Mathf.Min(multiplier, definition.MaxWalkAnimSpeed));
         }
     }
 }
