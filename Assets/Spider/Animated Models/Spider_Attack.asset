@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae2fd8e086a5f94991b50e5ca890322, type: 3}
+  m_Name: Spider_Attack
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedMeshScriptableObject
+  AnimationFPS: 7
+  Animations:
+  - Name: Attack1
+    Meshes:
+    - {fileID: 4300000, guid: 9e6eccddc12415c4eb4f9cdaf83fd404, type: 2}
+    - {fileID: 4300000, guid: 5acab743c0a8d7d419de142d1f9c2539, type: 2}
+    - {fileID: 4300000, guid: 6cb5c29e72008854d90403cab56673bc, type: 2}
+    - {fileID: 4300000, guid: 168b6c0cea3539c42a0215cdd0132077, type: 2}
+    - {fileID: 4300000, guid: 758f2053f2645964eacccb79c2e6d577, type: 2}
+    - {fileID: 4300000, guid: fff6f8e1dd29f044eb20ea97618c2d94, type: 2}
+    - {fileID: 4300000, guid: b64c66a385f677f45af7e971f2f0b755, type: 2}
+    - {fileID: 4300000, guid: b9f4d0c0fb59bc748a375b9b19b2bf63, type: 2}
+    - {fileID: 4300000, guid: 500f4374871ef234ea8025bfc5763510, type: 2}
+    - {fileID: 4300000, guid: 4e204d57147d312478b5ce1dce99850d, type: 2}
+    - {fileID: 4300000, guid: db837bbe860881a47a6127ecc823156a, type: 2}
+    - {fileID: 4300000, guid: f7d16559ea4315647b8f83c4abac476b, type: 2}
+    - {fileID: 4300000, guid: f4ccbde661d45554db6443fe6dba9bf8, type: 2}
+    - {fileID: 4300000, guid: 190d535045bbd4d4aaaa1e7e4d5dee4d, type: 2}
+    - {fileID: 4300000, guid: 73bc129e4702c554ba09fbd9a7a64547, type: 2}
+    - {fileID: 4300000, guid: d41ed5d605d54bb40ba98505c24f50a4, type: 2}
+    - {fileID: 4300000, guid: 0b2b18bd27a4c2041bf8ade120588288, type: 2}
+    - {fileID: 4300000, guid: 509d67a66faf0de4db588b32e79eabc3, type: 2}

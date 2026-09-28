@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4f5933e4fefca43900f61f373d7c76, type: 3}
+  m_Name: SpiderAnimations
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedMeshScriptableObject
+  AnimationFPS: 30
+  Animations:
+  - Name: Spider_Walking
+    Meshes:
+    - {fileID: 4300000, guid: 48dd03b248ad5224a9693dba7f34f617, type: 2}
+    - {fileID: 4300000, guid: db4104c7673668d4487390825682f53b, type: 2}
+    - {fileID: 4300000, guid: e7a480c3e6d22d3418efa0dfee0b7b5e, type: 2}
+    - {fileID: 4300000, guid: 22867f137a12fc541b01d300fbffc519, type: 2}
+    - {fileID: 4300000, guid: 86883dcb46d1bb84380bd9d8114dc38f, type: 2}
+    - {fileID: 4300000, guid: 8982866cf4c27684586d7eb7f1974fd1, type: 2}
+    - {fileID: 4300000, guid: 32f4c5924f4a4b64895c0855c2ec9b08, type: 2}
+    - {fileID: 4300000, guid: 3798b424a2dc2fb44990b4a2d4a1343f, type: 2}
+    - {fileID: 4300000, guid: 644d79098c0b23f4cb4d023614c01633, type: 2}
+    - {fileID: 4300000, guid: 45a85edb884bd60438ac3e7fae36e13e, type: 2}
+    - {fileID: 4300000, guid: 5169a52f2fee9014eaebd4ceef9061e5, type: 2}
+    - {fileID: 4300000, guid: 14e566abacafe2345bcd325d704f2ef3, type: 2}
+    - {fileID: 4300000, guid: 14e6c2a4f2a175346a8fcdbc311ad437, type: 2}
+    - {fileID: 4300000, guid: 231f6df3efed5c9498047bca08c78b56, type: 2}
+    - {fileID: 4300000, guid: c8337671cd146864496fe06054f55062, type: 2}
+    - {fileID: 4300000, guid: 60a9801fd94d5b74b9a58b4e9769f496, type: 2}
+    - {fileID: 4300000, guid: 8484f97bebea9c041b75ef15ee5965ba, type: 2}
+    - {fileID: 4300000, guid: 21947a0e1cd938748b75a0f35ad32b82, type: 2}
+    - {fileID: 4300000, guid: acebdf70af78f914aacdd7101bc0a820, type: 2}
+  - Name: Spider_Attack
+    Meshes:
+    - {fileID: 4300000, guid: ba95225fea5fd4c498d724d67e09661a, type: 2}
+    - {fileID: 4300000, guid: 501947a8df4c8bd4a918f7eed426247c, type: 2}
+    - {fileID: 4300000, guid: 31750a41bd50ebe4da6c6fc1fb6bd276, type: 2}
+    - {fileID: 4300000, guid: 8cd41b5d16ed9a545a86f431088b50c7, type: 2}
+    - {fileID: 4300000, guid: d78dac2cd3987604c9114e63f7277ac8, type: 2}
+    - {fileID: 4300000, guid: 5d31598231b13674298632db488854ad, type: 2}
+    - {fileID: 4300000, guid: 09d5377523dfa6d4fbc4258798c323a0, type: 2}
+    - {fileID: 4300000, guid: b79a19f1221f6ee41b2b49c673c5fc3e, type: 2}
+    - {fileID: 4300000, guid: acba20d45ce073a4e893d88c70bae02a, type: 2}
+    - {fileID: 4300000, guid: ad710d7c49ed53d48b3edd5c3af9438e, type: 2}
+    - {fileID: 4300000, guid: 3910f85ec56632b479190ad099911fc2, type: 2}
+    - {fileID: 4300000, guid: 60ae280adcb62b240914e744d94a4705, type: 2}
+    - {fileID: 4300000, guid: 85979e5882d9de44aa9bde968618f4c3, type: 2}
+    - {fileID: 4300000, guid: b5b89fd04db975c41b3d3563bafa4441, type: 2}
+    - {fileID: 4300000, guid: b2eabae798b41b147bd923ea01a7d331, type: 2}
+    - {fileID: 4300000, guid: 888bc7c4dfd166546903fe48ec731315, type: 2}
+    - {fileID: 4300000, guid: 0dc0d09633161ba449e4a8ef8eb6ae2c, type: 2}
+    - {fileID: 4300000, guid: 369b6490935fcd74fbcf55cc7c90606f, type: 2}
+  - Name: Spider_Death
+    Meshes:
+    - {fileID: 4300000, guid: 8d54dfdb6d2e37448baef08b00d3a036, type: 2}
+    - {fileID: 4300000, guid: 27682b9e5b81db741aab1a0a70b0d4dd, type: 2}
+    - {fileID: 4300000, guid: eeab11211a7ab22468930b9435d6b1bb, type: 2}
+    - {fileID: 4300000, guid: 25c7ab280802ab344a3adc106e3408cc, type: 2}
+    - {fileID: 4300000, guid: 278ce4a115572ef4295dab8923167bcf, type: 2}
+    - {fileID: 4300000, guid: f87ff3d99ea654c43af7662a2b2a2f05, type: 2}
+    - {fileID: 4300000, guid: 8dc09710fab55f245a56ecd6be914b86, type: 2}
+    - {fileID: 4300000, guid: d74fd9fabbc764a4b855c2d316354382, type: 2}
+    - {fileID: 4300000, guid: 5d609bbcfdbbbd74c98b9dff2e32c022, type: 2}
+    - {fileID: 4300000, guid: 95f048c76e844d543b3a579b427a5ae1, type: 2}
+    - {fileID: 4300000, guid: 0ced7d827fdaedd43834c1262206633f, type: 2}
+    - {fileID: 4300000, guid: 0aadfd3ebf1b5a24d8575715c728a2c7, type: 2}
+    - {fileID: 4300000, guid: 48e04bebab822304c8a51dffa222e851, type: 2}
+    - {fileID: 4300000, guid: d87386c1810068c4fbd32939d131ad2c, type: 2}
