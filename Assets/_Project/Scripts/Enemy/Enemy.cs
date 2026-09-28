@@ -13,6 +13,10 @@ namespace BulletHeaven.Enemy
         [Header("Navigation")]
         [SerializeField] private float destinationUpdateInterval = 0.4f;
 
+        [Header("Push-Out")]
+        [Tooltip("Extra gap kept between the player and the agent. Above ~0.02 the enemy can no longer touch the player, which stops contact damage.")]
+        [SerializeField, Min(0f)] private float pushOutPadding = 0f;
+
         [Header("Visuals")]
         [SerializeField] private Transform    model;
         [SerializeField] private AnimatedMesh animatedMesh;
@@ -38,6 +42,7 @@ namespace BulletHeaven.Enemy
         private float       _currentHealth;
         private Material[]  _defaultMaterials;
         private BoxCollider _boxCollider;
+        private float       _playerRadius = 0.5f;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
 
@@ -58,6 +63,12 @@ namespace BulletHeaven.Enemy
         private void Update()
         {
             _currentState?.Tick();
+        }
+
+        // Runs after the agent has written its position for this frame.
+        private void LateUpdate()
+        {
+            PushOutOfPlayer();
         }
 
         // ── Pool Callbacks ────────────────────────────────────────────────────
@@ -145,10 +156,10 @@ namespace BulletHeaven.Enemy
 
         // ── Unity Messages ────────────────────────────────────────────────────
 
-        private void OnCollisionStay(Collision collision)
+        private void OnTriggerStay(Collider other)
         {
-            if (!collision.gameObject.CompareTag("Player")) return;
-            (_currentState as EnemyChaseState)?.OnHitPlayer(collision.gameObject);
+            if (!other.CompareTag("Player")) return;
+            (_currentState as EnemyChaseState)?.OnHitPlayer(other.gameObject);
         }
 
         // ── Private ───────────────────────────────────────────────────────────
@@ -199,11 +210,40 @@ namespace BulletHeaven.Enemy
             effect.Play(transform.position + Vector3.up, direction);
         }
 
+        /// <summary>
+        /// Displaces the agent out of the player's body so the player can walk through a crowd.
+        /// Uses <see cref="NavMeshAgent.Move"/> so the agent stays on the NavMesh and keeps its path.
+        /// </summary>
+        private void PushOutOfPlayer()
+        {
+            if (PlayerTransform == null || !Agent.enabled || !Agent.isOnNavMesh) return;
+
+            Vector3 offset = transform.position - PlayerTransform.position;
+            offset.y = 0f;
+
+            float minDistance = _playerRadius + Agent.radius + pushOutPadding;
+            float distance    = offset.magnitude;
+
+            if (distance >= minDistance) return;
+
+            Vector3 direction = distance > 0.001f
+                ? offset / distance
+                : PlayerTransform.forward; // exactly overlapping — any direction will do
+
+            Agent.Move(direction * (minDistance - distance));
+        }
+
         private void CachePlayer()
         {
             PlayerTransform = GameManager.Instance?.PlayerTransform;
             if (PlayerTransform == null)
+            {
                 Debug.LogWarning("[Enemy] PlayerTransform not registered in GameManager.");
+                return;
+            }
+
+            if (PlayerTransform.TryGetComponent(out CapsuleCollider playerCapsule))
+                _playerRadius = playerCapsule.radius;
         }
     }
 }

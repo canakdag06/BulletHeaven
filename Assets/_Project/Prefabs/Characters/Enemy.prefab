@@ -51,7 +51,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Enemy.Enemy
   destinationUpdateInterval: 0.4
+  pushOutPadding: 0
+  model: {fileID: 0}
   animatedMesh: {fileID: 856321323405426966}
   meshRenderer: {fileID: 719748906470138594}
 --- !u!1 &479284930162970077
