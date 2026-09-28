@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using BulletHeaven.Core;
 using BulletHeaven.Enemy;
 
@@ -10,6 +11,10 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnRadius = 20f;
+    [Tooltip("Max distance from a random spawn point to the nearest NavMesh position.")]
+    [SerializeField] private float navMeshSampleDistance = 3f;
+
+    private const int MaxSpawnAttempts = 10;
 
     private LevelData _levelData;
     private Transform _playerTransform;
@@ -157,8 +162,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        Vector3 spawnPos = GetOffscreenSpawnPoint();
-        if (spawnPos == Vector3.zero) return;
+        if (!TryGetSpawnPoint(out Vector3 spawnPos)) return;
 
         Enemy enemy = PoolManager.Instance.Get(EPoolType.Enemy) as Enemy;
         if (enemy == null) return;
@@ -175,30 +179,49 @@ public class EnemySpawner : MonoBehaviour
     // Spawn Position 
 
     /// <summary>
-    /// Returns a random point on the spawn circle that falls outside
-    /// the camera viewport so enemies are never seen popping in.
+    /// Finds a random point on the spawn circle that lies on the NavMesh,
+    /// preferring points outside the camera viewport so enemies are never
+    /// seen popping in.
     /// </summary>
-    private Vector3 GetOffscreenSpawnPoint()
+    private bool TryGetSpawnPoint(out Vector3 spawnPoint)
     {
-        if (_playerTransform == null) return Vector3.zero;
+        spawnPoint = Vector3.zero;
+        if (_playerTransform == null) return false;
 
-        if (_mainCamera == null)
-            return RandomCirclePoint();
+        bool hasFallback = false;
 
-        for (int attempt = 0; attempt < 10; attempt++)
+        for (int attempt = 0; attempt < MaxSpawnAttempts; attempt++)
         {
-            Vector3 candidate = RandomCirclePoint();
-            Vector3 viewport  = _mainCamera.WorldToViewportPoint(candidate);
+            if (!NavMesh.SamplePosition(RandomCirclePoint(), out NavMeshHit hit, navMeshSampleDistance, NavMesh.AllAreas))
+                continue;
 
-            bool outsideX = viewport.x < 0f || viewport.x > 1f;
-            bool outsideY = viewport.y < 0f || viewport.y > 1f;
-            bool inFront  = viewport.z > 0f;
+            if (IsOffscreen(hit.position))
+            {
+                spawnPoint = hit.position;
+                return true;
+            }
 
-            if (inFront && (outsideX || outsideY))
-                return candidate;
+            if (!hasFallback)
+            {
+                spawnPoint  = hit.position;
+                hasFallback = true;
+            }
         }
 
-        return RandomCirclePoint();
+        return hasFallback;
+    }
+
+    private bool IsOffscreen(Vector3 point)
+    {
+        if (_mainCamera == null) return true;
+
+        Vector3 viewport = _mainCamera.WorldToViewportPoint(point);
+
+        bool outsideX = viewport.x < 0f || viewport.x > 1f;
+        bool outsideY = viewport.y < 0f || viewport.y > 1f;
+        bool inFront  = viewport.z > 0f;
+
+        return inFront && (outsideX || outsideY);
     }
 
     private Vector3 RandomCirclePoint()

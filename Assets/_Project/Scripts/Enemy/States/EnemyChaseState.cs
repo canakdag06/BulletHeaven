@@ -22,8 +22,15 @@ namespace BulletHeaven.Enemy
             if (_enemy.HitCollider != null)
                 _enemy.HitCollider.enabled = true;
 
-            _enemy.Agent.enabled   = true;
-            _enemy.Agent.isStopped = false;
+            _enemy.Agent.enabled = true;
+
+            if (!_enemy.Agent.isOnNavMesh)
+                _enemy.Agent.Warp(_enemy.transform.position);
+
+            if (_enemy.Agent.isOnNavMesh)
+                _enemy.Agent.isStopped = false;
+            else
+                Debug.LogWarning($"[EnemyChaseState] {_enemy.name} is not on a NavMesh at {_enemy.transform.position}.", _enemy);
 
             _enemy.AnimatedMesh?.PlayAnimation(_enemy.WalkAnimName, true);
         }
@@ -41,7 +48,7 @@ namespace BulletHeaven.Enemy
 
         public void Exit()
         {
-            if (_enemy.Agent.enabled)
+            if (_enemy.Agent.enabled && _enemy.Agent.isOnNavMesh)
                 _enemy.Agent.isStopped = true;
         }
 

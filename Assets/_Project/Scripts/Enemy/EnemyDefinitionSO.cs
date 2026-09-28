@@ -6,7 +6,7 @@ namespace BulletHeaven.Enemy
     public class EnemyDefinitionSO : ScriptableObject
     {
         [Header("Identity")]
-        [SerializeField] private EnemyType type = EnemyType.Slime;
+        [SerializeField] private EnemyType type = EnemyType.Spider;
         [SerializeField, Min(1)] private int tier = 1;
 
         [Header("Stats")]
@@ -18,7 +18,19 @@ namespace BulletHeaven.Enemy
         [Header("Visuals")]
         [SerializeField] private AnimatedMeshScriptableObject[] animationSet;
         [SerializeField] private Material[] materials;
-        [SerializeField, Min(0.01f)] private float scale = 1f;
+
+        [Header("Model Transform")]
+        [Tooltip("Local euler rotation applied to the Model child.")]
+        [SerializeField] private Vector3 modelRotation = Vector3.zero;
+        [Tooltip("Applied to the Model child. Visual only; does not affect collider or agent.")]
+        [SerializeField] private Vector3 modelScale    = Vector3.one;
+
+        [Header("Collider")]
+        [SerializeField] private Vector3 colliderCenter = new(0f, 0.9f, 0f);
+        [SerializeField] private Vector3 colliderSize   = new(0.6f, 1.8f, 0.6f);
+
+        [Header("Navigation")]
+        [SerializeField, Min(0.01f)] private float agentRadius = 0.28f;
 
         [Header("Animation Names")]
         [SerializeField] private string walkAnimName  = "Enemy_Walking";
@@ -33,7 +45,12 @@ namespace BulletHeaven.Enemy
 
         public AnimatedMeshScriptableObject[] AnimationSet => animationSet;
         public Material[] Materials => materials;
-        public float      Scale     => scale;
+
+        public Vector3 ModelRotation  => modelRotation;
+        public Vector3 ModelScale     => modelScale;
+        public Vector3 ColliderCenter => colliderCenter;
+        public Vector3 ColliderSize   => colliderSize;
+        public float   AgentRadius    => agentRadius;
 
         public string WalkAnimName  => walkAnimName;
         public string DeathAnimName => deathAnimName;
@@ -41,8 +58,6 @@ namespace BulletHeaven.Enemy
 
     public enum EnemyType
     {
-        Slime = 0,
-        Bat = 1,
-
+        Spider = 0,
     }
 }

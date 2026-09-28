@@ -18,11 +18,7 @@ namespace BulletHeaven.Enemy
             if (_enemy.HitCollider != null)
                 _enemy.HitCollider.enabled = false;
 
-            if (_enemy.Agent.enabled)
-            {
-                _enemy.Agent.isStopped = true;
-                _enemy.Agent.enabled   = false;
-            }
+            _enemy.StopAgent();
 
             if (_enemy.AnimatedMesh != null)
             {

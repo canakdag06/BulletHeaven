@@ -14,6 +14,7 @@ namespace BulletHeaven.Enemy
         [SerializeField] private float destinationUpdateInterval = 0.4f;
 
         [Header("Visuals")]
+        [SerializeField] private Transform    model;
         [SerializeField] private AnimatedMesh animatedMesh;
         [SerializeField] private MeshRenderer meshRenderer;
 
@@ -36,7 +37,7 @@ namespace BulletHeaven.Enemy
         private IEnemyState _currentState;
         private float       _currentHealth;
         private Material[]  _defaultMaterials;
-        private Vector3     _defaultScale;
+        private BoxCollider _boxCollider;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
 
@@ -44,13 +45,14 @@ namespace BulletHeaven.Enemy
         {
             base.Awake();
             Agent       = GetComponent<NavMeshAgent>();
-            HitCollider = GetComponent<Collider>();
+            HitCollider  = GetComponent<Collider>();
+            _boxCollider = HitCollider as BoxCollider;
 
             if (animatedMesh == null) animatedMesh = GetComponentInChildren<AnimatedMesh>();
             if (meshRenderer == null) meshRenderer = GetComponentInChildren<MeshRenderer>();
+            if (model == null && animatedMesh != null) model = animatedMesh.transform;
 
             _defaultMaterials = meshRenderer != null ? meshRenderer.sharedMaterials : null;
-            _defaultScale     = transform.localScale;
         }
 
         private void Update()
@@ -74,11 +76,7 @@ namespace BulletHeaven.Enemy
             _currentState?.Exit();
             _currentState = null;
 
-            if (Agent.enabled)
-            {
-                Agent.isStopped = true;
-                Agent.enabled   = false;
-            }
+            StopAgent();
         }
 
         // ── State Machine ─────────────────────────────────────────────────────
@@ -100,11 +98,18 @@ namespace BulletHeaven.Enemy
             _currentState?.Exit();
             _currentState = null;
 
-            if (Agent.enabled)
-            {
+            StopAgent();
+        }
+
+        /// <summary>Stops and disables the agent. Safe to call when the agent is off the NavMesh.</summary>
+        public void StopAgent()
+        {
+            if (!Agent.enabled) return;
+
+            if (Agent.isOnNavMesh)
                 Agent.isStopped = true;
-                Agent.enabled   = false;
-            }
+
+            Agent.enabled = false;
         }
 
         // ── Configuration ─────────────────────────────────────────────────────
@@ -120,6 +125,7 @@ namespace BulletHeaven.Enemy
             _currentHealth = Mathf.Max(1, Mathf.RoundToInt(definition.MaxHealth * healthMultiplier));
             Agent.speed    = definition.MoveSpeed * speedMultiplier;
 
+            ApplyBody(definition);
             ApplyVisuals(definition);
             ChangeState(new EnemyChaseState(this));
         }
@@ -154,9 +160,24 @@ namespace BulletHeaven.Enemy
             ChangeState(new EnemyDeadState(this));
         }
 
+        private void ApplyBody(EnemyDefinitionSO definition)
+        {
+            if (_boxCollider != null)
+            {
+                _boxCollider.size   = definition.ColliderSize;
+                _boxCollider.center = definition.ColliderCenter;
+            }
+
+            Agent.radius = definition.AgentRadius;
+        }
+
         private void ApplyVisuals(EnemyDefinitionSO definition)
         {
-            transform.localScale = _defaultScale * definition.Scale;
+            if (model != null)
+            {
+                model.localScale    = definition.ModelScale;
+                model.localRotation = Quaternion.Euler(definition.ModelRotation);
+            }
 
             if (meshRenderer != null)
             {
