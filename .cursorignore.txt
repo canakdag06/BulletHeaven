@@ -8,6 +8,7 @@ MemoryCaptures/
 UserSettings/
 Build/
 Builds/
+Assets/Asset Packs/
 
 # Büyük binary asset dosyaları (İsteğe bağlı ama önerilir)
 *.png
