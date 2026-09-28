@@ -50,22 +50,28 @@ MonoBehaviour:
       maxEnemiesAlive: 60
       enemiesPerSpawn: 1
       enemies:
-      - enemy: {fileID: 11400000, guid: dca090721f217ce44a63fe058278b5e5, type: 2}
+      - enemy: {fileID: 11400000, guid: 7f3c8af373bf26442bc14c68ba721f9f, type: 2}
         weight: 100
     - startTime: 30
       spawnInterval: 0.75
       maxEnemiesAlive: 80
       enemiesPerSpawn: 3
       enemies:
-      - enemy: {fileID: 11400000, guid: dca090721f217ce44a63fe058278b5e5, type: 2}
-        weight: 100
+      - enemy: {fileID: 11400000, guid: 7f3c8af373bf26442bc14c68ba721f9f, type: 2}
+        weight: 60
+      - enemy: {fileID: 11400000, guid: 8ba25e4bee203834c85bdbf96b050849, type: 2}
+        weight: 40
     - startTime: 100
       spawnInterval: 0.5
       maxEnemiesAlive: 100
       enemiesPerSpawn: 4
       enemies:
-      - enemy: {fileID: 11400000, guid: dca090721f217ce44a63fe058278b5e5, type: 2}
-        weight: 100
+      - enemy: {fileID: 11400000, guid: 7f3c8af373bf26442bc14c68ba721f9f, type: 2}
+        weight: 20
+      - enemy: {fileID: 11400000, guid: 8ba25e4bee203834c85bdbf96b050849, type: 2}
+        weight: 50
+      - enemy: {fileID: 11400000, guid: 7d8e5d4feddf1a842b6fb6d49f9ccc6d, type: 2}
+        weight: 30
     levelTimerSec: 180
     mapPrefab: {fileID: 2833051679408542892, guid: f728f7fd165c86640a7365c8f88ebfc3, type: 3}
     playerSpawnPoint: {x: 0, y: 0, z: 0}

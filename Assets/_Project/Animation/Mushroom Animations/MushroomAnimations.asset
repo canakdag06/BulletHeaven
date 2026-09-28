@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4f5933e4fefca43900f61f373d7c76, type: 3}
+  m_Name: MushroomAnimations
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedMeshScriptableObject
+  AnimationFPS: 30
+  Animations:
+  - Name: Mushroom_Walking
+    Meshes:
+    - {fileID: 4300000, guid: 9ad93ad7b882ffb41a8b35e2bf2f11b1, type: 2}
+    - {fileID: 4300000, guid: 328ac24b4a7740644bc95800b41892c4, type: 2}
+    - {fileID: 4300000, guid: 36846e135169baa4d8038b5a3eda12c7, type: 2}
+    - {fileID: 4300000, guid: af13cca59b4cd5e49baa132d5f7d0c94, type: 2}
+    - {fileID: 4300000, guid: 5623d29a0b771214d9782a8a5b5b1026, type: 2}
+    - {fileID: 4300000, guid: ff17be6df3a57f44d93af0a7bfdd3236, type: 2}
+    - {fileID: 4300000, guid: 35b516fcec357c24abb2c367f30d97a4, type: 2}
+    - {fileID: 4300000, guid: 0067ad0a690697140b322eb0fdf39892, type: 2}
+    - {fileID: 4300000, guid: c05f1fe1be0cfce41b4a09372787f405, type: 2}
+    - {fileID: 4300000, guid: ee72d056d824190418222e6c2f5bfbc8, type: 2}
+    - {fileID: 4300000, guid: 465398fdff6235c4d91158a48f4a1961, type: 2}
+    - {fileID: 4300000, guid: 5fbaed22067f36a42b242b54860bb98c, type: 2}
+    - {fileID: 4300000, guid: 9ebe4e3194435fd4aac25b8b0f774c75, type: 2}
+    - {fileID: 4300000, guid: 7fb6ce759f90cbd40b2f3698a9b8b20a, type: 2}
+    - {fileID: 4300000, guid: 33834692b753bfd4ba10c2b097791a62, type: 2}
+    - {fileID: 4300000, guid: 78a666eccc305894f90679f41969874b, type: 2}
+    - {fileID: 4300000, guid: c1a09361c5d79da48904b42fef66e38b, type: 2}
+    - {fileID: 4300000, guid: df0bfc73f6933f549b664ff2872c2fee, type: 2}
+    - {fileID: 4300000, guid: ea3e273eed5508a4591de12d836eb569, type: 2}
+    - {fileID: 4300000, guid: d04a5ad1c42f43b4183ea09c266ab963, type: 2}
+    - {fileID: 4300000, guid: 88917fad2431f424b8e4edcddab42983, type: 2}
+    - {fileID: 4300000, guid: b288978c715ca1444b775e76b58c7666, type: 2}
+  - Name: Mushroom_Attack
+    Meshes:
+    - {fileID: 4300000, guid: 3ab6375b0d3bf8443ad932e0b9284820, type: 2}
+    - {fileID: 4300000, guid: 7b10e73f2e3996f4aa0144251cec7267, type: 2}
+    - {fileID: 4300000, guid: 66bc8b6f27d91b0408d216fb0f51aa8d, type: 2}
+    - {fileID: 4300000, guid: f6270d52bcd341f418c29efca4b89cf9, type: 2}
+    - {fileID: 4300000, guid: da5d12ca806ca7540b7d9e025d0f6f32, type: 2}
+    - {fileID: 4300000, guid: fe4d9807b380cc04ca0ccf0f4cb13202, type: 2}
+    - {fileID: 4300000, guid: 71d4c0f4973995846b3076b34156a4d4, type: 2}
+    - {fileID: 4300000, guid: 567802ba4bc0ec74c8184b4e1a00ff54, type: 2}
+    - {fileID: 4300000, guid: ac689b11761174d46aead72b5cbc7b01, type: 2}
+    - {fileID: 4300000, guid: 9c327b006ec09e94db4fedd3812441c2, type: 2}
+    - {fileID: 4300000, guid: 8d3819b4ee98ae24383397794ff73ef7, type: 2}
+    - {fileID: 4300000, guid: a23c1f132e0bbb44092bca21e2c5583b, type: 2}
+    - {fileID: 4300000, guid: 931521e61aa8bcb408c7be4c053de5f8, type: 2}
+    - {fileID: 4300000, guid: 12f470957f1b099479445c072f321236, type: 2}
+    - {fileID: 4300000, guid: 85af7a500bb7a7242b06193cbb5fd869, type: 2}
+    - {fileID: 4300000, guid: 0a4db09dfe115aa4c99b26ad8b4c2af3, type: 2}
+    - {fileID: 4300000, guid: 2d81e67dc2f03c44fba9f4bff27c3a06, type: 2}
+    - {fileID: 4300000, guid: d56ee303807e0be428759b7aef019919, type: 2}
+    - {fileID: 4300000, guid: 939e7bd9040bc9141beac3433ba00adb, type: 2}
+    - {fileID: 4300000, guid: 33674b954196479449b44055e57d540c, type: 2}
+    - {fileID: 4300000, guid: dc4163b3541fe934f89bae7506ded249, type: 2}
+    - {fileID: 4300000, guid: ad764a89b0097df4b888a47227b6d708, type: 2}
+    - {fileID: 4300000, guid: f34bf06197e21124aa79272be3948406, type: 2}
+    - {fileID: 4300000, guid: f7d3b6b1d29929040a06acaf0eae8458, type: 2}
+    - {fileID: 4300000, guid: d0630126a26db0c479f5c0a2372ff5d8, type: 2}
+    - {fileID: 4300000, guid: 4575ab60bf77089458694cbf31969083, type: 2}
+    - {fileID: 4300000, guid: 36083ed900fe6bc418199d641e831d05, type: 2}
+    - {fileID: 4300000, guid: 11512d3ffdebd46448beb5e792806be4, type: 2}
+    - {fileID: 4300000, guid: cb7405cb72ff496459e1bf8fa792d975, type: 2}
+  - Name: Mushroom_Death
+    Meshes:
+    - {fileID: 4300000, guid: 10fa5297fa4be874aa7ccb9b8d8f023b, type: 2}
+    - {fileID: 4300000, guid: dba8a0e3b025a164d8ba37be4424a7fd, type: 2}
+    - {fileID: 4300000, guid: 03421af8ac720f349a2aa186c3126111, type: 2}
+    - {fileID: 4300000, guid: ba86aa943177751459cbed633c141269, type: 2}
+    - {fileID: 4300000, guid: f9f35b216677c6d40ac9719f5745eb1c, type: 2}
+    - {fileID: 4300000, guid: 2d0d1cbc8393ec340a76f1246253a95d, type: 2}
+    - {fileID: 4300000, guid: 360a7ce467f7b3747a02f27ddb05644f, type: 2}
+    - {fileID: 4300000, guid: b58a6bb6b6645a54caaa0ef28d2326cc, type: 2}
+    - {fileID: 4300000, guid: 678241d059e3be045ab8d025163ade5a, type: 2}
+    - {fileID: 4300000, guid: 885d22613490f7b41a12ccc25f79d2fa, type: 2}
+    - {fileID: 4300000, guid: b21872195ef8f444a9a1ce2826911936, type: 2}
+    - {fileID: 4300000, guid: 3e4d91558818a144c85f5745a9a5c8a2, type: 2}
+    - {fileID: 4300000, guid: 99f9a7a3803ca934abb17b153ebee850, type: 2}
+    - {fileID: 4300000, guid: 6bf2fed8c4fc1294f9c6a57c936d60b6, type: 2}
+    - {fileID: 4300000, guid: 8950e5ae7ce49154fa3a8d9cd53709a7, type: 2}
+    - {fileID: 4300000, guid: 718bb1f1749d5ac4bbd58056efbb16e6, type: 2}
+    - {fileID: 4300000, guid: 447083c05fcc4504785a612c35cd4268, type: 2}
+    - {fileID: 4300000, guid: 36d76d5d394bd8949baf3443e716b6c8, type: 2}
+    - {fileID: 4300000, guid: 74209811b33831649bc086e28461c74a, type: 2}
+    - {fileID: 4300000, guid: 3243a6bb2145453488581d3fdd8c3a22, type: 2}
+    - {fileID: 4300000, guid: d2d8f46f23206c04da06dd1e5c8c25d5, type: 2}
+    - {fileID: 4300000, guid: 0f42926b37526004e9d7bf3965e03f70, type: 2}
+    - {fileID: 4300000, guid: 661f3d9acd627e94ab779839c1010ed1, type: 2}

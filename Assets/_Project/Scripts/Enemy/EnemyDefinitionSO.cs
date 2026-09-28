@@ -68,5 +68,6 @@ namespace BulletHeaven.Enemy
     public enum EnemyType
     {
         Spider = 0,
+        Mushroom = 1,
     }
 }
