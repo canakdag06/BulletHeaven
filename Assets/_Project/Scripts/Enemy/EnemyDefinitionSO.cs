@@ -64,5 +64,6 @@ namespace BulletHeaven.Enemy
         Mushroom = 1,
         Orc = 2,
         Pigman = 3,
+        EyeBat = 4,
     }
 }

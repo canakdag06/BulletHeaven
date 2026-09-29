@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4f5933e4fefca43900f61f373d7c76, type: 3}
+  m_Name: EyeBatAnimations
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedMeshScriptableObject
+  AnimationFPS: 30
+  Animations:
+  - Name: EyeBat_Walking
+    Role: 0
+    Meshes:
+    - {fileID: 4300000, guid: 7011dec03e0e1b640868d63ba1faf4ef, type: 2}
+    - {fileID: 4300000, guid: 3feec4910a7d52742a36e988688cff6a, type: 2}
+    - {fileID: 4300000, guid: be45043d745c9ec4a8dc4e6322688b8f, type: 2}
+    - {fileID: 4300000, guid: c62b21120c99852469d8a82d29519fdb, type: 2}
+    - {fileID: 4300000, guid: 41d6354a35146044aa55b22a744448e3, type: 2}
+    - {fileID: 4300000, guid: 95979a24b56103048a831fba473896bf, type: 2}
+    - {fileID: 4300000, guid: d83576d4e6f933c48899b15f6e185589, type: 2}
+    - {fileID: 4300000, guid: 989fef10475a3214bb32285a3bbbae39, type: 2}
+    - {fileID: 4300000, guid: 492d19300dda3f143903cce910902bc3, type: 2}
+    - {fileID: 4300000, guid: d0c8e067148653c438e6b7bb0b778bf9, type: 2}
+    - {fileID: 4300000, guid: 530da72cc5c3a8a46bcb1e3dfcb88718, type: 2}
+    - {fileID: 4300000, guid: 39ab511e620f36d48a4ce0de13a13b6f, type: 2}
+  - Name: EyeBat_Death
+    Role: 2
+    Meshes:
+    - {fileID: 4300000, guid: 0e310e2938bcba84280aa6b42c8c7caf, type: 2}
+    - {fileID: 4300000, guid: 82fb1bf9cb0e50a438b20a11eff51a38, type: 2}
+    - {fileID: 4300000, guid: 25569b56be002c541b3783cd4aff336e, type: 2}
+    - {fileID: 4300000, guid: dcf7342ba3b4a8b4bad7ff037e6a5b94, type: 2}
+    - {fileID: 4300000, guid: b2c12ca2dbc18de4cb116fda0a56ed31, type: 2}
+    - {fileID: 4300000, guid: ba7d8afe828a9334c9c9c25a2030f81e, type: 2}
+    - {fileID: 4300000, guid: b91fcb22f68416341a326546d72376f4, type: 2}
+    - {fileID: 4300000, guid: d062101da02215d4dbc7050a13bcc9b9, type: 2}
+    - {fileID: 4300000, guid: 0d29baa794f6b034ebe787221169328a, type: 2}
+    - {fileID: 4300000, guid: e779ae046fb68b7458cc44893a3bf582, type: 2}
+    - {fileID: 4300000, guid: dfbfa6173164fb24f9732b1ad20ac0c3, type: 2}
+    - {fileID: 4300000, guid: 831fdf1b55f52b04bb17402eede936d3, type: 2}
+    - {fileID: 4300000, guid: 968fb3bc20829544690c8956afc9c066, type: 2}
+    - {fileID: 4300000, guid: 5f966de3c377ffa46a90aba8533ee184, type: 2}
+    - {fileID: 4300000, guid: 767eec1c8e487fd47adec4e2b420406e, type: 2}

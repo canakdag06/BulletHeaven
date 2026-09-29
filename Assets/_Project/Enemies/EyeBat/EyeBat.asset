@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8517484d4fede7a41be4d4f2437b6323, type: 3}
+  m_Name: EyeBat
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Enemy.EnemyDefinitionSO
+  type: 0
+  tier: 1
+  maxHealth: 10
+  damage: 5
+  moveSpeed: 1
+  attackInterval: 1
+  animationSet:
+  - {fileID: 11400000, guid: a9b924dfefe2ba24da21608c7b761fe0, type: 2}
+  materials:
+  - {fileID: 2100000, guid: f3945a1edaf7c3d459b4f654c3a62056, type: 2}
+  modelRotation: {x: 0, y: 0, z: 0}
+  modelScale: {x: 0.02, y: 0.02, z: 0.02}
+  colliderCenter: {x: 0, y: 0.9, z: 0}
+  colliderSize: {x: 0.6, y: 1.8, z: 0.6}
+  agentRadius: 0.28
+  walkAnimReferenceSpeed: 1
+  maxWalkAnimSpeed: 3
