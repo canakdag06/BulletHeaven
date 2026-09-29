@@ -32,10 +32,6 @@ namespace BulletHeaven.Enemy
         [Header("Navigation")]
         [SerializeField, Min(0.01f)] private float agentRadius = 0.28f;
 
-        [Header("Animation Names")]
-        [SerializeField] private string walkAnimName  = "Enemy_Walking";
-        [SerializeField] private string deathAnimName = "Enemy_Dying";
-
         [Header("Animation Speed")]
         [Tooltip("Movement speed (units/sec) at which the walk animation plays at 1x.")]
         [SerializeField, Min(0.01f)] private float walkAnimReferenceSpeed = 1f;
@@ -57,9 +53,6 @@ namespace BulletHeaven.Enemy
         public Vector3 ColliderCenter => colliderCenter;
         public Vector3 ColliderSize   => colliderSize;
         public float   AgentRadius    => agentRadius;
-
-        public string WalkAnimName  => walkAnimName;
-        public string DeathAnimName => deathAnimName;
 
         public float WalkAnimReferenceSpeed => walkAnimReferenceSpeed;
         public float MaxWalkAnimSpeed       => maxWalkAnimSpeed;

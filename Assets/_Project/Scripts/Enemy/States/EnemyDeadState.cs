@@ -23,7 +23,7 @@ namespace BulletHeaven.Enemy
             if (_enemy.AnimatedMesh != null)
             {
                 _enemy.AnimatedMesh.OnAnimationFinished = OnDeathAnimationFinished;
-                _enemy.AnimatedMesh.PlayAnimation(_enemy.DeathAnimName, false);
+                _enemy.AnimatedMesh.PlayAnimation(MeshAnimRole.Death, false);
             }
 
             _fallback = _enemy.StartCoroutine(FallbackRoutine());

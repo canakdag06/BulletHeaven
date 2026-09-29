@@ -15,6 +15,7 @@ MonoBehaviour:
   AnimationFPS: 30
   Animations:
   - Name: Enemy_Walking
+    Role: 0
     Meshes:
     - {fileID: 4300000, guid: f5c15e46eb0fc944fa6a19f11936a53d, type: 2}
     - {fileID: 4300000, guid: d9648392a7739b74b8e26dac4fd40f2d, type: 2}
@@ -46,6 +47,7 @@ MonoBehaviour:
     - {fileID: 4300000, guid: 1498191994095d944a54a07ab0eeba5a, type: 2}
     - {fileID: 4300000, guid: 429f4a83618a19d448e94729f54d5275, type: 2}
   - Name: Enemy_Dying
+    Role: 2
     Meshes:
     - {fileID: 4300000, guid: 32ce744eb15a23c4eb62f2d3a6a25798, type: 2}
     - {fileID: 4300000, guid: b4e57dd259bbba44bb170fda5629c060, type: 2}

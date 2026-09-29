@@ -15,6 +15,7 @@ MonoBehaviour:
   AnimationFPS: 30
   Animations:
   - Name: Mushroom_Walking
+    Role: 0
     Meshes:
     - {fileID: 4300000, guid: 9ad93ad7b882ffb41a8b35e2bf2f11b1, type: 2}
     - {fileID: 4300000, guid: 328ac24b4a7740644bc95800b41892c4, type: 2}
@@ -39,6 +40,7 @@ MonoBehaviour:
     - {fileID: 4300000, guid: 88917fad2431f424b8e4edcddab42983, type: 2}
     - {fileID: 4300000, guid: b288978c715ca1444b775e76b58c7666, type: 2}
   - Name: Mushroom_Attack
+    Role: 1
     Meshes:
     - {fileID: 4300000, guid: 3ab6375b0d3bf8443ad932e0b9284820, type: 2}
     - {fileID: 4300000, guid: 7b10e73f2e3996f4aa0144251cec7267, type: 2}
@@ -70,6 +72,7 @@ MonoBehaviour:
     - {fileID: 4300000, guid: 11512d3ffdebd46448beb5e792806be4, type: 2}
     - {fileID: 4300000, guid: cb7405cb72ff496459e1bf8fa792d975, type: 2}
   - Name: Mushroom_Death
+    Role: 2
     Meshes:
     - {fileID: 4300000, guid: 10fa5297fa4be874aa7ccb9b8d8f023b, type: 2}
     - {fileID: 4300000, guid: dba8a0e3b025a164d8ba37be4424a7fd, type: 2}

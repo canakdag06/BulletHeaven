@@ -32,7 +32,7 @@ namespace BulletHeaven.Enemy
             else
                 Debug.LogWarning($"[EnemyChaseState] {_enemy.name} is not on a NavMesh at {_enemy.transform.position}.", _enemy);
 
-            _enemy.AnimatedMesh?.PlayAnimation(_enemy.WalkAnimName, true);
+            _enemy.AnimatedMesh?.PlayAnimation(MeshAnimRole.Walk, true);
         }
 
         public void Tick()

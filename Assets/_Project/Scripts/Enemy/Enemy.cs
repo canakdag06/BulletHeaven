@@ -29,8 +29,6 @@ namespace BulletHeaven.Enemy
         public EnemyDefinitionSO Definition      { get; private set; }
 
         public float  DestinationUpdateInterval => destinationUpdateInterval;
-        public string WalkAnimName              => Definition.WalkAnimName;
-        public string DeathAnimName             => Definition.DeathAnimName;
         public int    Damage                    => Definition.Damage;
         public float  AttackInterval            => Definition.AttackInterval;
 

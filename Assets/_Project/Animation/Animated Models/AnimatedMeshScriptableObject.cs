@@ -2,6 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MeshAnimRole
+{
+    Walk = 0,
+    Attack = 1,
+    Death = 2,
+}
+
 [CreateAssetMenu(menuName = "BulletHeaven/Mesh Animation", fileName = "NewMeshAnimation")]
 public class AnimatedMeshScriptableObject : ScriptableObject
 {
@@ -12,25 +19,30 @@ public class AnimatedMeshScriptableObject : ScriptableObject
     public struct Animation
     {
         public string Name;
+        public MeshAnimRole Role;
         public List<Mesh> Meshes;
     }
 
     // Built lazily and shared by every AnimatedMesh that uses this asset.
-    [NonSerialized] private Dictionary<string, List<Mesh>> _lookup;
+    [NonSerialized] private Dictionary<MeshAnimRole, List<Mesh>> _lookup;
 
-    public bool TryGetClip(string animationName, out List<Mesh> frames)
+    public bool TryGetClip(MeshAnimRole role, out List<Mesh> frames)
     {
         if (_lookup == null)
             BuildLookup();
 
-        return _lookup.TryGetValue(animationName, out frames);
+        return _lookup.TryGetValue(role, out frames);
     }
 
     private void BuildLookup()
     {
-        _lookup = new Dictionary<string, List<Mesh>>(Animations.Count);
+        _lookup = new Dictionary<MeshAnimRole, List<Mesh>>(Animations.Count);
         for (int i = 0; i < Animations.Count; i++)
-            _lookup[Animations[i].Name] = Animations[i].Meshes;
+        {
+            Animation clip = Animations[i];
+            if (!_lookup.ContainsKey(clip.Role))
+                _lookup[clip.Role] = clip.Meshes;
+        }
     }
 
     private void OnValidate() => _lookup = null;

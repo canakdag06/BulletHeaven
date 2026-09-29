@@ -15,6 +15,7 @@ MonoBehaviour:
   AnimationFPS: 30
   Animations:
   - Name: Spider_Walking
+    Role: 0
     Meshes:
     - {fileID: 4300000, guid: 48dd03b248ad5224a9693dba7f34f617, type: 2}
     - {fileID: 4300000, guid: db4104c7673668d4487390825682f53b, type: 2}
@@ -36,6 +37,7 @@ MonoBehaviour:
     - {fileID: 4300000, guid: 21947a0e1cd938748b75a0f35ad32b82, type: 2}
     - {fileID: 4300000, guid: acebdf70af78f914aacdd7101bc0a820, type: 2}
   - Name: Spider_Attack
+    Role: 1
     Meshes:
     - {fileID: 4300000, guid: ba95225fea5fd4c498d724d67e09661a, type: 2}
     - {fileID: 4300000, guid: 501947a8df4c8bd4a918f7eed426247c, type: 2}
@@ -56,6 +58,7 @@ MonoBehaviour:
     - {fileID: 4300000, guid: 0dc0d09633161ba449e4a8ef8eb6ae2c, type: 2}
     - {fileID: 4300000, guid: 369b6490935fcd74fbcf55cc7c90606f, type: 2}
   - Name: Spider_Death
+    Role: 2
     Meshes:
     - {fileID: 4300000, guid: 8d54dfdb6d2e37448baef08b00d3a036, type: 2}
     - {fileID: 4300000, guid: 27682b9e5b81db741aab1a0a70b0d4dd, type: 2}

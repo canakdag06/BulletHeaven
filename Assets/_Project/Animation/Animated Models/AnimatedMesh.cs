@@ -41,12 +41,12 @@ public class AnimatedMesh : MonoBehaviour
         _currentFrames = null;
     }
 
-    /// <summary>Switches to the named animation and restarts from frame 0.</summary>
-    public void PlayAnimation(string animationName, bool isLooping, float speedMultiplier = 1f)
+    /// <summary>Switches to the clip with the given role and restarts from frame 0.</summary>
+    public void PlayAnimation(MeshAnimRole role, bool isLooping, float speedMultiplier = 1f)
     {
-        if (!TryFindClip(animationName, out List<Mesh> frames, out int fps))
+        if (!TryFindClip(role, out List<Mesh> frames, out int fps))
         {
-            Debug.LogWarning($"[AnimatedMesh] Clip '{animationName}' not found.", this);
+            Debug.LogWarning($"[AnimatedMesh] Clip for role '{role}' not found.", this);
             return;
         }
 
@@ -104,7 +104,7 @@ public class AnimatedMesh : MonoBehaviour
 
     // ── Private ───────────────────────────────────────────────────────────────
 
-    private bool TryFindClip(string animationName, out List<Mesh> frames, out int fps)
+    private bool TryFindClip(MeshAnimRole role, out List<Mesh> frames, out int fps)
     {
         frames = null;
         fps    = 0;
@@ -113,7 +113,7 @@ public class AnimatedMesh : MonoBehaviour
         for (int i = 0; i < _activeSet.Length; i++)
         {
             AnimatedMeshScriptableObject so = _activeSet[i];
-            if (so == null || !so.TryGetClip(animationName, out frames)) continue;
+            if (so == null || !so.TryGetClip(role, out frames)) continue;
             if (frames == null || frames.Count == 0) continue;
 
             fps = Mathf.Max(so.AnimationFPS, 1);

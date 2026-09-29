@@ -27,7 +27,5 @@ MonoBehaviour:
   colliderCenter: {x: 0, y: 0.8, z: 0}
   colliderSize: {x: 1.4, y: 1.6, z: 1.4}
   agentRadius: 0.67
-  walkAnimName: Orc_Walking
-  deathAnimName: Orc_Death
   walkAnimReferenceSpeed: 2
   maxWalkAnimSpeed: 3

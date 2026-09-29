@@ -15,6 +15,7 @@ MonoBehaviour:
   AnimationFPS: 30
   Animations:
   - Name: Orc_Walking
+    Role: 0
     Meshes:
     - {fileID: 4300000, guid: dc90852897910c541b8405ca47a65d18, type: 2}
     - {fileID: 4300000, guid: d79ad9b26d53347478e1fdc153b1396c, type: 2}
@@ -30,6 +31,7 @@ MonoBehaviour:
     - {fileID: 4300000, guid: ddce2f97d0f94144f9a5d35fc843fec4, type: 2}
     - {fileID: 4300000, guid: bea9c99ed8246c849bd7e418f534035c, type: 2}
   - Name: Orc_Attack
+    Role: 1
     Meshes:
     - {fileID: 4300000, guid: 5453ec4fd377d33419f6a146e571b705, type: 2}
     - {fileID: 4300000, guid: 3d305a7e6ccaea947a683f0dcaa2e2f2, type: 2}
@@ -58,6 +60,7 @@ MonoBehaviour:
     - {fileID: 4300000, guid: a1512d4a35b36f54fb1452c999b3fc72, type: 2}
     - {fileID: 4300000, guid: 382e1ff756b16a741a80c3ec9101aa20, type: 2}
   - Name: Orc_Death
+    Role: 2
     Meshes:
     - {fileID: 4300000, guid: 7b78aa9007e1b4d4b857ab1f9e793d16, type: 2}
     - {fileID: 4300000, guid: 5c3eb8cd9e29b234babbb292e078f3a3, type: 2}
