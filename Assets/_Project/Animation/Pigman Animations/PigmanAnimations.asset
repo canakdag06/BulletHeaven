@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4f5933e4fefca43900f61f373d7c76, type: 3}
+  m_Name: PigmanAnimations
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedMeshScriptableObject
+  AnimationFPS: 30
+  Animations:
+  - Name: Pigman_Walking
+    Role: 0
+    Meshes:
+    - {fileID: 4300000, guid: 5e68f59dc2af9ac41b0bbf90bb0e5936, type: 2}
+    - {fileID: 4300000, guid: a7c7425f968a8514b8a9c19e74db629d, type: 2}
+    - {fileID: 4300000, guid: d7c2cf24732cc99419745936f52313a8, type: 2}
+    - {fileID: 4300000, guid: de9c99800b632e248ae718d84353d077, type: 2}
+    - {fileID: 4300000, guid: 01567c09d4391af4690dfc42bca0b006, type: 2}
+    - {fileID: 4300000, guid: 2d62471fcac53054fa2f0a9a7e824482, type: 2}
+    - {fileID: 4300000, guid: ef04c79c81c026347a4a91d87d34ccff, type: 2}
+    - {fileID: 4300000, guid: a26bd0c85bc9c974a989afe73a4aff10, type: 2}
+    - {fileID: 4300000, guid: f3b117573359ff643ac0c3781e01a8b6, type: 2}
+    - {fileID: 4300000, guid: d9c5e90bb64dcbf47b541ef34bf08055, type: 2}
+  - Name: Pigman_Death
+    Role: 2
+    Meshes:
+    - {fileID: 4300000, guid: 10aedfc9e200a3c4a93b0b7f25190dac, type: 2}
+    - {fileID: 4300000, guid: 2143015d71732734a969f6d8228fd571, type: 2}
+    - {fileID: 4300000, guid: a8db63465c4b8844cb751e1ac48a4341, type: 2}
+    - {fileID: 4300000, guid: 1b2eccac6ffe9434487358daaa335184, type: 2}
+    - {fileID: 4300000, guid: 3b0a9c6fd978f9246940ad50bee17a4a, type: 2}
+    - {fileID: 4300000, guid: 1ee20b09e900fc644a1265a48695fcdf, type: 2}
+    - {fileID: 4300000, guid: c091912572e26c34db7054d1691a0e29, type: 2}
+    - {fileID: 4300000, guid: c63e29dbcf344244694554804aa306fa, type: 2}
+    - {fileID: 4300000, guid: c9945e38b2395434da4f57ca68996d53, type: 2}
+    - {fileID: 4300000, guid: b8100979bf3680a49b7b6bee72f0d1a2, type: 2}
+    - {fileID: 4300000, guid: 51a868e4f4311c545a21d14b211c5807, type: 2}
+    - {fileID: 4300000, guid: f3e67b75f60c0504fa3069662dfb34c8, type: 2}
+    - {fileID: 4300000, guid: 50a287f615153774c81b549e49da49e0, type: 2}
+    - {fileID: 4300000, guid: 1c6c39c490952814a9feb1c887f27e3c, type: 2}
+    - {fileID: 4300000, guid: 7b6b61f3e62a5024e9003c061531a7bb, type: 2}
+    - {fileID: 4300000, guid: e3d6d232bf32e5243b777aa8eeb2b892, type: 2}
+    - {fileID: 4300000, guid: c5ed038f198cba44d92c914bfa11ff03, type: 2}
+    - {fileID: 4300000, guid: af29e6323e88b40459431115b5f244e7, type: 2}
+    - {fileID: 4300000, guid: 35597b0f709a50d4da073a930d3c2ea5, type: 2}
+    - {fileID: 4300000, guid: 8c08b788d7e70854980a24f8cd57b727, type: 2}

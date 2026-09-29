@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 42d1a29736c26824ba7a3041c565c9d6
+timeCreated: 1477509984
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 75509
+  packageName: Lowpoly Pigman
+  packageVersion: 1.0
+  assetPath: Assets/Pigman/Materials/Pigman_material 3.mat
+  uploadId: 149247

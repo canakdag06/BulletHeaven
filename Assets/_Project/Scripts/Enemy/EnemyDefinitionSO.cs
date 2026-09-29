@@ -63,5 +63,6 @@ namespace BulletHeaven.Enemy
         Spider = 0,
         Mushroom = 1,
         Orc = 2,
+        Pigman = 3,
     }
 }
