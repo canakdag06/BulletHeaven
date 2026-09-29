@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8517484d4fede7a41be4d4f2437b6323, type: 3}
-  m_Name: Pigman_Tier1
+  m_Name: Pigman_Tier2
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Enemy.EnemyDefinitionSO
   type: 3
   tier: 1
-  maxHealth: 10
-  damage: 5
-  moveSpeed: 2
+  maxHealth: 20
+  damage: 10
+  moveSpeed: 1.5
   attackInterval: 1
   animationSet:
   - {fileID: 11400000, guid: 1645207fa511e704599c597f37926a49, type: 2}
   materials:
-  - {fileID: 2100000, guid: 42d1a29736c26824ba7a3041c565c9d6, type: 2}
+  - {fileID: 2100000, guid: a9fe90e456aebee4190194d01d25124b, type: 2}
   modelRotation: {x: -90, y: 0, z: 0}
-  modelScale: {x: 1.5, y: 1.5, z: 1.5}
+  modelScale: {x: 2, y: 2, z: 2}
   colliderCenter: {x: 0, y: 0.9, z: 0}
   colliderSize: {x: 0.7, y: 1.8, z: 0.7}
   agentRadius: 0.34

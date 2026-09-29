@@ -50,8 +50,12 @@ MonoBehaviour:
       maxEnemiesAlive: 60
       enemiesPerSpawn: 1
       enemies:
-      - enemy: {fileID: 11400000, guid: 7f3c8af373bf26442bc14c68ba721f9f, type: 2}
-        weight: 100
+      - enemy: {fileID: 11400000, guid: 46a35a11e446b2d478f079ff9bdf4396, type: 2}
+        weight: 33
+      - enemy: {fileID: 11400000, guid: 0c9faa97289d36241af8a9a41f75c3df, type: 2}
+        weight: 33
+      - enemy: {fileID: 11400000, guid: b1c6cb733a14e9b4495620be9bc747a1, type: 2}
+        weight: 33
     - startTime: 30
       spawnInterval: 0.75
       maxEnemiesAlive: 80
