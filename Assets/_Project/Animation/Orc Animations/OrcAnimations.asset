@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4f5933e4fefca43900f61f373d7c76, type: 3}
+  m_Name: OrcAnimations
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedMeshScriptableObject
+  AnimationFPS: 30
+  Animations:
+  - Name: Orc_Walking
+    Meshes:
+    - {fileID: 4300000, guid: dc90852897910c541b8405ca47a65d18, type: 2}
+    - {fileID: 4300000, guid: d79ad9b26d53347478e1fdc153b1396c, type: 2}
+    - {fileID: 4300000, guid: 4178120c5e2ddfe45b0f309e2218069a, type: 2}
+    - {fileID: 4300000, guid: 0ebc1792d8ae2844fb5bb13c65dfda93, type: 2}
+    - {fileID: 4300000, guid: 0aa581f65648e3c429dccd41182951df, type: 2}
+    - {fileID: 4300000, guid: 1f121fdcf10c49049b648716daeb0838, type: 2}
+    - {fileID: 4300000, guid: e996e61152b46af4f8bc0a505c411bd7, type: 2}
+    - {fileID: 4300000, guid: 8594831b7a787734a80033ce8dca79da, type: 2}
+    - {fileID: 4300000, guid: 8d5e0cb0ca6185e49980b53468d921e7, type: 2}
+    - {fileID: 4300000, guid: 095d1c8761c24ea468c0ba097ab97877, type: 2}
+    - {fileID: 4300000, guid: a6964d5aebf506f41a1c0d9da6422781, type: 2}
+    - {fileID: 4300000, guid: ddce2f97d0f94144f9a5d35fc843fec4, type: 2}
+    - {fileID: 4300000, guid: bea9c99ed8246c849bd7e418f534035c, type: 2}
+  - Name: Orc_Attack
+    Meshes:
+    - {fileID: 4300000, guid: 5453ec4fd377d33419f6a146e571b705, type: 2}
+    - {fileID: 4300000, guid: 3d305a7e6ccaea947a683f0dcaa2e2f2, type: 2}
+    - {fileID: 4300000, guid: 68d8c4008783a4e46bf9cfbff14657f7, type: 2}
+    - {fileID: 4300000, guid: f2f82af37d613c1498d49b26365cad37, type: 2}
+    - {fileID: 4300000, guid: dcbbb20ba32b33a47b990117f69691fc, type: 2}
+    - {fileID: 4300000, guid: c1f1c6ad5b9290642b139b3c8d7086a3, type: 2}
+    - {fileID: 4300000, guid: 1742ee3d57ef3b24581a9df48c3145fd, type: 2}
+    - {fileID: 4300000, guid: 81e2ee27558d6dd4b9ddf0e35581d632, type: 2}
+    - {fileID: 4300000, guid: 82d4fc66a25facd4fb1bf607d5bf05e8, type: 2}
+    - {fileID: 4300000, guid: e6daab8b72539574faed468758398a16, type: 2}
+    - {fileID: 4300000, guid: 2c283b8410d08b3479f907eebd24bb0c, type: 2}
+    - {fileID: 4300000, guid: 4b030798ef8966040872481d2f5f3b4d, type: 2}
+    - {fileID: 4300000, guid: 9cf2003a9bc9d2d448a29d3c25546e7a, type: 2}
+    - {fileID: 4300000, guid: aa348750d93258e4bb70c1ab2f906115, type: 2}
+    - {fileID: 4300000, guid: 7ee70eb4dd644cc4b9c366c03aca9c2b, type: 2}
+    - {fileID: 4300000, guid: c89514fbec2a3304db45835a065b0756, type: 2}
+    - {fileID: 4300000, guid: 6b8521b5bc76d2e449682275e3646b72, type: 2}
+    - {fileID: 4300000, guid: be82700cf16eeff4d958c6275ed72ec0, type: 2}
+    - {fileID: 4300000, guid: 96964b05699b4694a9d4efbdc6a135a7, type: 2}
+    - {fileID: 4300000, guid: 96995a3d74da33c41a1ea219afb0087a, type: 2}
+    - {fileID: 4300000, guid: d704c526763f126428533059963d1245, type: 2}
+    - {fileID: 4300000, guid: 84bd3c1f94b4b6a4cb62e20c5433e4c9, type: 2}
+    - {fileID: 4300000, guid: ee33b033bf9de1343b0b66f08e973db9, type: 2}
+    - {fileID: 4300000, guid: 235063ee25320ed40b55921d5b07291c, type: 2}
+    - {fileID: 4300000, guid: a1512d4a35b36f54fb1452c999b3fc72, type: 2}
+    - {fileID: 4300000, guid: 382e1ff756b16a741a80c3ec9101aa20, type: 2}
+  - Name: Orc_Death
+    Meshes:
+    - {fileID: 4300000, guid: 7b78aa9007e1b4d4b857ab1f9e793d16, type: 2}
+    - {fileID: 4300000, guid: 5c3eb8cd9e29b234babbb292e078f3a3, type: 2}
+    - {fileID: 4300000, guid: f9f9b62fd63b41d41ba4abedc01bbb89, type: 2}
+    - {fileID: 4300000, guid: 0f8a74779baebb2468b40f4956ab785d, type: 2}
+    - {fileID: 4300000, guid: 6def10e9253bb8f41953eee938a13c1e, type: 2}
+    - {fileID: 4300000, guid: 37087c12f4641d641b5270b351504278, type: 2}
+    - {fileID: 4300000, guid: 22e58821e3edc474586ad15fa0d6e9d4, type: 2}
+    - {fileID: 4300000, guid: f9b5530251964084dbd14c32dce24685, type: 2}
+    - {fileID: 4300000, guid: 747fd0030bd22f64585138624eec25be, type: 2}
+    - {fileID: 4300000, guid: 7c7e82c07c1548d43b93d7324eca9946, type: 2}
+    - {fileID: 4300000, guid: 548ccc4e22d0b944a927c95d9da36d29, type: 2}
+    - {fileID: 4300000, guid: f8fe9edf6b0f44c4faca34115ac25b99, type: 2}
+    - {fileID: 4300000, guid: f8bacfec4f7c90143ab5b3e9750b1875, type: 2}
+    - {fileID: 4300000, guid: c1712d61325b2e349b8f2b2433e649c1, type: 2}
+    - {fileID: 4300000, guid: 714a76493a0f21b47913b1b612759c79, type: 2}
+    - {fileID: 4300000, guid: 6bba25eaa0fc27a439b1f1019987c280, type: 2}
+    - {fileID: 4300000, guid: 3929cfdfd6b8e714e8014aacabe8c2ad, type: 2}
+    - {fileID: 4300000, guid: 01c4172affc5d714bbf08e5717ea546a, type: 2}
+    - {fileID: 4300000, guid: 30e13e0480091b34a93d45532439da74, type: 2}

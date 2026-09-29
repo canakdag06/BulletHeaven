@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8517484d4fede7a41be4d4f2437b6323, type: 3}
+  m_Name: Orc
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Enemy.EnemyDefinitionSO
+  type: 2
+  tier: 1
+  maxHealth: 50
+  damage: 10
+  moveSpeed: 1
+  attackInterval: 1
+  animationSet:
+  - {fileID: 11400000, guid: b71c8a04f79c18a42871762c648b01d7, type: 2}
+  materials:
+  - {fileID: 2100000, guid: dc66b1f7b771bef46a6e8bae9a948679, type: 2}
+  modelRotation: {x: 0, y: 0, z: 0}
+  modelScale: {x: 0.0075, y: 0.0075, z: 0.0075}
+  colliderCenter: {x: 0, y: 0.8, z: 0}
+  colliderSize: {x: 1.4, y: 1.6, z: 1.4}
+  agentRadius: 0.67
+  walkAnimName: Orc_Walking
+  deathAnimName: Orc_Death
+  walkAnimReferenceSpeed: 2
+  maxWalkAnimSpeed: 3
