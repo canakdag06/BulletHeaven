@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: fe579902405fe0c428653eb16830483e, type: 3}
+  m_Motion: {fileID: 7400000, guid: a5fa8989116c00d4e91a2f10096404e2, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -152,7 +152,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 80593b887a1e7bc4cbf8e90e2edcd861, type: 2}
+    m_Motion: {fileID: 7400000, guid: 9d5f40afcc57d0a4e99ac95b574b126f, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -160,7 +160,7 @@ BlendTree:
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d7527e233854a404987eba633f0d50f0, type: 2}
+    m_Motion: {fileID: 7400000, guid: e18855364ca8f37489b83cd45125b30e, type: 3}
     m_Threshold: 0.25
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1
@@ -168,26 +168,26 @@ BlendTree:
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: dd7a4984e79e47048ab82cb1b3600f5b, type: 2}
+    m_Motion: {fileID: 7400000, guid: 4f1dafea7e5e9c3439b0fbab57a88bc3, type: 3}
     m_Threshold: 0.5
     m_Position: {x: 0, y: -1}
-    m_TimeScale: 1
+    m_TimeScale: 3
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 3ee11fdf427f0724188bcd2d36348a8c, type: 2}
+    m_Motion: {fileID: 7400000, guid: d203047aa612bf04d85f4a87e011f0c7, type: 3}
     m_Threshold: 0.75
     m_Position: {x: -1, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 3
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 8b657ae1ab50f6143aa931d2502ad620, type: 2}
+    m_Motion: {fileID: 7400000, guid: 5262b85f0b6cdeb42b166e286ae5074c, type: 3}
     m_Threshold: 1
     m_Position: {x: 1, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 3
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
