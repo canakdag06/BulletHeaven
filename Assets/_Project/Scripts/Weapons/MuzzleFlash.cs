@@ -1,33 +1,19 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class MuzzleFlash : PoolableBehaviour
+public class MuzzleFlash : MonoBehaviour
 {
-    public override EPoolType PoolType => EPoolType.MuzzleFlash;
-
     private ParticleSystem _ps;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _ps = GetComponent<ParticleSystem>();
     }
 
-    public void Play(Vector3 position, Quaternion rotation)
+    public void Play()
     {
-        transform.SetPositionAndRotation(position, rotation);
-        _ps.Play();
-    }
-
-    public override void OnRelease()
-    {
-        base.OnRelease();
+        // Restart so rapid shots retrigger the effect instead of being ignored while it is still playing.
         _ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-    }
-
-    private void OnParticleSystemStopped()
-    {
-        if (!InPool)
-            Release();
+        _ps.Play();
     }
 }

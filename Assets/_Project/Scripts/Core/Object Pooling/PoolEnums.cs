@@ -5,6 +5,5 @@ public enum EPoolType
     BulletTrail = 1,
     Enemy = 2,
     BloodDirectional = 3,
-    MuzzleFlash = 4,
     Projectile = 5,
 }

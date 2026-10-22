@@ -15,6 +15,9 @@ namespace BulletHeaven.Control
         [SerializeField] private float maxShootAngle = 15f;
         [SerializeField] private LayerMask enemyLayer;
 
+        [Header("Visuals")]
+        [SerializeField] private MuzzleFlash muzzleFlash;
+
         [Header("Dependencies")]
         [SerializeField] private TargetingSystem targetingSystem;
 
@@ -69,13 +72,12 @@ namespace BulletHeaven.Control
             if (projectile == null) return;
 
             projectile.Launch(firePoint.position, direction, projectileSpeed, weaponDamage, weaponRange, enemyLayer);
-            SpawnMuzzleFlash();
+            PlayMuzzleFlash();
         }
 
-        private void SpawnMuzzleFlash()
+        private void PlayMuzzleFlash()
         {
-            MuzzleFlash flash = PoolManager.Instance.Get(EPoolType.MuzzleFlash) as MuzzleFlash;
-            flash?.Play(firePoint.position, firePoint.rotation);
+            if (muzzleFlash) muzzleFlash.Play();
         }
     }
 }
