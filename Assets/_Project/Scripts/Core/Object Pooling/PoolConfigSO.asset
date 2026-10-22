@@ -29,3 +29,7 @@ MonoBehaviour:
     type: 4
     prefab: {fileID: 5399198747534940445, guid: 3a2c3888ce45df24e919301d33e6be91, type: 3}
     initialSize: 10
+  - name: Projectile
+    type: 5
+    prefab: {fileID: 7549380978474511614, guid: 96c9d4ac1c9595742a1dcdffc054f8be, type: 3}
+    initialSize: 50

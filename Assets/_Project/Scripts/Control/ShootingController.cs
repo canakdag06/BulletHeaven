@@ -10,11 +10,10 @@ namespace BulletHeaven.Control
         [SerializeField] private float fireRate = 0.2f;
         [SerializeField] private float weaponRange = 50f;
         [SerializeField] private float weaponDamage = 10f;
+        [SerializeField] private float projectileSpeed = 20f;
+        [SerializeField] private float aimHeight = 1f;
         [SerializeField] private float maxShootAngle = 15f;
         [SerializeField] private LayerMask enemyLayer;
-
-        [Header("Visuals")]
-        [SerializeField] private GameObject hitEffectPrefab;
 
         [Header("Dependencies")]
         [SerializeField] private TargetingSystem targetingSystem;
@@ -42,7 +41,7 @@ namespace BulletHeaven.Control
             _fireTimer -= Time.deltaTime;
             if (_fireTimer <= 0f)
             {
-                PerformHitscan(target);
+                FireProjectile(target);
                 _fireTimer = fireRate;
             }
         }
@@ -60,30 +59,17 @@ namespace BulletHeaven.Control
             return Vector3.Angle(forward, directionToTarget) <= maxShootAngle; // if the angle is less than the max shoot angle, we consider it as facing
         }
 
-        private void PerformHitscan(Transform target)
+        private void FireProjectile(Transform target)
         {
-            Vector3 targetCenter = target.position + Vector3.up * 1f;
+            Vector3 targetCenter = target.position + Vector3.up * aimHeight;
             Vector3 direction = targetCenter - firePoint.position;
+            if (direction.sqrMagnitude < 0.0001f) direction = transform.forward;
 
-            if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, weaponRange, enemyLayer))
-            {
-                if (hit.collider.TryGetComponent(out IDamageable damageable))
-                    damageable.TakeDamage(weaponDamage);
+            Projectile projectile = PoolManager.Instance.Get(EPoolType.Projectile) as Projectile;
+            if (projectile == null) return;
 
-                if (hitEffectPrefab)
-                {
-                    GameObject effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-                    Destroy(effect, 1f);
-                }
-                SpawnMuzzleFlash();
-                SpawnBulletTrail(firePoint.position, hit.point);
-            }
-        }
-
-        private void SpawnBulletTrail(Vector3 start, Vector3 end)
-        {
-            BulletTrail trail = PoolManager.Instance.Get(EPoolType.BulletTrail) as BulletTrail;
-            trail?.SetUpTrail(start, end);
+            projectile.Launch(firePoint.position, direction, projectileSpeed, weaponDamage, weaponRange, enemyLayer);
+            SpawnMuzzleFlash();
         }
 
         private void SpawnMuzzleFlash()
