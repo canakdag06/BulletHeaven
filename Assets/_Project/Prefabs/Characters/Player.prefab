@@ -216,7 +216,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  detectionRadius: 10
+  detectionRadius: 7
   targetCheckInterval: 0.2
 --- !u!1001 &478650871134593969
 PrefabInstance:
