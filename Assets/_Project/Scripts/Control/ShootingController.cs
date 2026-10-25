@@ -38,10 +38,11 @@ namespace BulletHeaven.Control
 
         private void TryShoot(Transform target)
         {
+            _fireTimer -= Time.deltaTime;
+
             if (target == null) return;
             if (!IsFacingTarget(target)) return;
-
-            _fireTimer -= Time.deltaTime;
+            
             if (_fireTimer <= 0f)
             {
                 FireProjectile(target);

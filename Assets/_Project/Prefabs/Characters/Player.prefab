@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.ShootingController
   firePoint: {fileID: 3162706399941855221}
-  fireRate: 0.2
+  fireRate: 1
   weaponRange: 7
   weaponDamage: 10
   projectileSpeed: 20
