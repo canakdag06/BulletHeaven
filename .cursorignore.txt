@@ -1,24 +1,39 @@
-# Unity geçici ve build klasörleri
+# Unity geçici, build ve sistem klasörleri
 Library/
 Temp/
 Logs/
 Obj/
 UserSettings/
 MemoryCaptures/
-UserSettings/
 Build/
 Builds/
-Assets/Asset Packs/
+StagingArea/
+UserSettings/
 
-# Büyük binary asset dosyaları (İsteğe bağlı ama önerilir)
+# IDE ve Derleme Dosyaları (Cursor'ın okumasına gerek yoktur)
+.vs/
+.idea/
+*.csproj
+*.sln
+*.userprefs
+*.pidb
+*.booproj
+
+# Ağır Binary Assetler (Token tasarrufu için)
 *.png
 *.jpg
 *.jpeg
 *.psd
+*.tga
 *.fbx
 *.obj
 *.mp3
 *.wav
 *.ogg
-*.asset
-*.prefab
+*.mp4
+*.mov
+
+# Not: *.asset ve *.prefab dosyalarını, AI'ın sahne/prefab yapılarını
+# ve ScriptableObject'leri okuyabilmesi için çıkardım. 
+# Çok devasa asset paketleri hariç tutmak istersen Assets/Asset Packs/ yeterlidir.
+Assets/Asset Packs/
