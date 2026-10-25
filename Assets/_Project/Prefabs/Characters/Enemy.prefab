@@ -123,6 +123,8 @@ MonoBehaviour:
   model: {fileID: 0}
   animatedMesh: {fileID: 856321323405426966}
   meshRenderer: {fileID: 719748906470138594}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.15
 --- !u!1 &479284930162970077
 GameObject:
   m_ObjectHideFlags: 0

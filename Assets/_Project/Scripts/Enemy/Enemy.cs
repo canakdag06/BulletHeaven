@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using BulletHeaven.Core;
+using System.Collections;
 
 namespace BulletHeaven.Enemy
 {
@@ -21,6 +22,14 @@ namespace BulletHeaven.Enemy
         [SerializeField] private Transform    model;
         [SerializeField] private AnimatedMesh animatedMesh;
         [SerializeField] private MeshRenderer meshRenderer;
+
+        [Header("Hit Flash")]
+        [SerializeField] private Color flashColor    = Color.red;
+        [SerializeField] private float flashDuration = 0.25f;
+        private MaterialPropertyBlock _propBlock;
+        private Coroutine             _flashRoutine;
+        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        private static readonly int ColorId     = Shader.PropertyToID("_Color");
 
         public NavMeshAgent      Agent           { get; private set; }
         public Collider          HitCollider     { get; private set; }
@@ -56,6 +65,7 @@ namespace BulletHeaven.Enemy
             if (model == null && animatedMesh != null) model = animatedMesh.transform;
 
             _defaultMaterials = meshRenderer != null ? meshRenderer.sharedMaterials : null;
+            _propBlock = new MaterialPropertyBlock();
         }
 
         private void Update()
@@ -79,6 +89,13 @@ namespace BulletHeaven.Enemy
 
         public override void OnRelease()
         {
+            if(_flashRoutine != null)
+            {
+                StopCoroutine(_flashRoutine);
+                _flashRoutine = null;
+            }
+            ClearHitFlash();
+
             base.OnRelease();
             OnEnemyRemoved = null;
 
@@ -147,6 +164,7 @@ namespace BulletHeaven.Enemy
 
             _currentHealth -= amount;
             SpawnHitEffect();
+            PlayHitFlash();
 
             if (_currentHealth <= 0)
                 Die();
@@ -206,6 +224,39 @@ namespace BulletHeaven.Enemy
 
             Vector3 direction = (PlayerTransform.position - transform.position).normalized;
             effect.Play(transform.position + Vector3.up, direction);
+        }
+
+        private void PlayHitFlash()
+        {
+            if(meshRenderer == null) return;
+
+            if(_flashRoutine != null)
+            {
+                StopCoroutine(_flashRoutine);
+            }
+            _flashRoutine = StartCoroutine(HitFlashRoutine());
+        }
+
+        private IEnumerator HitFlashRoutine()
+        {
+            ApplyFlash(flashColor);
+            yield return new WaitForSeconds(flashDuration);
+            ClearHitFlash();
+            _flashRoutine = null;
+        }
+
+        private void ApplyFlash(Color albedo)
+        {
+            meshRenderer.GetPropertyBlock(_propBlock);
+            _propBlock.SetColor(BaseColorId, albedo);
+            _propBlock.SetColor(ColorId, albedo);
+            meshRenderer.SetPropertyBlock(_propBlock);
+        }
+
+        private void ClearHitFlash()
+        {
+            if(meshRenderer == null) return;
+            meshRenderer.SetPropertyBlock(null);
         }
 
         /// <summary>
