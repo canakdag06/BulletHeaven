@@ -84,6 +84,15 @@ namespace BulletHeaven.Collectibles
 
         // ── Unity Messages ────────────────────────────────────────────────────
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (InPool || !other.CompareTag("Player")) return;
+            if (!other.TryGetComponent(out PlayerCollector collector)) return;
+
+            _collector = collector;
+            Complete();
+        }
+
         private void Update()
         {
             if (_collector == null) return;
