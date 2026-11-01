@@ -41,12 +41,18 @@ namespace Benjathemaker
         {
             if (isRotating)
             {
-                Vector3 rotationVector = new Vector3(
+                Vector3 rotation = new Vector3(
                     rotateX ? 1 : 0,
                     rotateY ? 1 : 0,
                     rotateZ ? 1 : 0
-                );
-                transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
+                ) * (rotationSpeed * Time.deltaTime);
+
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    Transform child = transform.GetChild(i);
+                    if (child.gameObject.activeSelf)
+                        child.Rotate(rotation);
+                }
             }
 
             if (isFloating)
