@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d06082dc92c8449a9720b8a7c01410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Collectibles.PlayerCollector
-  pickupRadius: 3
+  pickupRadius: 1
   collectibleMask:
     serializedVersion: 2
     m_Bits: 1024
