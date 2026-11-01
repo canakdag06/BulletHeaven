@@ -29,3 +29,7 @@ MonoBehaviour:
     type: 5
     prefab: {fileID: 7549380978474511614, guid: 96c9d4ac1c9595742a1dcdffc054f8be, type: 3}
     initialSize: 50
+  - name: ExpGem
+    type: 6
+    prefab: {fileID: 811046840347445561, guid: 1c7247011b701dc468ddbbd4a8d9683c, type: 3}
+    initialSize: 300

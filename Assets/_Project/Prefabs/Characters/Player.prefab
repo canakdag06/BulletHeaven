@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 8347903929733621289}
   - component: {fileID: 4675789560060695743}
   - component: {fileID: 657201048365958342}
+  - component: {fileID: 5220584258912477341}
+  - component: {fileID: 4737686619638806881}
   - component: {fileID: 98552867473073938}
   - component: {fileID: 4964893753460716801}
   m_Layer: 6
@@ -174,6 +176,39 @@ MonoBehaviour:
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.15
   flashCount: 2
+--- !u!114 &5220584258912477341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657208915989901591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c2e0077d335994db016816edb52337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Core.PlayerExperience
+  baseExpRequirement: 5
+  growthExponent: 1.5
+  maxLevel: 99
+--- !u!114 &4737686619638806881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657208915989901591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d06082dc92c8449a9720b8a7c01410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Collectibles.PlayerCollector
+  pickupRadius: 3
+  collectibleMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  scanInterval: 0.1
+  maxHitsPerScan: 64
 --- !u!114 &98552867473073938
 MonoBehaviour:
   m_ObjectHideFlags: 0

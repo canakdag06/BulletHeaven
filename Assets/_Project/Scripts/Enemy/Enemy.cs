@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using BulletHeaven.Core;
+using BulletHeaven.Collectibles;
 using System.Collections;
 
 namespace BulletHeaven.Enemy
@@ -184,7 +185,16 @@ namespace BulletHeaven.Enemy
         {
             GameManager.Instance?.OnEnemyDefeated();
             OnEnemyRemoved?.Invoke();
+            DropExperience();
             ChangeState(new EnemyDeadState(this));
+        }
+
+        private void DropExperience()
+        {
+            if (Definition == null) return;
+
+            if (PoolManager.Instance.Get(EPoolType.ExpGem) is ExpGem gem)
+                gem.Initialize(transform.position, ExpDropTable.Roll(Definition.Tier));
         }
 
         private void ApplyBody(EnemyDefinitionSO definition)
