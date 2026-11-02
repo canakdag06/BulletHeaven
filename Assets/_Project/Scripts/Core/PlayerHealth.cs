@@ -11,8 +11,8 @@ namespace BulletHeaven.Core
 
         [Header("Hit Flash")]
         [SerializeField] private Color  flashColor    = Color.red;
-        [SerializeField] private float  flashDuration = 0.15f;
-        [SerializeField] private int    flashCount    = 2;
+        [SerializeField] private float  flashDuration = 2f;
+        [SerializeField] private int    flashCount    = 10;
 
         public float CurrentHealth  { get; private set; }
         public float MaxHealth      => maxHealth;
@@ -26,6 +26,7 @@ namespace BulletHeaven.Core
         private MaterialPropertyBlock propBlock;
         private Coroutine             flashCoroutine;
         private Animator              animator;
+        private bool                  isFlashing;
 
         private static readonly int BaseColorId    = Shader.PropertyToID("_BaseColor");
         private static readonly int ColorId        = Shader.PropertyToID("_Color");
@@ -57,13 +58,11 @@ namespace BulletHeaven.Core
 
         public void TakeDamage(float amount)
         {
-            if (IsDead || IsInvincible) return;
+            if (IsDead || IsInvincible || isFlashing) return;
 
             CurrentHealth = Mathf.Max(CurrentHealth - amount, 0f);
             OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
 
-            if (flashCoroutine != null)
-                StopCoroutine(flashCoroutine);
             flashCoroutine = StartCoroutine(FlashRoutine());
 
             if (CurrentHealth <= 0f)
@@ -74,16 +73,24 @@ namespace BulletHeaven.Core
 
         private IEnumerator FlashRoutine()
         {
-            float halfStep = flashDuration / (flashCount * 2);
+            isFlashing = true;
+
+            // Longer gaps first, then shorter, so the blink speeds up.
+            // Weights  n, n-1, ... 1  sum to n*(n+1)/2 and fill flashDuration.
+            int weightSum = flashCount * (flashCount + 1) / 2;
 
             for (int i = 0; i < flashCount; i++)
             {
+                float step     = flashDuration * (flashCount - i) / weightSum;
+                float halfStep = step * 0.5f;
+
                 SetTintColor(flashColor);
                 yield return new WaitForSeconds(halfStep);
                 SetTintColor(Color.white);
                 yield return new WaitForSeconds(halfStep);
             }
 
+            isFlashing     = false;
             flashCoroutine = null;
         }
 
@@ -107,8 +114,15 @@ namespace BulletHeaven.Core
 
         private void ResetHealth()
         {
+            if (flashCoroutine != null)
+            {
+                StopCoroutine(flashCoroutine);
+                flashCoroutine = null;
+            }
+
             IsDead        = false;
             IsInvincible  = false;
+            isFlashing    = false;
             CurrentHealth = maxHealth;
             OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
 
