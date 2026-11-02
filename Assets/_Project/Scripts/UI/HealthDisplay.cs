@@ -96,15 +96,23 @@ namespace BulletHeaven.UI
             float target = Mathf.Clamp01(current / max);
             _fillTween?.Kill();
 
+            RectTransform fillRect  = healthFill.rectTransform;
+            Vector2       anchorMax = new Vector2(target, fillRect.anchorMax.y);
+
+            if (target > 0f)
+                healthFill.enabled = true;
+
             if (instant)
             {
-                healthFill.fillAmount = target;
+                fillRect.anchorMax = anchorMax;
+                healthFill.enabled = target > 0f;
                 return;
             }
 
-            _fillTween = healthFill
-                .DOFillAmount(target, fillDuration)
-                .SetEase(fillEase);
+            _fillTween = fillRect
+                .DOAnchorMax(anchorMax, fillDuration)
+                .SetEase(fillEase)
+                .OnComplete(() => healthFill.enabled = target > 0f);
         }
 
         private void PlayHitFeedback()
