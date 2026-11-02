@@ -283,7 +283,7 @@ MonoBehaviour:
   levelText: {fileID: 8616562286871059611}
   fillDuration: 0.25
   fillEase: 6
-  punchStrength: 0.3
+  punchStrength: 0.5
   punchDuration: 0.3
 --- !u!1 &3983222310948865548
 GameObject:
