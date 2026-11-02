@@ -1,13 +1,28 @@
+using System;
 using UnityEngine;
+using BulletHeaven.Collectibles;
 
 namespace BulletHeaven.Enemy
 {
+    [Serializable]
+    public struct ExpDropEntry
+    {
+        public ExpTier Tier;
+        [Min(0)] public int Weight;
+    }
+
     [CreateAssetMenu(menuName = "BulletHeaven/Enemy Definition", fileName = "NewEnemyDefinition")]
     public class EnemyDefinitionSO : ScriptableObject
     {
         [Header("Identity")]
         [SerializeField] private EnemyType type = EnemyType.Spider;
         [SerializeField, Min(1)] private int tier = 1;
+
+        [Header("Experience")]
+        [SerializeField] private ExpDropEntry[] expDrops =
+        {
+            new() { Tier = ExpTier.LowEXP, Weight = 100 },
+        };
 
         [Header("Stats")]
         [SerializeField, Min(1)]    private int   maxHealth      = 10;
@@ -40,6 +55,31 @@ namespace BulletHeaven.Enemy
 
         public EnemyType Type         => type;
         public int    Tier           => tier;
+
+        public ExpTier RollExpTier()
+        {
+            if (expDrops == null || expDrops.Length == 0)
+                return ExpTier.LowEXP;
+
+            int total = 0;
+            for (int i = 0; i < expDrops.Length; i++)
+                total += expDrops[i].Weight;
+
+            if (total <= 0)
+                return ExpTier.LowEXP;
+
+            int roll       = UnityEngine.Random.Range(0, total);
+            int cumulative = 0;
+
+            for (int i = 0; i < expDrops.Length; i++)
+            {
+                cumulative += expDrops[i].Weight;
+                if (roll < cumulative)
+                    return expDrops[i].Tier;
+            }
+
+            return expDrops[expDrops.Length - 1].Tier;
+        }
         public int    MaxHealth      => maxHealth;
         public int    Damage         => damage;
         public float  MoveSpeed      => moveSpeed;

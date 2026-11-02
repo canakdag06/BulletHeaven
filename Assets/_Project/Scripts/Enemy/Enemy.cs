@@ -194,7 +194,7 @@ namespace BulletHeaven.Enemy
             if (Definition == null) return;
 
             if (PoolManager.Instance.Get(EPoolType.ExpGem) is ExpGem gem)
-                gem.Initialize(transform.position, ExpDropTable.Roll(Definition.Tier));
+                gem.Initialize(transform.position, Definition.RollExpTier());
         }
 
         private void ApplyBody(EnemyDefinitionSO definition)
