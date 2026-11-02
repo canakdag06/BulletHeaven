@@ -6,9 +6,6 @@ using BulletHeaven.Enemy;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Config")]
-    [SerializeField] private LevelConfigSO levelConfigSO;
-
     [Header("Spawn Settings")]
     [SerializeField] private float spawnRadius = 20f;
     [Tooltip("Max distance from a random spawn point to the nearest NavMesh position.")]
@@ -29,13 +26,14 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        if (levelConfigSO == null)
+        LevelConfigSO levelConfig = GameManager.Instance != null ? GameManager.Instance.LevelConfig : null;
+        if (levelConfig == null)
         {
-            Debug.LogError("[EnemySpawner] LevelConfigSO is not assigned.");
+            Debug.LogError("[EnemySpawner] GameManager.LevelConfig is not assigned.");
             return;
         }
 
-        _levelData = levelConfigSO.GetLevel(GameManager.Instance.CurrentLevel);
+        _levelData = levelConfig.GetLevel(GameManager.Instance.CurrentLevel);
         if (_levelData == null || _levelData.waveStages == null || _levelData.waveStages.Count == 0)
         {
             Debug.LogError($"[EnemySpawner] Level {GameManager.Instance.CurrentLevel} is missing or has no wave stages.");
