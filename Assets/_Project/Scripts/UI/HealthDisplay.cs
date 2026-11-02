@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using BulletHeaven.Core;
 
@@ -7,7 +8,12 @@ namespace BulletHeaven.UI
 {
     public class HealthDisplay : MonoBehaviour
     {
+        [SerializeField] private Image            healthFill;
         [SerializeField] private TextMeshProUGUI healthText;
+
+        [Header("Fill")]
+        [SerializeField] private float fillDuration = 0.25f;
+        [SerializeField] private Ease  fillEase     = Ease.OutQuad;
 
         [Header("Hit Feedback")]
         [SerializeField] private Color hitColor       = Color.red;
@@ -20,6 +26,7 @@ namespace BulletHeaven.UI
         private Color        _normalColor;
         private Tween        _colorTween;
         private Tween        _punchTween;
+        private Tween        _fillTween;
 
         private void Start()
         {
@@ -39,13 +46,13 @@ namespace BulletHeaven.UI
             if (GameManager.Instance != null)
                 GameManager.Instance.OnRoundReset += OnRoundReset;
 
-            RefreshText(_playerHealth.CurrentHealth);
+            Refresh(_playerHealth.CurrentHealth, _playerHealth.MaxHealth, instant: true);
         }
 
         private void OnDestroy()
         {
-            _colorTween?.Kill();
-            _punchTween?.Kill();
+            KillTweens();
+            _fillTween?.Kill();
 
             if (_playerHealth != null)
                 _playerHealth.OnHealthChanged -= UpdateDisplay;
@@ -62,7 +69,8 @@ namespace BulletHeaven.UI
 
             _lastHealth = _playerHealth.CurrentHealth;
             KillTweens();
-            RefreshText(_playerHealth.CurrentHealth);
+            _fillTween?.Kill();
+            Refresh(_playerHealth.CurrentHealth, _playerHealth.MaxHealth, instant: true);
         }
 
         private void UpdateDisplay(float current, float max)
@@ -70,7 +78,7 @@ namespace BulletHeaven.UI
             bool tookDamage = current < _lastHealth;
             _lastHealth = current;
 
-            RefreshText(current);
+            Refresh(current, max, instant: false);
 
             if (tookDamage)
                 PlayHitFeedback();
@@ -78,27 +86,43 @@ namespace BulletHeaven.UI
 
         // ── Helpers ───────────────────────────────────────────────────────────
 
-        private void RefreshText(float current)
+        private void Refresh(float current, float max, bool instant)
         {
-            if (healthText == null) return;
-            healthText.SetText("{0}", Mathf.CeilToInt(current));
+            if (healthText != null)
+                healthText.SetText("{0}", Mathf.CeilToInt(current));
+
+            if (healthFill == null || max <= 0f) return;
+
+            float target = Mathf.Clamp01(current / max);
+            _fillTween?.Kill();
+
+            if (instant)
+            {
+                healthFill.fillAmount = target;
+                return;
+            }
+
+            _fillTween = healthFill
+                .DOFillAmount(target, fillDuration)
+                .SetEase(fillEase);
         }
 
         private void PlayHitFeedback()
         {
-            if (healthText == null) return;
-
             KillTweens();
 
-            _colorTween = healthText
-                .DOColor(hitColor, colorDuration * 0.5f)
-                .SetEase(Ease.OutQuad)
-                .SetLoops(2, LoopType.Yoyo)
-                .OnComplete(() => healthText.color = _normalColor);
+            if (healthText != null)
+            {
+                _colorTween = healthText
+                    .DOColor(hitColor, colorDuration * 0.5f)
+                    .SetEase(Ease.OutQuad)
+                    .SetLoops(2, LoopType.Yoyo)
+                    .OnComplete(() => healthText.color = _normalColor);
+            }
 
-            _punchTween = healthText.rectTransform
+            _punchTween = transform
                 .DOPunchScale(Vector3.one * punchStrength, punchDuration, vibrato: 1, elasticity: 0.5f)
-                .OnComplete(() => healthText.rectTransform.localScale = Vector3.one);
+                .OnComplete(() => transform.localScale = Vector3.one);
         }
 
         private void KillTweens()
@@ -108,11 +132,10 @@ namespace BulletHeaven.UI
             _colorTween = null;
             _punchTween = null;
 
+            transform.localScale = Vector3.one;
+
             if (healthText != null)
-            {
-                healthText.color                    = _normalColor;
-                healthText.rectTransform.localScale = Vector3.one;
-            }
+                healthText.color = _normalColor;
         }
     }
 }
