@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpiderGreen
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Enemy.EnemyDefinitionSO
   type: 0
-  tier: 2
+  tier: 3
   maxHealth: 30
   damage: 10
   moveSpeed: 4
