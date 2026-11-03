@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Core.PlayerExperience
   baseExpRequirement: 5
-  growthExponent: 1.5
+  growthExponent: 1.1
   maxLevel: 99
 --- !u!114 &4737686619638806881
 MonoBehaviour:
