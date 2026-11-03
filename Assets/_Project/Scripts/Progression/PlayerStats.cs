@@ -5,12 +5,13 @@ using UnityEngine;
 namespace BulletHeaven.Progression
 {
     /// <summary>
-    /// Holds every stat modifier applied to the player. Base values stay on the systems that own them
-    /// (PlayerController, PlayerHealth, weapons…); they ask this component for the final value.
-    /// Final value = (base + Σflat) * (1 + Σpercent).
+    /// Single source of the player's stats: base values come from <see cref="PlayerBaseStatsSO"/>,
+    /// modifiers are added at runtime. Final value = (base + Σflat) * (1 + Σpercent).
     /// </summary>
     public class PlayerStats : MonoBehaviour
     {
+        [SerializeField] private PlayerBaseStatsSO baseStats;
+
         private struct Entry
         {
             public StatModifier modifier;
@@ -26,16 +27,26 @@ namespace BulletHeaven.Progression
         /// <summary>Fired once per stat whose modifiers changed.</summary>
         public event Action<StatType> OnStatChanged;
 
+        public PlayerBaseStatsSO BaseStats => baseStats;
+
+        private void Awake()
+        {
+            if (baseStats == null)
+                Debug.LogError("[PlayerStats] PlayerBaseStatsSO is not assigned; falling back to neutral defaults.", this);
+        }
+
         // ── Queries ───────────────────────────────────────────────────────────
 
+        public float Get(StatType type) => Apply(type, GetBase(type));
+
+        public float GetBase(StatType type) => baseStats != null ? baseStats.GetBase(type) : DefaultBase(type);
+
+        /// <summary>Applies this stat's modifiers to a value owned elsewhere (e.g. a weapon's own base damage).</summary>
         public float Apply(StatType type, float baseValue)
         {
             int i = (int)type;
             return (baseValue + _flat[i]) * (1f + _percent[i]);
         }
-
-        /// <summary>Final value for stats without an owner-side base (multipliers start at 1, the rest at 0).</summary>
-        public float Get(StatType type) => Apply(type, DefaultBase(type));
 
         // ── Modifiers ─────────────────────────────────────────────────────────
 
@@ -97,6 +108,8 @@ namespace BulletHeaven.Progression
             StatType.Area            => 1f,
             StatType.ProjectileSpeed => 1f,
             StatType.Duration        => 1f,
+            StatType.MaxHealth       => 1f,
+            StatType.PickupRadius    => 0.1f,
             _                        => 0f
         };
     }

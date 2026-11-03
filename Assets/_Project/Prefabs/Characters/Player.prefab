@@ -158,7 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d19528955442ad499292501a151cc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 5
   rotationSpeed: 15
   targetingSystem: {fileID: 4964893753460716801}
   joystick: {fileID: 0}
@@ -174,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fdb347bf408cfe468b60f0d8c846eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Progression.PlayerStats
+  baseStats: {fileID: 11400000, guid: 3f8b1d6e9a2c4e7b8d5f0a1c6e9b2d47, type: 2}
 --- !u!114 &657201048365958342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,12 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1e747bba0180147a378b9a58da22df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Control.PlayerHealth
-  maxHealth: 100
-  armor: 0
-  regen: 0
   regenTickInterval: 1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 2
+  flashDuration: 1
   flashCount: 10
 --- !u!114 &5220584258912477341
 MonoBehaviour:
@@ -220,7 +217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d06082dc92c8449a9720b8a7c01410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Collectibles.PlayerCollector
-  pickupRadius: 1
   collectibleMask:
     serializedVersion: 2
     m_Bits: 1024

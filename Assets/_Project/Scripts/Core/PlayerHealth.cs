@@ -5,13 +5,10 @@ using BulletHeaven.Progression;
 
 namespace BulletHeaven.Core
 {
+    [RequireComponent(typeof(PlayerStats))]
     public class PlayerHealth : MonoBehaviour, IDamageable
     {
         [Header("Settings")]
-        [SerializeField] private float maxHealth = 100f;
-        [SerializeField, Min(0f)] private float armor;
-        [Tooltip("Health restored per second.")]
-        [SerializeField, Min(0f)] private float regen;
         [SerializeField, Min(0.1f)] private float regenTickInterval = 1f;
 
         [Header("Hit Flash")]
@@ -20,9 +17,9 @@ namespace BulletHeaven.Core
         [SerializeField] private int    flashCount    = 10;
 
         public float CurrentHealth  { get; private set; }
-        public float MaxHealth      => Mathf.Max(1f, stats != null ? stats.Apply(StatType.MaxHealth, maxHealth) : maxHealth);
-        public float Armor          => Mathf.Max(0f, stats != null ? stats.Apply(StatType.Armor, armor) : armor);
-        public float Regen          => Mathf.Max(0f, stats != null ? stats.Apply(StatType.Regen, regen) : regen);
+        public float MaxHealth      => Mathf.Max(1f, stats.Get(StatType.MaxHealth));
+        public float Armor          => Mathf.Max(0f, stats.Get(StatType.Armor));
+        public float Regen          => Mathf.Max(0f, stats.Get(StatType.Regen));
         public bool  IsDead         { get; private set; }
         public bool  IsInvincible   { get; private set; }
 
@@ -57,8 +54,7 @@ namespace BulletHeaven.Core
             if (GameManager.Instance != null)
                 GameManager.Instance.OnRoundReset += ResetHealth;
 
-            if (stats != null)
-                stats.OnStatChanged += HandleStatChanged;
+            stats.OnStatChanged += HandleStatChanged;
         }
 
         private void OnDestroy()

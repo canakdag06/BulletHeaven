@@ -4,10 +4,10 @@ using BulletHeaven.Progression;
 
 namespace BulletHeaven.Control
 {
+    [RequireComponent(typeof(PlayerStats))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Movement Settings")]
-        [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationSpeed = 15f;
 
         [Header("Dependencies")]
@@ -19,7 +19,7 @@ namespace BulletHeaven.Control
         private PlayerStats stats;
         private Vector3 moveInput;
 
-        public float MoveSpeed => stats != null ? stats.Apply(StatType.MoveSpeed, moveSpeed) : moveSpeed;
+        public float MoveSpeed => Mathf.Max(0f, stats.Get(StatType.MoveSpeed));
 
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveZHash = Animator.StringToHash("MoveZ");

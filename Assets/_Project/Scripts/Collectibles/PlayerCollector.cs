@@ -8,20 +8,16 @@ namespace BulletHeaven.Collectibles
     /// Scans for collectibles around the player without allocating (NonAlloc + preallocated buffer)
     /// and hands each one off through <see cref="ICollectible"/>.
     /// </summary>
+    [RequireComponent(typeof(PlayerStats))]
     public class PlayerCollector : MonoBehaviour
     {
-        [SerializeField, Min(0.1f)] private float     pickupRadius  = 3f;
         [SerializeField]            private LayerMask collectibleMask;
         [SerializeField, Min(0f)]   private float     scanInterval  = 0.1f;
         [SerializeField, Min(1)]    private int       maxHitsPerScan = 64;
 
         public PlayerExperience Experience { get; private set; }
         public Transform        Target     => transform;
-        public float            PickupRadius
-        {
-            get => Mathf.Max(0.1f, _stats != null ? _stats.Apply(StatType.PickupRadius, pickupRadius) : pickupRadius);
-            set => pickupRadius = Mathf.Max(0.1f, value);
-        }
+        public float            PickupRadius => Mathf.Max(0.1f, _stats.Get(StatType.PickupRadius));
 
         private PlayerStats _stats;
         private Collider[]  _hits;
@@ -54,7 +50,9 @@ namespace BulletHeaven.Collectibles
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(transform.position, PickupRadius);
+            PlayerStats stats = _stats != null ? _stats : GetComponent<PlayerStats>();
+            if (stats == null) return;
+            Gizmos.DrawWireSphere(transform.position, Mathf.Max(0.1f, stats.Get(StatType.PickupRadius)));
         }
     }
 }
