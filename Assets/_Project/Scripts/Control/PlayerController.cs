@@ -1,5 +1,6 @@
 using UnityEngine;
 using BulletHeaven.Core;
+using BulletHeaven.Progression;
 
 namespace BulletHeaven.Control
 {
@@ -15,7 +16,10 @@ namespace BulletHeaven.Control
 
         private Rigidbody rb;
         private Animator animator;
+        private PlayerStats stats;
         private Vector3 moveInput;
+
+        public float MoveSpeed => stats != null ? stats.Apply(StatType.MoveSpeed, moveSpeed) : moveSpeed;
 
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveZHash = Animator.StringToHash("MoveZ");
@@ -24,6 +28,7 @@ namespace BulletHeaven.Control
         {
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
+            stats = GetComponent<PlayerStats>();
         }
 
         private void Start()
@@ -59,7 +64,8 @@ namespace BulletHeaven.Control
 
         private void MovePlayer()
         {
-            rb.linearVelocity = new Vector3(moveInput.x * moveSpeed, rb.linearVelocity.y, moveInput.z * moveSpeed);
+            float speed = MoveSpeed;
+            rb.linearVelocity = new Vector3(moveInput.x * speed, rb.linearVelocity.y, moveInput.z * speed);
         }
 
         private void RotatePlayer()
