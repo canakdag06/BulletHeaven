@@ -1,4 +1,5 @@
 using BulletHeaven.Core;
+using BulletHeaven.Progression;
 using UnityEngine;
 
 namespace BulletHeaven.Collectibles
@@ -18,16 +19,18 @@ namespace BulletHeaven.Collectibles
         public Transform        Target     => transform;
         public float            PickupRadius
         {
-            get => pickupRadius;
+            get => Mathf.Max(0.1f, _stats != null ? _stats.Apply(StatType.PickupRadius, pickupRadius) : pickupRadius);
             set => pickupRadius = Mathf.Max(0.1f, value);
         }
 
-        private Collider[] _hits;
-        private float      _nextScanTime;
+        private PlayerStats _stats;
+        private Collider[]  _hits;
+        private float       _nextScanTime;
 
         private void Awake()
         {
             Experience = GetComponent<PlayerExperience>();
+            _stats     = GetComponent<PlayerStats>();
             _hits      = new Collider[maxHitsPerScan];
         }
 
@@ -37,7 +40,7 @@ namespace BulletHeaven.Collectibles
             _nextScanTime = Time.time + scanInterval;
 
             int count = Physics.OverlapSphereNonAlloc(
-                transform.position, pickupRadius, _hits, collectibleMask, QueryTriggerInteraction.Collide);
+                transform.position, PickupRadius, _hits, collectibleMask, QueryTriggerInteraction.Collide);
 
             for (int i = 0; i < count; i++)
             {
@@ -51,7 +54,7 @@ namespace BulletHeaven.Collectibles
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(transform.position, pickupRadius);
+            Gizmos.DrawWireSphere(transform.position, PickupRadius);
         }
     }
 }
