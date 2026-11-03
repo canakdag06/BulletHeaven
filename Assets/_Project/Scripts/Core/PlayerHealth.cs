@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using BulletHeaven.Progression;
 
 namespace BulletHeaven.Core
 {
@@ -8,6 +9,10 @@ namespace BulletHeaven.Core
     {
         [Header("Settings")]
         [SerializeField] private float maxHealth = 100f;
+        [SerializeField, Min(0f)] private float armor;
+        [Tooltip("Health restored per second.")]
+        [SerializeField, Min(0f)] private float regen;
+        [SerializeField, Min(0.1f)] private float regenTickInterval = 1f;
 
         [Header("Hit Flash")]
         [SerializeField] private Color  flashColor    = Color.red;
@@ -15,7 +20,9 @@ namespace BulletHeaven.Core
         [SerializeField] private int    flashCount    = 10;
 
         public float CurrentHealth  { get; private set; }
-        public float MaxHealth      => maxHealth;
+        public float MaxHealth      => Mathf.Max(1f, stats != null ? stats.Apply(StatType.MaxHealth, maxHealth) : maxHealth);
+        public float Armor          => Mathf.Max(0f, stats != null ? stats.Apply(StatType.Armor, armor) : armor);
+        public float Regen          => Mathf.Max(0f, stats != null ? stats.Apply(StatType.Regen, regen) : regen);
         public bool  IsDead         { get; private set; }
         public bool  IsInvincible   { get; private set; }
 
@@ -27,6 +34,9 @@ namespace BulletHeaven.Core
         private Coroutine             flashCoroutine;
         private Animator              animator;
         private bool                  isFlashing;
+        private PlayerStats           stats;
+        private float                 lastMaxHealth;
+        private float                 regenTimer;
 
         private static readonly int BaseColorId    = Shader.PropertyToID("_BaseColor");
         private static readonly int ColorId        = Shader.PropertyToID("_Color");
@@ -34,7 +44,9 @@ namespace BulletHeaven.Core
 
         private void Awake()
         {
-            CurrentHealth = maxHealth;
+            stats         = GetComponent<PlayerStats>();
+            CurrentHealth = MaxHealth;
+            lastMaxHealth = MaxHealth;
             renderers     = GetComponentsInChildren<Renderer>();
             propBlock     = new MaterialPropertyBlock();
             animator      = GetComponentInChildren<Animator>();
@@ -44,12 +56,23 @@ namespace BulletHeaven.Core
         {
             if (GameManager.Instance != null)
                 GameManager.Instance.OnRoundReset += ResetHealth;
+
+            if (stats != null)
+                stats.OnStatChanged += HandleStatChanged;
         }
 
         private void OnDestroy()
         {
             if (GameManager.Instance != null)
                 GameManager.Instance.OnRoundReset -= ResetHealth;
+
+            if (stats != null)
+                stats.OnStatChanged -= HandleStatChanged;
+        }
+
+        private void Update()
+        {
+            TickRegen();
         }
 
         // ── IDamageable ───────────────────────────────────────────────────────
@@ -60,8 +83,12 @@ namespace BulletHeaven.Core
         {
             if (IsDead || IsInvincible || isFlashing) return;
 
+            float currentArmor = Armor;
+            if (currentArmor > 0f)
+                amount = Mathf.Max(1f, amount - currentArmor);
+
             CurrentHealth = Mathf.Max(CurrentHealth - amount, 0f);
-            OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+            OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
 
             flashCoroutine = StartCoroutine(FlashRoutine());
 
@@ -70,6 +97,37 @@ namespace BulletHeaven.Core
         }
 
         // ── Private ───────────────────────────────────────────────────────────
+
+        private void TickRegen()
+        {
+            float perSecond = Regen;
+            if (IsDead || perSecond <= 0f || CurrentHealth >= MaxHealth)
+            {
+                regenTimer = 0f;
+                return;
+            }
+
+            regenTimer += Time.deltaTime;
+            if (regenTimer < regenTickInterval) return;
+
+            CurrentHealth = Mathf.Min(CurrentHealth + perSecond * regenTimer, MaxHealth);
+            regenTimer    = 0f;
+            OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        }
+
+        // Gaining max health also heals by the same amount; losing it only clamps.
+        private void HandleStatChanged(StatType type)
+        {
+            if (type != StatType.MaxHealth) return;
+
+            float newMax = MaxHealth;
+            float delta  = newMax - lastMaxHealth;
+            lastMaxHealth = newMax;
+
+            if (!IsDead && delta > 0f) CurrentHealth += delta;
+            CurrentHealth = Mathf.Min(CurrentHealth, newMax);
+            OnHealthChanged?.Invoke(CurrentHealth, newMax);
+        }
 
         private IEnumerator FlashRoutine()
         {
@@ -123,8 +181,10 @@ namespace BulletHeaven.Core
             IsDead        = false;
             IsInvincible  = false;
             isFlashing    = false;
-            CurrentHealth = maxHealth;
-            OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+            regenTimer    = 0f;
+            lastMaxHealth = MaxHealth;
+            CurrentHealth = lastMaxHealth;
+            OnHealthChanged?.Invoke(CurrentHealth, lastMaxHealth);
 
             if (animator != null)
             {

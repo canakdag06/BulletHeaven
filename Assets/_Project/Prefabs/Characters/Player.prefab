@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 222964267130699676}
   - component: {fileID: 8347903929733621289}
   - component: {fileID: 4675789560060695743}
+  - component: {fileID: 5064275348183745926}
   - component: {fileID: 657201048365958342}
   - component: {fileID: 5220584258912477341}
   - component: {fileID: 4737686619638806881}
@@ -161,6 +162,18 @@ MonoBehaviour:
   rotationSpeed: 15
   targetingSystem: {fileID: 4964893753460716801}
   joystick: {fileID: 0}
+--- !u!114 &5064275348183745926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657208915989901591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdb347bf408cfe468b60f0d8c846eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Progression.PlayerStats
 --- !u!114 &657201048365958342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +187,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Control.PlayerHealth
   maxHealth: 100
+  armor: 0
+  regen: 0
+  regenTickInterval: 1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 2
   flashCount: 10
