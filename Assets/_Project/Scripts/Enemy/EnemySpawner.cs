@@ -17,7 +17,6 @@ public class EnemySpawner : MonoBehaviour
     private Transform _playerTransform;
     private Camera    _mainCamera;
     private WaveStage _currentStage;
-    private int       _activeEnemyCount;
     private int       _currentStageIndex;
     private float     _elapsedTime;
     private bool      _isRunning;
@@ -42,7 +41,6 @@ public class EnemySpawner : MonoBehaviour
 
         _elapsedTime      = 0f;
         _currentStageIndex = 0;
-        _activeEnemyCount = 0;
         _isRunning        = true;
 
         _playerTransform = GameManager.Instance.PlayerTransform;
@@ -67,26 +65,18 @@ public class EnemySpawner : MonoBehaviour
 
     public void FreezeAllEnemies()
     {
-        var active = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-        foreach (var enemy in active)
-        {
-            if (!enemy.InPool)
-                enemy.Freeze();
-        }
+        var active = EnemyRegistry.Active;
+        for (int i = 0; i < active.Count; i++)
+            active[i].Freeze();
     }
 
+    // Backwards: each Release swap-removes the enemy from the registry.
     public void ClearAllEnemies()
     {
-        var active = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-        foreach (var enemy in active)
-        {
-            if (!enemy.InPool)
-                enemy.Release();
-        }
-        _activeEnemyCount = 0;
+        var active = EnemyRegistry.Active;
+        for (int i = active.Count - 1; i >= 0; i--)
+            active[i].Release();
     }
-
-    public void OnEnemyRemoved() => _activeEnemyCount--;
 
     // -- Wave Tracking --
 
@@ -135,7 +125,7 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(_currentStage.spawnInterval);
 
-            if (_activeEnemyCount < _currentStage.maxEnemiesAlive)
+            if (EnemyRegistry.AliveCount < _currentStage.maxEnemiesAlive)
                 SpawnBatch();
         }
     }
@@ -144,7 +134,7 @@ public class EnemySpawner : MonoBehaviour
     {
         int toSpawn = Mathf.Min(
             _currentStage.enemiesPerSpawn,
-            _currentStage.maxEnemiesAlive - _activeEnemyCount
+            _currentStage.maxEnemiesAlive - EnemyRegistry.AliveCount
         );
 
         for (int i = 0; i < toSpawn; i++)
@@ -169,9 +159,6 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.rotation = Quaternion.identity;
 
         enemy.Initialize(definition);
-        enemy.OnEnemyRemoved += OnEnemyRemoved;
-
-        _activeEnemyCount++;
     }
 
     // Spawn Position 

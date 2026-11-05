@@ -257,9 +257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ca9de26f963d349bb6dbc3ce0bfbb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Control.TargetingSystem
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256

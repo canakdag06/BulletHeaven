@@ -44,7 +44,8 @@ namespace BulletHeaven.Enemy
 
         public bool IsDead => _currentState is EnemyDeadState;
 
-        public event Action OnEnemyRemoved;
+        internal int  RegistryIndex     { get; set; } = -1;
+        internal bool IsRegisteredAlive { get; set; }
 
         private IEnemyState _currentState;
         private float       _currentHealth;
@@ -86,6 +87,7 @@ namespace BulletHeaven.Enemy
         {
             base.OnGet();
             CachePlayer();
+            EnemyRegistry.Register(this);
         }
 
         public override void OnRelease()
@@ -98,7 +100,7 @@ namespace BulletHeaven.Enemy
             ClearHitFlash();
 
             base.OnRelease();
-            OnEnemyRemoved = null;
+            EnemyRegistry.Unregister(this);
 
             _currentState?.Exit();
             _currentState = null;
@@ -184,7 +186,7 @@ namespace BulletHeaven.Enemy
         private void Die()
         {
             GameManager.Instance?.OnEnemyDefeated();
-            OnEnemyRemoved?.Invoke();
+            EnemyRegistry.MarkDead(this);
             DropExperience();
             ChangeState(new EnemyDeadState(this));
         }
