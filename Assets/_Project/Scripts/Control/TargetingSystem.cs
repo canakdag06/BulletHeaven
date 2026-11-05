@@ -10,9 +10,10 @@ namespace BulletHeaven.Control
         [SerializeField] private float detectionRadius = 10f;
         [SerializeField] private float targetCheckInterval = 0.2f;
 
-        public Transform CurrentTarget { get; private set; }
+        public Transform CurrentTarget => IsActiveTarget(_currentTarget) ? _currentTarget : null;
 
-        private float _targetCheckTimer;
+        private Transform _currentTarget;
+        private float     _targetCheckTimer;
         private readonly Collider[] _overlapBuffer = new Collider[32];
 
         private void Update()
@@ -35,6 +36,7 @@ namespace BulletHeaven.Control
             for (int i = 0; i < count; i++)
             {
                 Collider enemy = _overlapBuffer[i];
+                if (!IsActiveTarget(enemy.transform)) continue;
                 if (enemy.TryGetComponent(out IDamageable damageable) && damageable.IsDead) continue;
                 if (!HasLineOfSight(enemy.transform)) continue;
 
@@ -46,7 +48,12 @@ namespace BulletHeaven.Control
                 }
             }
 
-            CurrentTarget = closestEnemy;
+            _currentTarget = closestEnemy;
+        }
+
+        private static bool IsActiveTarget(Transform target)
+        {
+            return target != null && target.gameObject.activeInHierarchy;
         }
 
         private bool HasLineOfSight(Transform target)

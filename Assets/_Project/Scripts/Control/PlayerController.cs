@@ -71,6 +71,8 @@ namespace BulletHeaven.Control
         private void RotatePlayer()
         {
             Transform currentTarget = targetingSystem != null ? targetingSystem.CurrentTarget : null;
+            if (currentTarget != null && !currentTarget.gameObject.activeInHierarchy)
+                currentTarget = null;
 
             if (currentTarget != null)
             {
