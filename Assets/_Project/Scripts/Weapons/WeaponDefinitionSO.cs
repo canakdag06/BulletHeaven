@@ -25,6 +25,10 @@ namespace BulletHeaven.Weapons
         public Sprite icon;
         [TextArea] public string description;
 
+        [Header("Runtime")]
+        [Tooltip("Prefab with a WeaponBase. Spawned under the player the first time this weapon is taken.")]
+        public WeaponBase weaponPrefab;
+
         [Header("Levels")]
         [Tooltip("Index 0 is level 1.")]
         public WeaponLevelData[] levels = { new WeaponLevelData() };
