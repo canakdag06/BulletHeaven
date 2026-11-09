@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 657201048365958342}
   - component: {fileID: 5220584258912477341}
   - component: {fileID: 4737686619638806881}
+  - component: {fileID: 8578861945256632157}
   - component: {fileID: 98552867473073938}
   - component: {fileID: 4964893753460716801}
   m_Layer: 6
@@ -222,6 +223,19 @@ MonoBehaviour:
     m_Bits: 1024
   scanInterval: 0.1
   maxHitsPerScan: 64
+--- !u!114 &8578861945256632157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657208915989901591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 054eb1b8a985bed4da99654b01a1fb96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Loadout.PlayerLoadout
+  startingWeapon: {fileID: 11400000, guid: d04a7f6b125e4bc2ce3a9b8c4d5f6e71, type: 2}
 --- !u!114 &98552867473073938
 MonoBehaviour:
   m_ObjectHideFlags: 0
