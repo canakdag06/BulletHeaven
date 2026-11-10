@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using BulletHeaven.Core.Save;
+using BulletHeaven.Loadout;
 
 namespace BulletHeaven.Core
 {
@@ -17,6 +19,8 @@ namespace BulletHeaven.Core
         [SerializeField] private LevelConfigSO levelConfig;
         public LevelConfigSO LevelConfig => levelConfig;
 
+        [SerializeField] private UpgradePoolSO upgradePool;
+
         // ── Persistent data ──────────────────────────────────────────────────
         public int TotalEnemiesDefeated { get; private set; }
         public int UnlockedLevelIndex   { get; private set; } = 1;
@@ -24,6 +28,7 @@ namespace BulletHeaven.Core
         // ── Session data ─────────────────────────────────────────────────────
         public int CurrentLevel { get; private set; } = 1;
         public const int MaxLevel = 3;
+        public const int UpgradeOfferCount = 3;
         public int EnemiesDefeatedThisRun { get; private set; }
         public float RoundTimer { get; set; }
 
@@ -36,11 +41,21 @@ namespace BulletHeaven.Core
         public event Action OnLevelTransitionStarted;
         public event Action OnGameOver;
 
+        public event Action<IReadOnlyList<UpgradeOffer>> OnLevelUpOffers;
+        public event Action OnLevelUpClosed;
+
         public bool IsInputEnabled { get; private set; } = true;
 
+        private readonly UpgradeOfferGenerator _upgradeOffers = new();
         private ISaveService _saveService;
+        private PlayerLoadout _loadout;
+        private PlayerExperience _experience;
+        private PlayerHealth _playerHealth;
 
         private int _lastSecondRecorded;
+        private int _pendingLevelUps;
+        private bool _closingLevelUp;
+        private bool _missingPoolWarned;
         private GameObject _currentMapInstance;
 
         // ── Lifecycle ────────────────────────────────────────────────────────
@@ -78,6 +93,7 @@ namespace BulletHeaven.Core
         private IEnumerator BeginGame()
         {
             yield return null;
+            BindPlayerProgression();
             SpawnMap();
             StateMachine.Initialize(new PlayingState(this, enemySpawner));
         }
@@ -87,14 +103,30 @@ namespace BulletHeaven.Core
             StateMachine.Tick();
         }
 
+        private void OnDestroy()
+        {
+            if (_experience != null)
+                _experience.OnLevelUp -= OnPlayerLevelUp;
+
+            if (Instance != this) return;
+
+            Time.timeScale = 1f;
+            Instance = null;
+        }
+
         private void OnApplicationQuit()
         {
+            Time.timeScale = 1f;
             PersistSave();
         }
 
         // ── Helpers ──────────────────────────────────────────────────────────
 
         public void ChangeState(IGameState newState) => StateMachine.ChangeState(newState);
+
+        public void PushState(IGameState state) => StateMachine.PushState(state);
+
+        public void PopState() => StateMachine.PopState();
 
         public void SetInputEnabled(bool value) => IsInputEnabled = value;
 
@@ -111,6 +143,7 @@ namespace BulletHeaven.Core
         public void RegisterPlayer(Transform playerTransform)
         {
             PlayerTransform = playerTransform;
+            BindPlayerProgression();
         }
 
         /// <summary>Teleports the player's Rigidbody to the given world position and zeroes its velocity.</summary>
@@ -171,6 +204,12 @@ namespace BulletHeaven.Core
 
         public void ResetRoundStats()
         {
+            if (StateMachine != null && StateMachine.CurrentState is LevelUpState)
+                PopState();
+
+            _pendingLevelUps = 0;
+            Time.timeScale = 1f;
+
             LevelData data = levelConfig != null ? levelConfig.GetLevel(CurrentLevel) : null;
             float timer = data != null ? data.levelTimerSec : 180f;
 
@@ -231,6 +270,94 @@ namespace BulletHeaven.Core
         public void FinishTransition()
         {
             StateMachine.ChangeState(new PlayingState(this, enemySpawner));
+        }
+
+        // ── Level up ─────────────────────────────────────────────────────────
+
+        public void SelectUpgrade(UpgradeOffer offer)
+        {
+            if (_closingLevelUp) return;
+            if (StateMachine.CurrentState is not LevelUpState) return;
+            if (!TryApplyUpgrade(offer))
+            {
+                Debug.LogWarning("[GameManager] Upgrade could not be applied.", this);
+                return;
+            }
+
+            _pendingLevelUps = Mathf.Max(0, _pendingLevelUps - 1);
+
+            if (_pendingLevelUps > 0)
+                RaiseOffers();
+            else
+                PopState();
+        }
+
+        public void RaiseOffers()
+        {
+            if (StateMachine.CurrentState is not LevelUpState) return;
+
+            if (upgradePool == null && !_missingPoolWarned)
+            {
+                _missingPoolWarned = true;
+                Debug.LogWarning("[GameManager] Upgrade Pool is not assigned. Level-up cards will be heals.", this);
+            }
+
+            List<UpgradeOffer> offers = _upgradeOffers.Generate(UpgradeOfferCount, _loadout, upgradePool);
+            OnLevelUpOffers?.Invoke(offers);
+        }
+
+        public void CloseLevelUp()
+        {
+            _pendingLevelUps = 0;
+            _closingLevelUp = true;
+            OnLevelUpClosed?.Invoke();
+            _closingLevelUp = false;
+        }
+
+        private void OnPlayerLevelUp(int _)
+        {
+            _pendingLevelUps++;
+
+            if (StateMachine.CurrentState is PlayingState)
+                PushState(new LevelUpState(this));
+        }
+
+        private void BindPlayerProgression()
+        {
+            if (PlayerTransform == null) return;
+
+            _loadout      = PlayerTransform.GetComponent<PlayerLoadout>();
+            _playerHealth = PlayerTransform.GetComponent<PlayerHealth>();
+
+            PlayerExperience experience = PlayerTransform.GetComponent<PlayerExperience>();
+            if (_experience == experience) return;
+
+            if (_experience != null)
+                _experience.OnLevelUp -= OnPlayerLevelUp;
+
+            _experience = experience;
+
+            if (_experience != null)
+                _experience.OnLevelUp += OnPlayerLevelUp;
+        }
+
+        private bool TryApplyUpgrade(UpgradeOffer offer)
+        {
+            if (offer.IsFallback)
+            {
+                if (_playerHealth != null)
+                {
+                    float amount = _playerHealth.MaxHealth * Mathf.Clamp01(offer.HealFraction);
+                    _playerHealth.Heal(amount);
+                }
+
+                return true;
+            }
+
+            if (_loadout == null) return false;
+            if (offer.Weapon != null) return _loadout.Apply(offer.Weapon);
+            if (offer.Passive != null) return _loadout.Apply(offer.Passive);
+            return false;
         }
     }
 }

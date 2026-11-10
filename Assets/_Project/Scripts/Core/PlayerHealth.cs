@@ -92,6 +92,17 @@ namespace BulletHeaven.Core
                 Die();
         }
 
+        public void Heal(float amount)
+        {
+            if (IsDead || amount <= 0f) return;
+
+            float healed = Mathf.Min(CurrentHealth + amount, MaxHealth);
+            if (Mathf.Approximately(healed, CurrentHealth)) return;
+
+            CurrentHealth = healed;
+            OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        }
+
         // ── Private ───────────────────────────────────────────────────────────
 
         private void TickRegen()

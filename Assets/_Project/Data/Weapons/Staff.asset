@@ -23,3 +23,15 @@ MonoBehaviour:
     projectileSpeed: 20
     amount: 1
     spreadAngle: 15
+  - damage: 16
+    cooldown: 0.85
+    range: 7.5
+    projectileSpeed: 22
+    amount: 1
+    spreadAngle: 15
+  - damage: 22
+    cooldown: 0.7
+    range: 8
+    projectileSpeed: 24
+    amount: 2
+    spreadAngle: 20

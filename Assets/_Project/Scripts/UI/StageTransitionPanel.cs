@@ -8,11 +8,11 @@ namespace BulletHeaven.UI
     /// <summary>
     /// Handles the full-screen fade that plays during a level transition.
     /// </summary>
-    public class LevelTransitionPanel : MonoBehaviour
+    public class StageTransitionPanel : MonoBehaviour
     {
         [Header("References")]
         [SerializeField] private CanvasGroup overlay;
-        [SerializeField] private TextMeshProUGUI levelLabel;
+        [SerializeField] private TextMeshProUGUI stageLabel;
 
         [Header("Timing")]
         [SerializeField] private float fadeDuration = 0.45f;
@@ -28,8 +28,8 @@ namespace BulletHeaven.UI
             overlay.interactable   = false;
             overlay.blocksRaycasts = false;
 
-            if (levelLabel != null)
-                levelLabel.alpha = 0f;
+            if (stageLabel != null)
+                stageLabel.alpha = 0f;
         }
 
         private void Start()
@@ -80,10 +80,10 @@ namespace BulletHeaven.UI
             // the correct value as soon as the overlay fades back in.
             gm.ResetRoundStats();
 
-            if (levelLabel != null)
+            if (stageLabel != null)
             {
-                levelLabel.text  = $"Level {gm.CurrentLevel} is loading...";
-                levelLabel.alpha = 1f;
+                stageLabel.text  = $"Level {gm.CurrentLevel} is loading...";
+                stageLabel.alpha = 1f;
             }
         }
 
@@ -91,8 +91,8 @@ namespace BulletHeaven.UI
         {
             overlay.blocksRaycasts = false;
 
-            if (levelLabel != null)
-                levelLabel.alpha = 0f;
+            if (stageLabel != null)
+                stageLabel.alpha = 0f;
 
             GameManager.Instance.FinishTransition();
         }

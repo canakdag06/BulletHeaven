@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a91e7b4d2f4a6e8b1c0d9f5e7a2b64, type: 3}
+  m_Name: UpgradePool
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Loadout.UpgradePoolSO
+  weapons:
+  - item: {fileID: 11400000, guid: d04a7f6b125e4bc2ce3a9b8c4d5f6e71, type: 2}
+    weight: 1
+  passives:
+  - item: {fileID: 11400000, guid: a91c4e2d7b804f1ea6d35c8b0f4e71d2, type: 2}
+    weight: 1
+  - item: {fileID: 11400000, guid: b7e1c4a09d3f4c6e8a2b5d7f1c0e93a4, type: 2}
+    weight: 1
+  fallbackHealFraction: 0.3
+  fallbackIcon: {fileID: 0}
+  fallbackName: Heal
+  fallbackDescription: Restore 30% of max health.
