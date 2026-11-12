@@ -20,7 +20,7 @@ MonoBehaviour:
     weight: 1
   - item: {fileID: 11400000, guid: b7e1c4a09d3f4c6e8a2b5d7f1c0e93a4, type: 2}
     weight: 1
-  fallbackHealFraction: 0.3
-  fallbackIcon: {fileID: 0}
+  fallbackHealFraction: 1
+  fallbackIcon: {fileID: 21300000, guid: e52ea25af699fd445b7046374f81a5b9, type: 3}
   fallbackName: Heal
-  fallbackDescription: Restore 30% of max health.
+  fallbackDescription: Restore all your health.
