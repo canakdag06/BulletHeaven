@@ -7,7 +7,7 @@ using BulletHeaven.Loadout;
 namespace BulletHeaven.UI
 {
     /// <summary>
-    /// One upgrade card: icon, name, level line and description.
+    /// One upgrade card: icon, name, level line, description and the next-rank line.
     /// Views are assigned in the inspector, or filled by <see cref="Construct"/> when the panel builds them.
     /// </summary>
     public class LevelUpCardView : MonoBehaviour
@@ -19,6 +19,7 @@ namespace BulletHeaven.UI
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI levelText;
         [SerializeField] private TextMeshProUGUI descriptionText;
+        [SerializeField] private TextMeshProUGUI upgradeDescriptionText;
         [SerializeField] private Button button;
 
         private Sprite _blankSprite;
@@ -28,15 +29,17 @@ namespace BulletHeaven.UI
             TextMeshProUGUI nameLabel,
             TextMeshProUGUI levelLabel,
             TextMeshProUGUI descriptionLabel,
+            TextMeshProUGUI upgradeLabel,
             Button cardButton,
             Sprite blank)
         {
-            icon             = iconImage;
-            nameText         = nameLabel;
-            levelText        = levelLabel;
-            descriptionText  = descriptionLabel;
-            button           = cardButton;
-            _blankSprite     = blank;
+            icon                   = iconImage;
+            nameText               = nameLabel;
+            levelText              = levelLabel;
+            descriptionText        = descriptionLabel;
+            upgradeDescriptionText = upgradeLabel;
+            button                 = cardButton;
+            _blankSprite           = blank;
         }
 
         public void SetClickHandler(UnityAction callback)
@@ -63,6 +66,9 @@ namespace BulletHeaven.UI
 
             if (descriptionText != null)
                 descriptionText.text = offer.Description ?? string.Empty;
+
+            if (upgradeDescriptionText != null)
+                upgradeDescriptionText.text = offer.UpgradeDescription ?? string.Empty;
 
             if (levelText != null)
                 levelText.text = LevelLabel(offer);

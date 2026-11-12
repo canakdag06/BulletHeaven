@@ -439,10 +439,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeCard 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8756375772478948674, guid: 563e910896b52154abbcba01f765d411, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -19.400024
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

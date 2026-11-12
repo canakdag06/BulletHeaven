@@ -330,11 +330,20 @@ namespace BulletHeaven.UI
                 FontStyles.Normal,
                 new Color(0.84f, 0.87f, 0.92f, 1f));
             LayoutElement descriptionLayout = description.gameObject.AddComponent<LayoutElement>();
-            descriptionLayout.preferredHeight = 180f;
+            descriptionLayout.preferredHeight = 120f;
             descriptionLayout.flexibleHeight = 1f;
 
+            TextMeshProUGUI upgrade = CreateText(
+                "UpgradeDescription",
+                cardRect,
+                string.Empty,
+                24,
+                FontStyles.Normal,
+                new Color(0.91f, 1f, 0f, 1f));
+            upgrade.gameObject.AddComponent<LayoutElement>().preferredHeight = 72f;
+
             LevelUpCardView view = cardRect.gameObject.AddComponent<LevelUpCardView>();
-            view.Construct(icon, name, level, description, button, _blankSprite);
+            view.Construct(icon, name, level, description, upgrade, button, _blankSprite);
             return view;
         }
 

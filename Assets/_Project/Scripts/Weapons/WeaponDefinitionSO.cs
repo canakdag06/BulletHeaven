@@ -6,6 +6,10 @@ namespace BulletHeaven.Weapons
     [Serializable]
     public class WeaponLevelData
     {
+        [TextArea]
+        [Tooltip("Shown on the upgrade card as the next-rank line. The weapon description stays on its own line.")]
+        public string upgradeDescription;
+
         [Min(0f)]    public float damage          = 10f;
         [Tooltip("Seconds between shots.")]
         [Min(0.01f)] public float cooldown        = 1f;
@@ -39,6 +43,19 @@ namespace BulletHeaven.Weapons
         {
             if (levels == null || levels.Length == 0) return null;
             return levels[Mathf.Clamp(level - 1, 0, levels.Length - 1)];
+        }
+
+        /// <summary>
+        /// Card line for the rank about to be gained. Empty when that rank has no text.
+        /// </summary>
+        public string GetUpgradeDescription(int level)
+        {
+            int index = level - 1;
+            if (levels == null || index < 0 || index >= levels.Length)
+                return string.Empty;
+
+            WeaponLevelData data = levels[index];
+            return data != null ? (data.upgradeDescription ?? string.Empty) : string.Empty;
         }
     }
 }

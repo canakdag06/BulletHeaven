@@ -16,6 +16,7 @@ namespace BulletHeaven.Loadout
         public string DisplayName;
         public Sprite Icon;
         public string Description;
+        public string UpgradeDescription;
         public bool IsFallback;
         public float HealFraction;
     }

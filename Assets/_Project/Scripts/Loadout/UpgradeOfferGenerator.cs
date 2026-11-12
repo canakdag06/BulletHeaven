@@ -153,9 +153,10 @@ namespace BulletHeaven.Loadout
                 Weapon       = weapon,
                 CurrentLevel = current,
                 NextLevel    = current + 1,
-                DisplayName  = Label(weapon.displayName, weapon.name),
-                Icon         = weapon.icon,
-                Description  = weapon.description ?? string.Empty
+                DisplayName        = Label(weapon.displayName, weapon.name),
+                Icon               = weapon.icon,
+                Description        = weapon.description ?? string.Empty,
+                UpgradeDescription = weapon.GetUpgradeDescription(current + 1)
             };
         }
 
@@ -167,9 +168,10 @@ namespace BulletHeaven.Loadout
                 Passive      = passive,
                 CurrentLevel = current,
                 NextLevel    = current + 1,
-                DisplayName  = Label(passive.displayName, passive.name),
-                Icon         = passive.icon,
-                Description  = passive.description ?? string.Empty
+                DisplayName        = Label(passive.displayName, passive.name),
+                Icon               = passive.icon,
+                Description        = passive.description ?? string.Empty,
+                UpgradeDescription = passive.GetUpgradeDescription(current + 1)
             };
         }
 

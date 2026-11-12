@@ -10,6 +10,10 @@ namespace BulletHeaven.Progression
     [Serializable]
     public class PassiveLevelData
     {
+        [TextArea]
+        [Tooltip("Shown on the upgrade card as the next-rank line. The passive description stays on its own line.")]
+        public string upgradeDescription;
+
         public StatModifier[] modifiers;
     }
 
@@ -34,6 +38,19 @@ namespace BulletHeaven.Progression
         {
             if (levels == null || levels.Length == 0) return null;
             return levels[Mathf.Clamp(level - 1, 0, levels.Length - 1)];
+        }
+
+        /// <summary>
+        /// Card line for the rank about to be gained. Empty when that rank has no text.
+        /// </summary>
+        public string GetUpgradeDescription(int level)
+        {
+            int index = level - 1;
+            if (levels == null || index < 0 || index >= levels.Length)
+                return string.Empty;
+
+            PassiveLevelData data = levels[index];
+            return data != null ? (data.upgradeDescription ?? string.Empty) : string.Empty;
         }
     }
 }
