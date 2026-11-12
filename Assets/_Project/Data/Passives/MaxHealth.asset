@@ -10,21 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1332f6be20ef7d246bd11705100f92b9, type: 3}
-  m_Name: Vitality
+  m_Name: MaxHealth
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Progression.PassiveDefinitionSO
-  displayName: Vitality
-  icon: {fileID: 0}
+  displayName: The Apple
+  icon: {fileID: 21300000, guid: 8e1f416c7d68f5f4494ad45eee82af26, type: 3}
   description: Increases maximum health.
   levels:
-  - modifiers:
+  - upgradeDescription: 100 HP -> 120 HP
+    modifiers:
     - stat: 1
       kind: 0
       value: 20
-  - modifiers:
+  - upgradeDescription: 120 HP -> 140 HP
+    modifiers:
     - stat: 1
       kind: 0
-      value: 45
-  - modifiers:
+      value: 40
+  - upgradeDescription: 140 HP -> 160 HP
+    modifiers:
+    - stat: 1
+      kind: 0
+      value: 60
+  - upgradeDescription: 160 HP -> 180 HP
+    modifiers:
     - stat: 1
       kind: 0
       value: 80
+  - upgradeDescription: 180 HP -> 200 HP
+    modifiers:
+    - stat: 1
+      kind: 0
+      value: 100

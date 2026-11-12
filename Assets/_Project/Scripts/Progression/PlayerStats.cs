@@ -103,7 +103,7 @@ namespace BulletHeaven.Progression
 
         private static float DefaultBase(StatType type) => type switch
         {
-            StatType.Might           => 1f,
+            StatType.Damage           => 1f,
             StatType.Cooldown        => 1f,
             StatType.Area            => 1f,
             StatType.ProjectileSpeed => 1f,

@@ -7,7 +7,7 @@ namespace BulletHeaven.Progression
         Armor,
         Regen,
         PickupRadius,
-        Might,
+        Damage,
         Cooldown,
         Area,
         Amount,

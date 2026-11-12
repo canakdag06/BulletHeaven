@@ -34,7 +34,7 @@ namespace BulletHeaven.Progression
             StatType.Armor           => armor,
             StatType.Regen           => regen,
             StatType.PickupRadius    => pickupRadius,
-            StatType.Might           => might,
+            StatType.Damage           => might,
             StatType.Cooldown        => cooldown,
             StatType.Area            => area,
             StatType.Amount          => amount,

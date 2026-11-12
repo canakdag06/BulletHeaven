@@ -25,7 +25,7 @@ namespace BulletHeaven.Weapons
 
         // ── Scaled values ─────────────────────────────────────────────────────
 
-        protected float Damage          => Data.damage          * Multiplier(StatType.Might);
+        protected float Damage          => Data.damage          * Multiplier(StatType.Damage);
         protected float Cooldown        => Mathf.Max(0.01f, Data.cooldown * Multiplier(StatType.Cooldown));
         protected float ProjectileSpeed => Data.projectileSpeed * Multiplier(StatType.ProjectileSpeed);
         protected float Range           => Data.range;
