@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using BulletHeaven.Core;
 using BulletHeaven.Control;
@@ -17,8 +18,14 @@ namespace BulletHeaven.Weapons
         [SerializeField] private bool  requireFacingTarget;
         [SerializeField] private float maxShootAngle = 15f;
 
+        [Header("Burst")]
+        [Tooltip("Delay between projectiles in the same shot.")]
+        [SerializeField, Min(0f)] private float shotInterval = 0.1f;
+
         [Header("Visuals")]
         [SerializeField] private MuzzleFlash muzzleFlash;
+
+        private Coroutine _burst;
 
         protected override void Awake()
         {
@@ -27,9 +34,52 @@ namespace BulletHeaven.Weapons
             if (firePoint == null)       firePoint       = transform;
         }
 
+        private void OnDisable()
+        {
+            if (_burst == null) return;
+            StopCoroutine(_burst);
+            _burst = null;
+        }
+
         protected override bool TryFire()
         {
+            if (_burst != null) return false;
+
             Transform target = targetingSystem != null ? targetingSystem.CurrentTarget : null;
+            int amount = Amount;
+            if (!TryLaunch(target)) return false;
+
+            if (amount > 1)
+                _burst = StartCoroutine(FireRemaining(target, amount));
+
+            return true;
+        }
+
+        private IEnumerator FireRemaining(Transform target, int amount)
+        {
+            for (int i = 1; i < amount; i++)
+            {
+                yield return new WaitForSeconds(shotInterval);
+
+                while (!OwnerCanAttack)
+                {
+                    if (OwnerIsDead)
+                    {
+                        _burst = null;
+                        yield break;
+                    }
+
+                    yield return null;
+                }
+
+                TryLaunch(target);
+            }
+
+            _burst = null;
+        }
+
+        private bool TryLaunch(Transform target)
+        {
             if (target == null || !target.gameObject.activeInHierarchy) return false;
             if (requireFacingTarget && !IsFacingTarget(target)) return false;
 
@@ -37,23 +87,11 @@ namespace BulletHeaven.Weapons
             Vector3 direction = target.position + Vector3.up * aimHeight - origin;
             if (direction.sqrMagnitude < 0.0001f) direction = transform.forward;
 
-            int   amount = Amount;
-            float spread = amount > 1 ? Data.spreadAngle : 0f;
-            float step   = amount > 1 ? spread / (amount - 1) : 0f;
-            bool  fired  = false;
+            if (PoolManager.Instance.Get(EPoolType.Projectile) is not Projectile projectile) return false;
 
-            for (int i = 0; i < amount; i++)
-            {
-                Vector3 shotDirection = Quaternion.AngleAxis(-spread * 0.5f + step * i, Vector3.up) * direction;
-
-                if (PoolManager.Instance.Get(EPoolType.Projectile) is not Projectile projectile) continue;
-
-                projectile.Launch(origin, shotDirection, ProjectileSpeed, Damage, Range, enemyLayer);
-                fired = true;
-            }
-
-            if (fired && muzzleFlash) muzzleFlash.Play();
-            return fired;
+            projectile.Launch(origin, direction, ProjectileSpeed, Damage, Range, enemyLayer);
+            if (muzzleFlash) muzzleFlash.Play();
+            return true;
         }
 
         private bool IsFacingTarget(Transform target)

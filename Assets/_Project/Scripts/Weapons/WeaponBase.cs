@@ -44,10 +44,12 @@ namespace BulletHeaven.Weapons
                 Debug.LogError($"[{GetType().Name}] WeaponDefinitionSO is not assigned.", this);
         }
 
+        protected bool OwnerIsDead     => _ownerHealth != null && _ownerHealth.IsDead;
+        protected bool OwnerCanAttack => _ownerHealth == null || (!_ownerHealth.IsDead && !_ownerHealth.IsInvincible);
+
         protected virtual void Update()
         {
-            if (Data == null) return;
-            if (_ownerHealth != null && (_ownerHealth.IsDead || _ownerHealth.IsInvincible)) return;
+            if (Data == null || !OwnerCanAttack) return;
 
             _cooldownTimer -= Time.deltaTime;
             if (_cooldownTimer > 0f) return;
