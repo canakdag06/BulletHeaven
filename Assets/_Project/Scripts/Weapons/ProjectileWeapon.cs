@@ -47,7 +47,7 @@ namespace BulletHeaven.Weapons
 
             Transform target = targetingSystem != null ? targetingSystem.CurrentTarget : null;
             int amount = Amount;
-            if (!TryLaunch(target)) return false;
+            if (!TryLaunch(target, 0, amount)) return false;
 
             if (amount > 1)
                 _burst = StartCoroutine(FireRemaining(target, amount));
@@ -72,13 +72,13 @@ namespace BulletHeaven.Weapons
                     yield return null;
                 }
 
-                TryLaunch(target);
+                TryLaunch(target, i, amount);
             }
 
             _burst = null;
         }
 
-        private bool TryLaunch(Transform target)
+        private bool TryLaunch(Transform target, int index, int amount)
         {
             if (target == null || !target.gameObject.activeInHierarchy) return false;
             if (requireFacingTarget && !IsFacingTarget(target)) return false;
@@ -87,9 +87,13 @@ namespace BulletHeaven.Weapons
             Vector3 direction = target.position + Vector3.up * aimHeight - origin;
             if (direction.sqrMagnitude < 0.0001f) direction = transform.forward;
 
+            float spread = amount > 1 ? Data.spreadAngle : 0f;
+            float step   = amount > 1 ? spread / (amount - 1) : 0f;
+            Vector3 shotDirection = Quaternion.AngleAxis(-spread * 0.5f + step * index, Vector3.up) * direction;
+
             if (PoolManager.Instance.Get(EPoolType.Projectile) is not Projectile projectile) return false;
 
-            projectile.Launch(origin, direction, ProjectileSpeed, Damage, Range, enemyLayer);
+            projectile.Launch(origin, shotDirection, ProjectileSpeed, Damage, Range, enemyLayer);
             if (muzzleFlash) muzzleFlash.Play();
             return true;
         }
