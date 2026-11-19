@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.UI.LevelTransitionPanel
   overlay: {fileID: 4090666629816854121}
-  stageLabel: {fileID: 0}
+  stageLabel: {fileID: 1092839038587153490}
   fadeDuration: 0.45
   holdDuration: 0.6
 --- !u!1 &8652229132694319636
