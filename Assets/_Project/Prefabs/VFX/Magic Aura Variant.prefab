@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &800289936877432056
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1318935079978438871, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133223516628, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: ShapeModule.type
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133223516628, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133223516628, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133223516628, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133223516629, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621005, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_Name
+      value: Magic Aura Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621042, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621043, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893921968227561089, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3280519133390621041, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 3280519133430969738, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e7a4a91918eaaac4090c29589f6a0798, type: 3}
