@@ -15,6 +15,8 @@ MonoBehaviour:
   weapons:
   - item: {fileID: 11400000, guid: d04a7f6b125e4bc2ce3a9b8c4d5f6e71, type: 2}
     weight: 1
+  - item: {fileID: 11400000, guid: 8f3ab58629c448968bab3915f144fa4f, type: 2}
+    weight: 1
   passives:
   - item: {fileID: 11400000, guid: a91c4e2d7b804f1ea6d35c8b0f4e71d2, type: 2}
     weight: 1
