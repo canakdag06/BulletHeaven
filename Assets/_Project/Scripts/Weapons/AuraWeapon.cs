@@ -23,6 +23,10 @@ namespace BulletHeaven.Weapons
         [Tooltip("Kept at a fixed world rotation so the effect does not spin with the player.")]
         [SerializeField] private Transform visualRoot;
 
+        [Header("Debug")]
+        [SerializeField] private bool drawRangeGizmo = true;
+        [SerializeField] private Color rangeGizmoColor = new Color(0.4f, 1f, 0.4f, 0.8f);
+
         private Collider[] _hits;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
@@ -84,6 +88,30 @@ namespace BulletHeaven.Weapons
             float scale = Area * 2f / visualBaseDiameter;
             Vector3 current = radiusVisual.localScale;
             radiusVisual.localScale = new Vector3(scale, current.y, scale);
+        }
+
+        // ── Gizmos ────────────────────────────────────────────────────────────
+
+        private void OnDrawGizmos()
+        {
+            if (!drawRangeGizmo) return;
+
+            float radius = GetGizmoRadius();
+            if (radius <= 0f) return;
+
+            Gizmos.color = rangeGizmoColor;
+            Gizmos.DrawWireSphere(transform.position, radius);
+        }
+
+        private float GetGizmoRadius()
+        {
+            if (Application.isPlaying && Data != null)
+                return Area;
+
+            if (Definition == null) return 0f;
+
+            WeaponLevelData data = Definition.GetLevel(Mathf.Max(1, Level));
+            return data != null ? data.area : 0f;
         }
     }
 }

@@ -52,8 +52,10 @@ MonoBehaviour:
     m_Bits: 128
   maxHits: 64
   radiusVisual: {fileID: 8903259406020287524}
-  visualBaseDiameter: 1
+  visualBaseDiameter: 2
   visualRoot: {fileID: 8903259406020287524}
+  drawRangeGizmo: 1
+  rangeGizmoColor: {r: 0.4, g: 1, b: 0.4, a: 0.8}
 --- !u!1001 &6706764684613548462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2782535932987368842, guid: 56603a506506c8948ba7a56b69c368b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.02
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2782535932987368842, guid: 56603a506506c8948ba7a56b69c368b2, type: 3}
       propertyPath: m_LocalPosition.z
