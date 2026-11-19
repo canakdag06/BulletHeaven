@@ -79,12 +79,16 @@ namespace BulletHeaven.Weapons
         /// <summary>Returns true if the weapon actually fired, which restarts the cooldown.</summary>
         protected abstract bool TryFire();
 
+        /// <summary>Called after Level and Data change, including the first Initialize.</summary>
+        protected virtual void OnLevelChanged() { }
+
         // ── Private ───────────────────────────────────────────────────────────
 
         private void SetLevel(int level)
         {
             Level = Mathf.Clamp(level, 1, Mathf.Max(1, definition.MaxLevel));
             Data  = definition.GetLevel(Level);
+            OnLevelChanged();
         }
 
         private float Multiplier(StatType type) => Stats != null ? Stats.Get(type) : 1f;

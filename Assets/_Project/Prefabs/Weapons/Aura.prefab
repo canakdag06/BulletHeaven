@@ -53,6 +53,7 @@ MonoBehaviour:
   maxHits: 64
   radiusVisual: {fileID: 8903259406020287524}
   visualBaseDiameter: 1
+  visualRoot: {fileID: 8903259406020287524}
 --- !u!1001 &6706764684613548462
 PrefabInstance:
   m_ObjectHideFlags: 0

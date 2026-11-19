@@ -1,5 +1,6 @@
 using UnityEngine;
 using BulletHeaven.Core;
+using BulletHeaven.Progression;
 
 namespace BulletHeaven.Weapons
 {
@@ -18,10 +19,11 @@ namespace BulletHeaven.Weapons
         [Tooltip("Child scaled on X/Z to match the radius. Leave empty for no visual.")]
         [SerializeField] private Transform radiusVisual;
         [Tooltip("Diameter of the visual mesh at scale 1 (Unity cylinder/quad = 1).")]
-        [SerializeField, Min(0.01f)] private float visualBaseDiameter = 1f;
+        [SerializeField, Min(0.01f)] private float visualBaseDiameter;
+        [Tooltip("Kept at a fixed world rotation so the effect does not spin with the player.")]
+        [SerializeField] private Transform visualRoot;
 
         private Collider[] _hits;
-        private float      _visualRadius = -1f;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
 
@@ -31,17 +33,21 @@ namespace BulletHeaven.Weapons
             _hits = new Collider[maxHits];
         }
 
+        private void OnEnable()
+        {
+            if (Stats != null) Stats.OnStatChanged += OnStatChanged;
+            UpdateVisualScale();
+        }
+
+        private void OnDisable()
+        {
+            if (Stats != null) Stats.OnStatChanged -= OnStatChanged;
+        }
+
         private void LateUpdate()
         {
-            if (Data == null || radiusVisual == null) return;
-
-            float radius = Area;
-            if (Mathf.Approximately(radius, _visualRadius)) return;
-
-            _visualRadius = radius;
-            float scale = radius * 2f / visualBaseDiameter;
-            Vector3 current = radiusVisual.localScale;
-            radiusVisual.localScale = new Vector3(scale, current.y, scale);
+            if (visualRoot != null)
+                visualRoot.rotation = Quaternion.identity;
         }
 
         // ── Fire ──────────────────────────────────────────────────────────────
@@ -60,6 +66,24 @@ namespace BulletHeaven.Weapons
             }
 
             return true;
+        }
+
+        // ── Visuals ───────────────────────────────────────────────────────────
+
+        protected override void OnLevelChanged() => UpdateVisualScale();
+
+        private void OnStatChanged(StatType type)
+        {
+            if (type == StatType.Area) UpdateVisualScale();
+        }
+
+        private void UpdateVisualScale()
+        {
+            if (Data == null || radiusVisual == null) return;
+
+            float scale = Area * 2f / visualBaseDiameter;
+            Vector3 current = radiusVisual.localScale;
+            radiusVisual.localScale = new Vector3(scale, current.y, scale);
         }
     }
 }
