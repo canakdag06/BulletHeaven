@@ -25,11 +25,13 @@ namespace BulletHeaven.Weapons
 
         // ── Scaled values ─────────────────────────────────────────────────────
 
-        protected float Damage          => Data.damage          * Multiplier(StatType.Damage);
-        protected float Cooldown        => Mathf.Max(0.01f, Data.cooldown * Multiplier(StatType.Cooldown));
-        protected float ProjectileSpeed => Data.projectileSpeed * Multiplier(StatType.ProjectileSpeed);
-        protected float Range           => Data.range;
-        protected int   Amount          => Mathf.Max(1, Data.amount + (Stats != null ? Mathf.RoundToInt(Stats.Get(StatType.Amount)) : 0));
+        protected float Damage   => Data.damage * Multiplier(StatType.Damage);
+        protected float Cooldown => Mathf.Max(0.01f, Data.cooldown * Multiplier(StatType.Cooldown));
+        protected int   Amount   => Mathf.Max(1, Data.amount + (Stats != null ? Mathf.RoundToInt(Stats.Get(StatType.Amount)) : 0));
+        protected float Area     => Data.area     * Multiplier(StatType.Area);
+        protected float Speed    => Data.speed    * Multiplier(StatType.ProjectileSpeed);
+        protected float Duration => Data.duration * Multiplier(StatType.Duration);
+        protected int   Pierce   => Data.pierce;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
 

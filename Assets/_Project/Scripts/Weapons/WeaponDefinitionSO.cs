@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BulletHeaven.Weapons
 {
@@ -10,15 +11,22 @@ namespace BulletHeaven.Weapons
         [Tooltip("Shown on the upgrade card as the next-rank line. The weapon description stays on its own line.")]
         public string upgradeDescription;
 
-        [Min(0f)]    public float damage          = 10f;
-        [Tooltip("Seconds between shots.")]
-        [Min(0.01f)] public float cooldown        = 1f;
-        [Min(0f)]    public float range           = 7f;
-        [Min(0f)]    public float projectileSpeed = 20f;
-        [Tooltip("Projectiles fired per shot.")]
-        [Min(1)]     public int   amount          = 1;
-        [Tooltip("Total fan angle used when more than one projectile is fired.")]
-        [Min(0f)]    public float spreadAngle     = 15f;
+        // Shared set; each weapon reads these its own way (e.g. aura: area = radius, orbit: speed = spin).
+
+        [Min(0f)]    public float damage   = 10f;
+        [Tooltip("Seconds between activations.")]
+        [Min(0.01f)] public float cooldown = 1f;
+        [Tooltip("Objects spawned per activation (projectiles, strikes, orbiters...).")]
+        [Min(1)]     public int   amount   = 1;
+        [Tooltip("Size of the effect. Meaning depends on the weapon (radius, scale...).")]
+        [Min(0f)]    public float area     = 1f;
+        [Tooltip("Travel or rotation speed. Meaning depends on the weapon.")]
+        [FormerlySerializedAs("projectileSpeed")]
+        [Min(0f)]    public float speed    = 20f;
+        [Tooltip("Seconds the effect stays active. Unused by instant weapons.")]
+        [Min(0f)]    public float duration;
+        [Tooltip("Extra enemies a single object can hit before it is spent.")]
+        [Min(0)]     public int   pierce;
     }
 
     [CreateAssetMenu(menuName = "Weapons/WeaponDefinitionSO", fileName = "Weapon")]

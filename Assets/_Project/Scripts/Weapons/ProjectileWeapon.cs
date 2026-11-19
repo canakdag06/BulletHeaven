@@ -18,6 +18,12 @@ namespace BulletHeaven.Weapons
         [SerializeField] private bool  requireFacingTarget;
         [SerializeField] private float maxShootAngle = 15f;
 
+        [Header("Projectile")]
+        [Tooltip("Distance a projectile travels before returning to the pool. Not scaled by stats.")]
+        [SerializeField, Min(0f)] private float range = 7f;
+        [Tooltip("Total fan angle used when more than one projectile is fired.")]
+        [SerializeField, Min(0f)] private float spreadAngle;
+
         [Header("Burst")]
         [Tooltip("Delay between projectiles in the same shot.")]
         [SerializeField, Min(0f)] private float shotInterval = 0.1f;
@@ -87,13 +93,13 @@ namespace BulletHeaven.Weapons
             Vector3 direction = target.position + Vector3.up * aimHeight - origin;
             if (direction.sqrMagnitude < 0.0001f) direction = transform.forward;
 
-            float spread = amount > 1 ? Data.spreadAngle : 0f;
+            float spread = amount > 1 ? spreadAngle : 0f;
             float step   = amount > 1 ? spread / (amount - 1) : 0f;
             Vector3 shotDirection = Quaternion.AngleAxis(-spread * 0.5f + step * index, Vector3.up) * direction;
 
             if (PoolManager.Instance.Get(EPoolType.Projectile) is not Projectile projectile) return false;
 
-            projectile.Launch(origin, shotDirection, ProjectileSpeed, Damage, Range, enemyLayer);
+            projectile.Launch(origin, shotDirection, Speed, Damage, range, enemyLayer);
             if (muzzleFlash) muzzleFlash.Play();
             return true;
         }

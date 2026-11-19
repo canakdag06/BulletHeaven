@@ -20,56 +20,64 @@ MonoBehaviour:
   - upgradeDescription: Like fireflies, but with a vengeance.
     damage: 10
     cooldown: 1
-    range: 7
-    projectileSpeed: 20
     amount: 1
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
   - upgradeDescription: Fires 1 more projectile.
     damage: 10
     cooldown: 1
-    range: 7
-    projectileSpeed: 20
     amount: 2
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
   - upgradeDescription: Cooldown reduced by 0.2 seconds.
     damage: 10
     cooldown: 0.8
-    range: 7
-    projectileSpeed: 20
     amount: 2
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
   - upgradeDescription: Fires 1 more projectile.
     damage: 10
     cooldown: 0.8
-    range: 7
-    projectileSpeed: 20
     amount: 3
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
   - upgradeDescription: Damage increased by 50%.
     damage: 15
     cooldown: 0.8
-    range: 7
-    projectileSpeed: 20
     amount: 3
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
   - upgradeDescription: Fires 1 more projectile.
     damage: 15
     cooldown: 0.8
-    range: 7
-    projectileSpeed: 20
     amount: 4
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
   - upgradeDescription: Cooldown reduced by 0.2 seconds.
     damage: 15
     cooldown: 0.6
-    range: 7
-    projectileSpeed: 20
     amount: 4
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
   - upgradeDescription: Damage increased by 50%.
     damage: 23
     cooldown: 0.6
-    range: 7
-    projectileSpeed: 20
     amount: 4
-    spreadAngle: 0
+    area: 1
+    speed: 20
+    duration: 0
+    pierce: 0
