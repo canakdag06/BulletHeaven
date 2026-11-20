@@ -2,18 +2,12 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Pooled bolt and impact burst. Child particle systems are replayed at the strike point,
-/// then the object returns to the pool once they have finished.
+/// Pooled lightning strike. The bolt and the ground burst are one particle effect.
+/// Played at the impact point, then returned to the pool once it finishes.
 /// </summary>
-public class LightningStrike : PoolableBehaviour
+public class ThunderboltStrike : PoolableBehaviour
 {
-    public override EPoolType PoolType => EPoolType.Lightning;
-
-    [SerializeField] private LineRenderer bolt;
-
-    [Tooltip("Scaled uniformly so the burst matches the strike radius. Diameter of the effect at scale 1.")]
-    [SerializeField] private Transform splashVisual;
-    [SerializeField, Min(0.01f)] private float splashBaseDiameter = 2f;
+    public override EPoolType PoolType => EPoolType.Thunderbolt;
 
     private const float MaxLifetime = 2f;
 
@@ -26,27 +20,10 @@ public class LightningStrike : PoolableBehaviour
         _systems = GetComponentsInChildren<ParticleSystem>(true);
     }
 
-    /// <summary>
-    /// Draws a bolt from origin to target and plays the impact burst at target.
-    /// </summary>
-    public void Play(Vector3 origin, Vector3 target, float radius)
+    /// <summary>Places the effect on the impact point and plays it.</summary>
+    public void Play(Vector3 position)
     {
-        transform.position = target;
-
-        if (bolt != null)
-        {
-            bolt.enabled = true;
-            bolt.positionCount = 2;
-            bolt.SetPosition(0, origin);
-            bolt.SetPosition(1, target);
-        }
-
-        if (splashVisual != null)
-        {
-            splashVisual.localPosition = Vector3.zero;
-            float scale = radius * 2f / splashBaseDiameter;
-            splashVisual.localScale = new Vector3(scale, scale, scale);
-        }
+        transform.position = position;
 
         float lifetime = RestartEffects();
 
@@ -71,10 +48,6 @@ public class LightningStrike : PoolableBehaviour
         }
 
         StopEffects();
-
-        if (bolt != null)
-            bolt.enabled = false;
-
         base.OnRelease();
     }
 

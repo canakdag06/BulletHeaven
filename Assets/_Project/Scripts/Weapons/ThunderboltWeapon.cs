@@ -9,17 +9,15 @@ namespace BulletHeaven.Weapons
     /// Each strike deals <see cref="WeaponBase.Damage"/> to every living enemy within <see cref="WeaponBase.Area"/> of that target.
     /// Reads: damage, cooldown, amount, area. searchRadius is not scaled by stats.
     /// </summary>
-    public class LightningWeapon : WeaponBase
+    public class ThunderboltWeapon : WeaponBase
     {
         [Header("Targeting")]
         [Tooltip("Enemies farther than this from the player are ignored. Not scaled by Area.")]
         [SerializeField, Min(0f)] private float searchRadius = 10f;
 
         [Header("Visuals")]
-        [Tooltip("Height of the impact above the enemy's feet.")]
-        [SerializeField] private float effectHeight = 1f;
-        [Tooltip("How far above the impact the bolt starts. The strike falls straight down onto the enemy.")]
-        [SerializeField, Min(0f)] private float boltHeight = 12f;
+        [Tooltip("Height of the effect above the enemy's feet.")]
+        [SerializeField] private float effectHeight;
 
         [Header("Debug")]
         [SerializeField] private bool drawRangeGizmo = true;
@@ -94,11 +92,9 @@ namespace BulletHeaven.Weapons
 
         private void SpawnBolt(Vector3 point)
         {
-            if (PoolManager.Instance.Get(EPoolType.Lightning) is not LightningStrike strike) return;
+            if (PoolManager.Instance.Get(EPoolType.Thunderbolt) is not ThunderboltStrike strike) return;
 
-            Vector3 impact = point + Vector3.up * effectHeight;
-            Vector3 sky = impact + Vector3.up * boltHeight;
-            strike.Play(sky, impact, Area);
+            strike.Play(point + Vector3.up * effectHeight);
         }
 
         private static float FlatSqrDistance(Vector3 a, Vector3 b)
