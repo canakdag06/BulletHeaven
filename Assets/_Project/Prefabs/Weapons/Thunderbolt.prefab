@@ -43,10 +43,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4c8e1b27d6f4a0e9c3b5d7f1e8a6c24, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.LightningWeapon
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.ThunderboltWeapon
   definition: {fileID: 11400000, guid: e5b9a2d47c1e4f6a8d3c0b5e7f1a4c68, type: 2}
   startLevel: 1
   searchRadius: 10
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  maxSplashHits: 32
   effectHeight: 1
   drawRangeGizmo: 1
   rangeGizmoColor: {r: 0.6, g: 0.8, b: 1, a: 0.8}
+  splashGizmoColor: {r: 1, g: 0.75, b: 0.2, a: 0.9}
