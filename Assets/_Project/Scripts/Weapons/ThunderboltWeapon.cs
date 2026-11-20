@@ -54,7 +54,8 @@ namespace BulletHeaven.Weapons
 
             int strikes = Mathf.Min(Amount, count);
             float damage = Damage;
-            float radius = Area;
+            float areaScale = AreaScale;
+            float radius = BaseArea * areaScale;
 
             for (int i = 0; i < strikes; i++)
             {
@@ -68,7 +69,7 @@ namespace BulletHeaven.Weapons
 
                 Vector3 point = target.transform.position;
                 DealSplash(point, radius, damage);
-                SpawnBolt(point);
+                SpawnBolt(point, areaScale);
                 RecordSplashPoint(point);
             }
 
@@ -123,11 +124,22 @@ namespace BulletHeaven.Weapons
             return false;
         }
 
-        private void SpawnBolt(Vector3 point)
+        private float BaseArea
+        {
+            get
+            {
+                WeaponLevelData first = Definition != null ? Definition.GetLevel(1) : null;
+                return first != null ? first.area : 0f;
+            }
+        }
+
+        private float AreaScale => BaseArea > 0f ? Area / BaseArea : 1f;
+
+        private void SpawnBolt(Vector3 point, float areaScale)
         {
             if (PoolManager.Instance.Get(EPoolType.Thunderbolt) is not ThunderboltStrike strike) return;
 
-            strike.Play(point + Vector3.up * effectHeight);
+            strike.Play(point + Vector3.up * effectHeight, areaScale);
         }
 
         private static float FlatSqrDistance(Vector3 a, Vector3 b)

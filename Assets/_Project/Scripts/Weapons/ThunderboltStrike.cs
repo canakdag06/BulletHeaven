@@ -2,28 +2,39 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Pooled lightning strike. The bolt and the ground burst are one particle effect.
+/// Pooled lightning strike. The whole effect scales with the strike radius.
 /// Played at the impact point, then returned to the pool once it finishes.
 /// </summary>
 public class ThunderboltStrike : PoolableBehaviour
 {
     public override EPoolType PoolType => EPoolType.Thunderbolt;
 
+    [Tooltip("Root of the effect. Its scale on the prefab is the size at rank 1.")]
+    [SerializeField] private Transform visual;
+
     private const float MaxLifetime = 2f;
 
     private ParticleSystem[] _systems;
     private Coroutine        _releaseRoutine;
+    private Vector3          _baseScale = Vector3.one;
 
     protected override void Awake()
     {
         base.Awake();
         _systems = GetComponentsInChildren<ParticleSystem>(true);
+
+        if (visual != null)
+            _baseScale = visual.localScale;
     }
 
-    /// <summary>Places the effect on the impact point and plays it.</summary>
-    public void Play(Vector3 position)
+    /// <summary>
+    /// Places the effect on the impact point and plays it.
+    /// <paramref name="areaScale"/> is 1 at rank 1 and grows with Area.
+    /// </summary>
+    public void Play(Vector3 position, float areaScale)
     {
         transform.position = position;
+        ApplyScale(areaScale);
 
         float lifetime = RestartEffects();
 
@@ -51,6 +62,13 @@ public class ThunderboltStrike : PoolableBehaviour
         base.OnRelease();
     }
 
+    private void ApplyScale(float areaScale)
+    {
+        if (visual == null) return;
+
+        visual.localScale = _baseScale * areaScale;
+    }
+
     private float RestartEffects()
     {
         float lifetime = 0.2f;
@@ -61,10 +79,11 @@ public class ThunderboltStrike : PoolableBehaviour
             ParticleSystem ps = _systems[i];
             if (ps == null) continue;
 
+            ParticleSystem.MainModule main = ps.main;
+            main.scalingMode = ParticleSystemScalingMode.Hierarchy;
+
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             ps.Play(false);
-
-            ParticleSystem.MainModule main = ps.main;
             float systemLife = main.duration + main.startDelay.constantMax + main.startLifetime.constantMax;
             if (systemLife > lifetime)
                 lifetime = systemLife;
