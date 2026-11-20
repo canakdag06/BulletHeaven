@@ -25,7 +25,7 @@ MonoBehaviour:
     speed: 20
     duration: 0
     pierce: 0
-  - upgradeDescription: Fires 1 more projectile.
+  - upgradeDescription: +1 Projectile
     damage: 10
     cooldown: 1
     amount: 2
@@ -33,7 +33,7 @@ MonoBehaviour:
     speed: 20
     duration: 0
     pierce: 0
-  - upgradeDescription: Cooldown reduced by 0.2 seconds.
+  - upgradeDescription: -0.2 sec Cooldown
     damage: 10
     cooldown: 0.8
     amount: 2
@@ -41,7 +41,7 @@ MonoBehaviour:
     speed: 20
     duration: 0
     pierce: 0
-  - upgradeDescription: Fires 1 more projectile.
+  - upgradeDescription: +1 Projectile
     damage: 10
     cooldown: 0.8
     amount: 3
@@ -49,7 +49,7 @@ MonoBehaviour:
     speed: 20
     duration: 0
     pierce: 0
-  - upgradeDescription: Damage increased by 50%.
+  - upgradeDescription: +50% Damage
     damage: 15
     cooldown: 0.8
     amount: 3
@@ -57,7 +57,7 @@ MonoBehaviour:
     speed: 20
     duration: 0
     pierce: 0
-  - upgradeDescription: Fires 1 more projectile.
+  - upgradeDescription: +1 Projectile
     damage: 15
     cooldown: 0.8
     amount: 4
@@ -65,7 +65,7 @@ MonoBehaviour:
     speed: 20
     duration: 0
     pierce: 0
-  - upgradeDescription: Cooldown reduced by 0.2 seconds.
+  - upgradeDescription: -0.2 sec Cooldown
     damage: 15
     cooldown: 0.6
     amount: 4
@@ -73,7 +73,7 @@ MonoBehaviour:
     speed: 20
     duration: 0
     pierce: 0
-  - upgradeDescription: Damage increased by 50%.
+  - upgradeDescription: +50% Damage
     damage: 23
     cooldown: 0.6
     amount: 4
