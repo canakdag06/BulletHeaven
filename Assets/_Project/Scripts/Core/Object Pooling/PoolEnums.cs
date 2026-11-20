@@ -7,4 +7,5 @@ public enum EPoolType
     BloodDirectional = 3,
     Projectile = 5,
     ExpGem = 6,
+    Lightning = 7,
 }
