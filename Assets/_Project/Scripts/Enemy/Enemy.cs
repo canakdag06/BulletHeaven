@@ -167,6 +167,7 @@ namespace BulletHeaven.Enemy
 
             _currentHealth -= amount;
             SpawnHitEffect();
+            SpawnDamageText(amount);
             PlayHitFlash();
 
             if (_currentHealth <= 0)
@@ -227,6 +228,15 @@ namespace BulletHeaven.Enemy
             }
 
             animatedMesh?.SetAnimationSet(definition.AnimationSet);
+        }
+
+        private void SpawnDamageText(float amount)
+        {
+            if (amount <= 0f) return;
+            if (PoolManager.Instance.Get(EPoolType.DamageText) is not DamageText text) return;
+
+            float height = HitCollider != null ? HitCollider.bounds.extents.y : 1f;
+            text.Show(transform.position + Vector3.up * (height + 0.15f), amount);
         }
 
         private void SpawnHitEffect()

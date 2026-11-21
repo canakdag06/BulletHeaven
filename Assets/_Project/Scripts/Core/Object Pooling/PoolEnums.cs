@@ -8,4 +8,5 @@ public enum EPoolType
     Projectile = 5,
     ExpGem = 6,
     Thunderbolt = 7,
+    DamageText = 8,
 }
