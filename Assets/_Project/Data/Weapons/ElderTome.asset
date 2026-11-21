@@ -16,6 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0f182fb2863faa7449e020de33b77e68, type: 3}
   description: Damages every enemy close to you at regular intervals.
   weaponPrefab: {fileID: 1000000000000000003, guid: 8092e9c1fefc4998a8e30ee4f4e7f689, type: 3}
+  scaledStats: 11
   levels:
   - upgradeDescription: Written by someone who really hated personal space.
     damage: 5

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
+using BulletHeaven.Progression;
 
 namespace BulletHeaven.Weapons
 {
@@ -41,11 +42,22 @@ namespace BulletHeaven.Weapons
         [Tooltip("Prefab with a WeaponBase. Spawned under the player the first time this weapon is taken.")]
         public WeaponBase weaponPrefab;
 
+        [Header("Scaling")]
+        [Tooltip("Passive modifiers apply only to the stats checked here.")]
+        public WeaponStat scaledStats = WeaponStat.Damage | WeaponStat.Cooldown | WeaponStat.Amount;
+
         [Header("Levels")]
         [Tooltip("Index 0 is level 1.")]
         public WeaponLevelData[] levels = { new WeaponLevelData() };
 
         public int MaxLevel => levels != null ? levels.Length : 0;
+
+        /// <summary>True when a passive of this stat should scale the weapon.</summary>
+        public bool Uses(StatType type)
+        {
+            WeaponStat stat = ToWeaponStat(type);
+            return stat != WeaponStat.None && (scaledStats & stat) != 0;
+        }
 
         public WeaponLevelData GetLevel(int level)
         {
@@ -65,5 +77,16 @@ namespace BulletHeaven.Weapons
             WeaponLevelData data = levels[index];
             return data != null ? (data.upgradeDescription ?? string.Empty) : string.Empty;
         }
+
+        private static WeaponStat ToWeaponStat(StatType type) => type switch
+        {
+            StatType.Damage          => WeaponStat.Damage,
+            StatType.Cooldown        => WeaponStat.Cooldown,
+            StatType.Amount          => WeaponStat.Amount,
+            StatType.Spread          => WeaponStat.Spread,
+            StatType.ProjectileSpeed => WeaponStat.ProjectileSpeed,
+            StatType.Duration        => WeaponStat.Duration,
+            _                        => WeaponStat.None
+        };
     }
 }

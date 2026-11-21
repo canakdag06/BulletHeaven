@@ -16,12 +16,13 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0d1dc8ade7e63d14da6ea8a209621906, type: 3}
   description: Fires homing projectiles that target the nearest enemy.
   weaponPrefab: {fileID: 0}
+  scaledStats: 23
   levels:
   - upgradeDescription: Like fireflies, but with a vengeance.
     damage: 10
     cooldown: 1
     amount: 1
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
@@ -29,7 +30,7 @@ MonoBehaviour:
     damage: 10
     cooldown: 1
     amount: 2
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
@@ -37,7 +38,7 @@ MonoBehaviour:
     damage: 10
     cooldown: 0.8
     amount: 2
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
@@ -45,7 +46,7 @@ MonoBehaviour:
     damage: 10
     cooldown: 0.8
     amount: 3
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
@@ -53,7 +54,7 @@ MonoBehaviour:
     damage: 15
     cooldown: 0.8
     amount: 3
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
@@ -61,7 +62,7 @@ MonoBehaviour:
     damage: 15
     cooldown: 0.8
     amount: 4
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
@@ -69,7 +70,7 @@ MonoBehaviour:
     damage: 15
     cooldown: 0.6
     amount: 4
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
@@ -77,7 +78,7 @@ MonoBehaviour:
     damage: 23
     cooldown: 0.6
     amount: 4
-    spread: 1
+    spread: 0
     speed: 20
     duration: 0
     pierce: 0
