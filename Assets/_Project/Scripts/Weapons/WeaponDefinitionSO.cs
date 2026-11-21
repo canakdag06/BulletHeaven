@@ -19,7 +19,6 @@ namespace BulletHeaven.Weapons
         [Tooltip("Objects spawned per activation (projectiles, strikes, orbiters...).")]
         [Min(1)]     public int   amount   = 1;
         [Tooltip("Size of the effect. Meaning depends on the weapon (radius, scale...).")]
-        [FormerlySerializedAs("area")]
         [Min(0f)]    public float spread   = 1f;
         [Tooltip("Travel or rotation speed. Meaning depends on the weapon.")]
         [FormerlySerializedAs("projectileSpeed")]
