@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BulletHeaven.Progression
 {
@@ -21,7 +22,8 @@ namespace BulletHeaven.Progression
         [Header("Weapon Multipliers")]
         [Min(0f)] public float might           = 1f;
         [Min(0f)] public float cooldown        = 1f;
-        [Min(0f)] public float area            = 1f;
+        [FormerlySerializedAs("area")]
+        [Min(0f)] public float spread          = 1f;
         [Min(0f)] public float projectileSpeed = 1f;
         [Min(0f)] public float duration        = 1f;
         [Tooltip("Extra projectiles added to every weapon.")]
@@ -36,7 +38,7 @@ namespace BulletHeaven.Progression
             StatType.PickupRadius    => pickupRadius,
             StatType.Damage           => might,
             StatType.Cooldown        => cooldown,
-            StatType.Area            => area,
+            StatType.Spread          => spread,
             StatType.Amount          => amount,
             StatType.ProjectileSpeed => projectileSpeed,
             StatType.Duration        => duration,

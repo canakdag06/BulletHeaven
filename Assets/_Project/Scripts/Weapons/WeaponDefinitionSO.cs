@@ -11,7 +11,7 @@ namespace BulletHeaven.Weapons
         [Tooltip("Shown on the upgrade card as the next-rank line. The weapon description stays on its own line.")]
         public string upgradeDescription;
 
-        // Shared set; each weapon reads these its own way (e.g. aura: area = radius, orbit: speed = spin).
+        // Shared set; each weapon reads these its own way (e.g. aura: spread = radius, orbit: speed = spin).
 
         [Min(0f)]    public float damage   = 10f;
         [Tooltip("Seconds between activations.")]
@@ -19,7 +19,8 @@ namespace BulletHeaven.Weapons
         [Tooltip("Objects spawned per activation (projectiles, strikes, orbiters...).")]
         [Min(1)]     public int   amount   = 1;
         [Tooltip("Size of the effect. Meaning depends on the weapon (radius, scale...).")]
-        [Min(0f)]    public float area     = 1f;
+        [FormerlySerializedAs("area")]
+        [Min(0f)]    public float spread   = 1f;
         [Tooltip("Travel or rotation speed. Meaning depends on the weapon.")]
         [FormerlySerializedAs("projectileSpeed")]
         [Min(0f)]    public float speed    = 20f;

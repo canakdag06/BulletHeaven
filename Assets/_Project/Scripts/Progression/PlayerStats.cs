@@ -105,7 +105,7 @@ namespace BulletHeaven.Progression
         {
             StatType.Damage           => 1f,
             StatType.Cooldown        => 1f,
-            StatType.Area            => 1f,
+            StatType.Spread          => 1f,
             StatType.ProjectileSpeed => 1f,
             StatType.Duration        => 1f,
             StatType.MaxHealth       => 1f,

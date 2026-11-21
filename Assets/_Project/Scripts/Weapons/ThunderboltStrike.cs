@@ -29,12 +29,12 @@ public class ThunderboltStrike : PoolableBehaviour
 
     /// <summary>
     /// Places the effect on the impact point and plays it.
-    /// <paramref name="areaScale"/> is 1 at rank 1 and grows with Area.
+    /// <paramref name="spreadScale"/> is 1 at rank 1 and grows with Spread.
     /// </summary>
-    public void Play(Vector3 position, float areaScale)
+    public void Play(Vector3 position, float spreadScale)
     {
         transform.position = position;
-        ApplyScale(areaScale);
+        ApplyScale(spreadScale);
 
         float lifetime = RestartEffects();
 
@@ -62,11 +62,11 @@ public class ThunderboltStrike : PoolableBehaviour
         base.OnRelease();
     }
 
-    private void ApplyScale(float areaScale)
+    private void ApplyScale(float spreadScale)
     {
         if (visual == null) return;
 
-        visual.localScale = _baseScale * areaScale;
+        visual.localScale = _baseScale * spreadScale;
     }
 
     private float RestartEffects()

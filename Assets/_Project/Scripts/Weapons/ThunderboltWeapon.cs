@@ -6,13 +6,13 @@ namespace BulletHeaven.Weapons
 {
     /// <summary>
     /// On each cooldown, strikes up to <see cref="WeaponBase.Amount"/> living enemies inside searchRadius.
-    /// Each strike deals <see cref="WeaponBase.Damage"/> to every living enemy whose collider overlaps <see cref="WeaponBase.Area"/> around that target.
-    /// Reads: damage, cooldown, amount, area. searchRadius is not scaled by stats.
+    /// Each strike deals <see cref="WeaponBase.Damage"/> to every living enemy whose collider overlaps <see cref="WeaponBase.Spread"/> around that target.
+    /// Reads: damage, cooldown, amount, spread. searchRadius is not scaled by stats.
     /// </summary>
     public class ThunderboltWeapon : WeaponBase
     {
         [Header("Targeting")]
-        [Tooltip("Enemies farther than this from the player are ignored. Not scaled by Area.")]
+        [Tooltip("Enemies farther than this from the player are ignored. Not scaled by Spread.")]
         [SerializeField, Min(0f)] private float searchRadius = 10f;
 
         [Header("Splash")]
@@ -54,8 +54,8 @@ namespace BulletHeaven.Weapons
 
             int strikes = Mathf.Min(Amount, count);
             float damage = Damage;
-            float areaScale = AreaScale;
-            float radius = BaseArea * areaScale;
+            float spreadScale = SpreadScale;
+            float radius = BaseSpread * spreadScale;
 
             for (int i = 0; i < strikes; i++)
             {
@@ -69,7 +69,7 @@ namespace BulletHeaven.Weapons
 
                 Vector3 point = target.transform.position;
                 DealSplash(point, radius, damage);
-                SpawnBolt(point, areaScale);
+                SpawnBolt(point, spreadScale);
                 RecordSplashPoint(point);
             }
 
@@ -124,22 +124,22 @@ namespace BulletHeaven.Weapons
             return false;
         }
 
-        private float BaseArea
+        private float BaseSpread
         {
             get
             {
                 WeaponLevelData first = Definition != null ? Definition.GetLevel(1) : null;
-                return first != null ? first.area : 0f;
+                return first != null ? first.spread : 0f;
             }
         }
 
-        private float AreaScale => BaseArea > 0f ? Area / BaseArea : 1f;
+        private float SpreadScale => BaseSpread > 0f ? Spread / BaseSpread : 1f;
 
-        private void SpawnBolt(Vector3 point, float areaScale)
+        private void SpawnBolt(Vector3 point, float spreadScale)
         {
             if (PoolManager.Instance.Get(EPoolType.Thunderbolt) is not ThunderboltStrike strike) return;
 
-            strike.Play(point + Vector3.up * effectHeight, areaScale);
+            strike.Play(point + Vector3.up * effectHeight, spreadScale);
         }
 
         private static float FlatSqrDistance(Vector3 a, Vector3 b)
@@ -184,12 +184,12 @@ namespace BulletHeaven.Weapons
         private float GetSplashRadius()
         {
             if (Application.isPlaying && Data != null)
-                return Area;
+                return Spread;
 
             if (Definition == null) return 0f;
 
             WeaponLevelData data = Definition.GetLevel(Mathf.Max(1, Level));
-            return data != null ? data.area : 0f;
+            return data != null ? data.spread : 0f;
         }
     }
 }

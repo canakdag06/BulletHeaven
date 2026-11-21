@@ -9,7 +9,7 @@ namespace BulletHeaven.Progression
         PickupRadius,
         Damage,
         Cooldown,
-        Area,
+        Spread,
         Amount,
         ProjectileSpeed,
         Duration

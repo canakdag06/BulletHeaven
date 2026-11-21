@@ -19,7 +19,7 @@ MonoBehaviour:
   pickupRadius: 1
   might: 1
   cooldown: 1
-  area: 1
+  spread: 1
   projectileSpeed: 1
   duration: 1
   amount: 0

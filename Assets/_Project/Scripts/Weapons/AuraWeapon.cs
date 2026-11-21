@@ -5,8 +5,8 @@ using BulletHeaven.Progression;
 namespace BulletHeaven.Weapons
 {
     /// <summary>
-    /// Damages every living enemy within <see cref="WeaponBase.Area"/> of the player on each cooldown.
-    /// Reads: damage, cooldown, area (radius).
+    /// Damages every living enemy within <see cref="WeaponBase.Spread"/> of the player on each cooldown.
+    /// Reads: damage, cooldown, spread (radius).
     /// </summary>
     public class AuraWeapon : WeaponBase
     {
@@ -58,7 +58,7 @@ namespace BulletHeaven.Weapons
 
         protected override bool TryFire()
         {
-            int count = Physics.OverlapSphereNonAlloc(transform.position, Area, _hits, enemyLayer, QueryTriggerInteraction.Collide);
+            int count = Physics.OverlapSphereNonAlloc(transform.position, Spread, _hits, enemyLayer, QueryTriggerInteraction.Collide);
             float damage = Damage;
 
             for (int i = 0; i < count; i++)
@@ -78,14 +78,14 @@ namespace BulletHeaven.Weapons
 
         private void OnStatChanged(StatType type)
         {
-            if (type == StatType.Area) UpdateVisualScale();
+            if (type == StatType.Spread) UpdateVisualScale();
         }
 
         private void UpdateVisualScale()
         {
             if (Data == null || radiusVisual == null) return;
 
-            float scale = Area * 2f / visualBaseDiameter;
+            float scale = Spread * 2f / visualBaseDiameter;
             Vector3 current = radiusVisual.localScale;
             radiusVisual.localScale = new Vector3(scale, current.y, scale);
         }
@@ -106,12 +106,12 @@ namespace BulletHeaven.Weapons
         private float GetGizmoRadius()
         {
             if (Application.isPlaying && Data != null)
-                return Area;
+                return Spread;
 
             if (Definition == null) return 0f;
 
             WeaponLevelData data = Definition.GetLevel(Mathf.Max(1, Level));
-            return data != null ? data.area : 0f;
+            return data != null ? data.spread : 0f;
         }
     }
 }
