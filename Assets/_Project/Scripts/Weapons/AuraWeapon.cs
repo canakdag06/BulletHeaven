@@ -16,12 +16,10 @@ namespace BulletHeaven.Weapons
         [SerializeField, Min(1)] private int maxHits = 64;
 
         [Header("Visuals")]
-        [Tooltip("Child scaled on X/Z to match the radius. Leave empty for no visual.")]
+        [Tooltip("Scaled on X/Z to match the radius, and held at a fixed world rotation so it does not spin with the player. Leave empty for no visual.")]
         [SerializeField] private Transform radiusVisual;
         [Tooltip("Diameter of the visual mesh at scale 1 (Unity cylinder/quad = 1).")]
         [SerializeField, Min(0.01f)] private float visualBaseDiameter;
-        [Tooltip("Kept at a fixed world rotation so the effect does not spin with the player.")]
-        [SerializeField] private Transform visualRoot;
 
         [Header("Debug")]
         [SerializeField] private bool drawRangeGizmo = true;
@@ -50,8 +48,8 @@ namespace BulletHeaven.Weapons
 
         private void LateUpdate()
         {
-            if (visualRoot != null)
-                visualRoot.rotation = Quaternion.identity;
+            if (radiusVisual != null)
+                radiusVisual.rotation = Quaternion.identity;
         }
 
         // ── Fire ──────────────────────────────────────────────────────────────

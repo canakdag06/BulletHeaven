@@ -41,7 +41,7 @@ MonoBehaviour:
         weight: 40
       - enemy: {fileID: 11400000, guid: 6cd86bb7d54f8724488175e530e4fdd1, type: 2}
         weight: 30
-    levelTimerSec: 180
+    levelTimerSec: 99999
     mapPrefab: {fileID: 7287694583744956005, guid: b530f0f5fa517d541807e4ce79b2b712, type: 3}
     playerSpawnPoint: {x: 0, y: 0, z: 0}
   - waveStages:
