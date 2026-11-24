@@ -12,7 +12,8 @@ namespace BulletHeaven.Weapons
         [Tooltip("Shown on the upgrade card as the next-rank line. The weapon description stays on its own line.")]
         public string upgradeDescription;
 
-        // Shared set; each weapon reads these its own way (e.g. aura: spread = radius, orbit: speed = spin).
+        // Shared set; each weapon reads these its own way
+        // (aura and orbit: spread = radius, orbit: speed = degrees per second).
 
         [Min(0f)]    public float damage   = 10f;
         [Tooltip("Seconds between activations.")]

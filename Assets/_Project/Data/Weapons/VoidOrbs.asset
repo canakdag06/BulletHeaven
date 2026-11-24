@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71d4c3e8f2b4e9c9b0d6e5f1a2c3b48, type: 3}
+  m_Name: VoidOrbs
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.WeaponDefinitionSO
+  displayName: Void Orbs
+  icon: {fileID: 21300000, guid: ee34195976181ef4b83f98f5034ab668, type: 3}
+  description: Summons orbiting void orbs that damage enemies on hit.
+  weaponPrefab: {fileID: 6100000000000000003, guid: e3b7c9d25f8a4b1c0d6e2f3a4b5c6d70, type: 3}
+  scaledStats: 31
+  levels:
+  - upgradeDescription: Touch them and find out.
+    damage: 10
+    cooldown: 2
+    amount: 1
+    spread: 2
+    speed: 180
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +1 Orbiter
+    damage: 10
+    cooldown: 2
+    amount: 2
+    spread: 2
+    speed: 180
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +20% Spread
+    damage: 10
+    cooldown: 2
+    amount: 2
+    spread: 2
+    speed: 180
+    duration: 0
+    pierce: 0
+  - upgradeDescription: -0.4 sec Cooldown
+    damage: 10
+    cooldown: 1.6
+    amount: 2
+    spread: 2
+    speed: 180
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +1 Orbiter
+    damage: 10
+    cooldown: 1.6
+    amount: 3
+    spread: 2
+    speed: 180
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +20% Speed
+    damage: 10
+    cooldown: 1.6
+    amount: 3
+    spread: 2
+    speed: 216
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +5 Damage
+    damage: 15
+    cooldown: 1.6
+    amount: 3
+    spread: 2
+    speed: 216
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +20% Spread
+    damage: 15
+    cooldown: 1.6
+    amount: 3
+    spread: 2
+    speed: 216
+    duration: 0
+    pierce: 0
