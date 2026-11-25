@@ -77,6 +77,7 @@ namespace BulletHeaven.Core
 
         public void TakeDamage(float amount)
         {
+            Debug.Log($"[PlayerHealth] Damage {amount}", this);
             if (IsDead || IsInvincible || isFlashing) return;
 
             float currentArmor = Armor;

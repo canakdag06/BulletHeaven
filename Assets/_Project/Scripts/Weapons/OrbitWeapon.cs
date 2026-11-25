@@ -64,6 +64,9 @@ namespace BulletHeaven.Weapons
 
         protected override void Update()
         {
+            if (Data != null && AnyOrbiterActive())
+                _angle = Mathf.Repeat(_angle + Speed * Time.deltaTime, 360f);
+
             if (_passing && Data != null)
             {
                 if (OwnerCanAttack)
@@ -77,7 +80,8 @@ namespace BulletHeaven.Weapons
 
         private void FixedUpdate()
         {
-            if (!_passing || !_shown) return;
+            // Also runs while bodies shrink out after a pass, so they keep following the player.
+            if (_slotCount <= 0) return;
 
             PlaceActive(teleport: false);
         }
@@ -115,7 +119,6 @@ namespace BulletHeaven.Weapons
 
         private void TickPass()
         {
-            _angle       = Mathf.Repeat(_angle + Speed * Time.deltaTime, 360f);
             _visibleTime += Time.deltaTime;
 
             if (_visibleTime >= Duration)
@@ -167,14 +170,19 @@ namespace BulletHeaven.Weapons
 
             for (int i = 0; i < _orbiterCount; i++)
             {
-                GameObject body = _orbiters[i].gameObject;
-                bool on = i < count;
-                if (body.activeSelf != on)
-                    body.SetActive(on);
+                if (i < count) _orbiters[i].Show();
+                else           _orbiters[i].Hide();
             }
 
             if (shown)
                 PlaceActive(teleport: true);
+        }
+
+        private bool AnyOrbiterActive()
+        {
+            for (int i = 0; i < _orbiterCount; i++)
+                if (_orbiters[i].gameObject.activeSelf) return true;
+            return false;
         }
 
         private void PlaceActive(bool teleport)

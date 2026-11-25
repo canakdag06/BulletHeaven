@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace BulletHeaven.Weapons
@@ -9,9 +10,17 @@ namespace BulletHeaven.Weapons
     [RequireComponent(typeof(Collider))]
     public class OrbitOrbiter : MonoBehaviour
     {
+        [Header("Scale Animation")]
+        [Tooltip("Seconds to grow from zero to full size when shown, and to shrink back when hidden. Zero disables the animation.")]
+        [SerializeField] private float scaleDuration = 0.2f;
+        [SerializeField] private Ease  showEase = Ease.OutBack;
+        [SerializeField] private Ease  hideEase = Ease.InBack;
+
         private OrbitWeapon _weapon;
         private Rigidbody   _body;
         private bool        _ready;
+        private Vector3     _baseScale;
+        private Tween       _scaleTween;
 
         public void Bind(OrbitWeapon weapon)
         {
@@ -37,7 +46,64 @@ namespace BulletHeaven.Weapons
             _body.MoveRotation(worldRotation);
         }
 
-        private void Awake() => EnsurePhysics();
+        private void Awake()
+        {
+            _baseScale = transform.localScale;
+            EnsurePhysics();
+        }
+
+        /// <summary>
+        /// Activates the body and grows it in. If it is still shrinking out, it grows back from its current size.
+        /// </summary>
+        public void Show()
+        {
+            if (!gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+                transform.localScale = Vector3.zero;
+            }
+
+            _scaleTween?.Kill();
+
+            if (scaleDuration <= 0f)
+            {
+                transform.localScale = _baseScale;
+                return;
+            }
+
+            _scaleTween = transform.DOScale(_baseScale, scaleDuration)
+                .SetEase(showEase)
+                .SetLink(gameObject);
+        }
+
+        /// <summary>
+        /// Shrinks the body to zero, then deactivates it.
+        /// </summary>
+        public void Hide()
+        {
+            if (!gameObject.activeSelf) return;
+
+            _scaleTween?.Kill();
+
+            if (scaleDuration <= 0f)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
+            _scaleTween = transform.DOScale(Vector3.zero, scaleDuration)
+                .SetEase(hideEase)
+                .SetLink(gameObject)
+                .OnComplete(() => gameObject.SetActive(false));
+        }
+
+        // Copies are made from the template, so it must never be left at a partial scale.
+        private void OnDisable()
+        {
+            _scaleTween?.Kill();
+            _scaleTween = null;
+            transform.localScale = _baseScale;
+        }
 
         private void OnTriggerEnter(Collider other) => _weapon?.NotifyContact(other);
 
