@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BulletHeaven.Core
 {
@@ -13,6 +14,10 @@ namespace BulletHeaven.Core
         [SerializeField, Min(1)]  private int   baseExpRequirement = 5;
         [SerializeField, Min(1f)] private float growthExponent     = 1.5f;
         [SerializeField, Min(1)]  private int   maxLevel           = 99;
+
+        [Header("Debug")]
+        [Tooltip("Numpad + grants one level while the game is running. Ignored while the game is paused.")]
+        [SerializeField] private bool levelUpOnNumpadPlus = true;
 
         public int  CurrentLevel      { get; private set; } = 1;
         public int  CurrentExp        { get; private set; }
@@ -43,6 +48,16 @@ namespace BulletHeaven.Core
         {
             if (GameManager.Instance != null)
                 GameManager.Instance.OnRoundReset -= ResetProgress;
+        }
+
+        private void Update()
+        {
+            if (!levelUpOnNumpadPlus || IsMaxLevel || Time.timeScale <= 0f) return;
+
+            Keyboard keyboard = Keyboard.current;
+            if (keyboard == null || !keyboard.numpadPlusKey.wasPressedThisFrame) return;
+
+            AddExperience(Mathf.Max(1, ExpToNextLevel - CurrentExp));
         }
 
         // ── Public ────────────────────────────────────────────────────────────
