@@ -16,69 +16,69 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: ee34195976181ef4b83f98f5034ab668, type: 3}
   description: Summons orbiting void orbs that damage enemies on hit.
   weaponPrefab: {fileID: 6100000000000000003, guid: e3b7c9d25f8a4b1c0d6e2f3a4b5c6d70, type: 3}
-  scaledStats: 31
+  scaledStats: -1
   levels:
   - upgradeDescription: Touch them and find out.
-    damage: 10
-    cooldown: 2
-    amount: 1
-    spread: 2
-    speed: 180
-    duration: 0
-    pierce: 0
-  - upgradeDescription: +1 Orbiter
-    damage: 10
-    cooldown: 2
+    damage: 3
+    cooldown: 3
     amount: 2
     spread: 2
     speed: 180
-    duration: 0
+    duration: 3
     pierce: 0
-  - upgradeDescription: +20% Spread
-    damage: 10
-    cooldown: 2
-    amount: 2
-    spread: 2
-    speed: 180
-    duration: 0
-    pierce: 0
-  - upgradeDescription: -0.4 sec Cooldown
-    damage: 10
-    cooldown: 1.6
-    amount: 2
-    spread: 2
-    speed: 180
-    duration: 0
-    pierce: 0
-  - upgradeDescription: +1 Orbiter
-    damage: 10
-    cooldown: 1.6
+  - upgradeDescription: +1 Projectile, +30% Speed
+    damage: 3
+    cooldown: 3
     amount: 3
     spread: 2
-    speed: 180
-    duration: 0
-    pierce: 0
-  - upgradeDescription: +20% Speed
-    damage: 10
-    cooldown: 1.6
-    amount: 3
-    spread: 2
-    speed: 216
-    duration: 0
+    speed: 234
+    duration: 3
     pierce: 0
   - upgradeDescription: +5 Damage
-    damage: 15
-    cooldown: 1.6
+    damage: 8
+    cooldown: 3
     amount: 3
     spread: 2
-    speed: 216
-    duration: 0
+    speed: 234
+    duration: 3
     pierce: 0
-  - upgradeDescription: +20% Spread
-    damage: 15
-    cooldown: 1.6
+  - upgradeDescription: +1 s Duration, -1 s Cooldown
+    damage: 8
+    cooldown: 2
     amount: 3
     spread: 2
-    speed: 216
-    duration: 0
+    speed: 234
+    duration: 4
+    pierce: 0
+  - upgradeDescription: +1 Projectile
+    damage: 8
+    cooldown: 2
+    amount: 4
+    spread: 2
+    speed: 234
+    duration: 4
+    pierce: 0
+  - upgradeDescription: +5 Damage
+    damage: 13
+    cooldown: 2
+    amount: 4
+    spread: 2
+    speed: 234
+    duration: 4
+    pierce: 0
+  - upgradeDescription: +1 Projectile, +30% Speed
+    damage: 13
+    cooldown: 2
+    amount: 5
+    spread: 2
+    speed: 304
+    duration: 4
+    pierce: 0
+  - upgradeDescription: +1s Duration
+    damage: 13
+    cooldown: 2
+    amount: 5
+    spread: 2
+    speed: 304
+    duration: 5
     pierce: 0

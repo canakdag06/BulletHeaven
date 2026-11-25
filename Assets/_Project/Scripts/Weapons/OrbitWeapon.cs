@@ -4,14 +4,15 @@ using BulletHeaven.Enemy;
 namespace BulletHeaven.Weapons
 {
     /// <summary>
-    /// Bodies orbit the player until they hit an enemy. That body hides, then returns after <see cref="WeaponBase.Cooldown"/>.
-    /// Each body keeps its own timer. Reads: damage, cooldown, amount, spread (radius), speed (degrees per second).
+    /// Bodies orbit the player for <see cref="WeaponBase.Duration"/>, then hide for <see cref="WeaponBase.Cooldown"/>.
+    /// A touch damages an enemy once. The body must leave and touch again to damage it again.
+    /// Reads: damage, cooldown, amount, spread (radius), speed (degrees per second), duration.
     /// </summary>
     [DefaultExecutionOrder(100)]
     public class OrbitWeapon : WeaponBase
     {
         [Header("Orbit")]
-        [Tooltip("Body kept on this prefab. Copied once each time Amount grows. Turns off on impact and back on after Cooldown.")]
+        [Tooltip("Body kept on this prefab. Copied once each time Amount grows. Shown for Duration, hidden for Cooldown.")]
         [SerializeField] private OrbitOrbiter orbiterTemplate;
         [Tooltip("Height above the player's feet. Not scaled by stats.")]
         [SerializeField] private float orbitHeight;
@@ -25,11 +26,13 @@ namespace BulletHeaven.Weapons
 
         private Transform      _anchor;
         private OrbitOrbiter[] _orbiters = new OrbitOrbiter[4];
-        private float[]        _recover  = new float[4];
         private int            _orbiterCount;
         private int            _slotCount;
         private float          _angle;
-        private bool           _running;
+        private float          _visibleTime;
+        private bool           _passing;
+        private bool           _shown;
+        private bool           _awaitingCooldown;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
 
@@ -51,7 +54,7 @@ namespace BulletHeaven.Weapons
             Adopt(orbiterTemplate);
         }
 
-        private void OnDisable() => HideAll();
+        private void OnDisable() => SetShown(false);
 
         private void OnDestroy()
         {
@@ -61,12 +64,12 @@ namespace BulletHeaven.Weapons
 
         protected override void Update()
         {
-            if (_running && Data != null)
+            if (_passing && Data != null)
             {
                 if (OwnerCanAttack)
-                    TickOrbit();
+                    TickPass();
                 else
-                    HideAll();
+                    SetShown(false);
             }
 
             base.Update();
@@ -74,7 +77,7 @@ namespace BulletHeaven.Weapons
 
         private void FixedUpdate()
         {
-            if (!_running || !OwnerCanAttack) return;
+            if (!_passing || !_shown) return;
 
             PlaceActive(teleport: false);
         }
@@ -82,58 +85,54 @@ namespace BulletHeaven.Weapons
         // ── Fire ──────────────────────────────────────────────────────────────
 
         /// <summary>
-        /// Arms the ring once. Returns false so <see cref="WeaponBase"/> does not run a second timer.
-        /// <see cref="WeaponBase.Cooldown"/> is the per-body delay after a hit.
+        /// Starts a pass. Returns true only when that pass ends, so the base cooldown is the time the bodies stay hidden.
         /// </summary>
         protected override bool TryFire()
         {
-            if (_running || orbiterTemplate == null || _anchor == null)
+            if (_awaitingCooldown)
+            {
+                _awaitingCooldown = false;
+                return true;
+            }
+
+            if (_passing || orbiterTemplate == null || _anchor == null)
                 return false;
 
-            Begin();
+            StartPass();
             return false;
         }
 
-        private void Begin()
+        private void StartPass()
         {
             _slotCount = Amount;
             EnsureOrbiters(_slotCount);
             if (_orbiterCount <= 0) return;
 
-            _running = true;
-
-            for (int i = 0; i < _slotCount; i++)
-            {
-                _recover[i] = 0f;
-                Show(i);
-            }
+            _visibleTime = 0f;
+            _passing     = true;
+            SetShown(true);
         }
 
-        private void TickOrbit()
+        private void TickPass()
         {
-            _angle     = Mathf.Repeat(_angle + Speed * Time.deltaTime, 360f);
-            _slotCount = Amount;
-            EnsureOrbiters(_slotCount);
+            _angle       = Mathf.Repeat(_angle + Speed * Time.deltaTime, 360f);
+            _visibleTime += Time.deltaTime;
 
-            for (int i = 0; i < _slotCount; i++)
+            if (_visibleTime >= Duration)
             {
-                if (_recover[i] > 0f)
-                {
-                    _recover[i] -= Time.deltaTime;
-                    if (_recover[i] > 0f) continue;
-
-                    _recover[i] = 0f;
-                }
-
-                if (!_orbiters[i].gameObject.activeSelf)
-                    Show(i);
+                FinishPass();
+                return;
             }
 
-            for (int i = _slotCount; i < _orbiterCount; i++)
-            {
-                _recover[i] = 0f;
-                Hide(i);
-            }
+            if (!_shown)
+                SetShown(true);
+        }
+
+        private void FinishPass()
+        {
+            _passing          = false;
+            _awaitingCooldown = true;
+            SetShown(false);
         }
 
         // ── Orbiters ──────────────────────────────────────────────────────────
@@ -141,13 +140,9 @@ namespace BulletHeaven.Weapons
         private void Adopt(OrbitOrbiter orbiter)
         {
             if (_orbiterCount == _orbiters.Length)
-            {
-                int size = _orbiters.Length * 2;
-                System.Array.Resize(ref _orbiters, size);
-                System.Array.Resize(ref _recover, size);
-            }
+                System.Array.Resize(ref _orbiters, _orbiters.Length * 2);
 
-            orbiter.Bind(this, _orbiterCount);
+            orbiter.Bind(this);
             _orbiters[_orbiterCount++] = orbiter;
         }
 
@@ -163,35 +158,30 @@ namespace BulletHeaven.Weapons
             }
         }
 
-        private void Show(int index)
+        private void SetShown(bool shown)
         {
-            OrbitOrbiter body = _orbiters[index];
-            body.SetClosed(false);
+            if (_anchor == null || _shown == shown) return;
 
-            if (!body.gameObject.activeSelf)
-                body.gameObject.SetActive(true);
+            _shown = shown;
+            int count = shown ? _slotCount : 0;
 
-            PlaceOne(index, teleport: true);
-        }
-
-        private void Hide(int index)
-        {
-            GameObject body = _orbiters[index].gameObject;
-            if (body.activeSelf)
-                body.SetActive(false);
-        }
-
-        private void HideAll()
-        {
             for (int i = 0; i < _orbiterCount; i++)
-                Hide(i);
+            {
+                GameObject body = _orbiters[i].gameObject;
+                bool on = i < count;
+                if (body.activeSelf != on)
+                    body.SetActive(on);
+            }
+
+            if (shown)
+                PlaceActive(teleport: true);
         }
 
         private void PlaceActive(bool teleport)
         {
             for (int i = 0; i < _slotCount && i < _orbiterCount; i++)
             {
-                if (_recover[i] > 0f || !_orbiters[i].gameObject.activeSelf) continue;
+                if (!_orbiters[i].gameObject.activeSelf) continue;
                 PlaceOne(i, teleport);
             }
         }
@@ -211,20 +201,14 @@ namespace BulletHeaven.Weapons
 
         // ── Hits ──────────────────────────────────────────────────────────────
 
-        public void NotifyContact(int index, Collider other)
+        public void NotifyContact(Collider other)
         {
-            if (!_running || !OwnerCanAttack || other == null) return;
-            if (index < 0 || index >= _slotCount) return;
-            if (_recover[index] > 0f) return;
+            if (!_passing || !_shown || !OwnerCanAttack || other == null) return;
             if ((enemyLayer.value & (1 << other.gameObject.layer)) == 0) return;
 
             Enemy.Enemy enemy = other.GetComponentInParent<Enemy.Enemy>();
             if (enemy == null || enemy.IsDead || enemy.InPool) return;
 
-            // Close before damage so a second contact in this physics step cannot hit again.
-            _recover[index] = Cooldown;
-            _orbiters[index].SetClosed(true);
-            Hide(index);
             enemy.TakeDamage(Damage);
         }
 

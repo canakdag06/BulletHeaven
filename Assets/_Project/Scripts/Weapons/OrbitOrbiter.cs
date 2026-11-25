@@ -3,7 +3,7 @@ using UnityEngine;
 namespace BulletHeaven.Weapons
 {
     /// <summary>
-    /// One orbiting body. Forwards trigger overlaps to <see cref="OrbitWeapon"/>.
+    /// One orbiting body. Reports the moment its trigger starts touching something.
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Collider))]
@@ -11,18 +11,13 @@ namespace BulletHeaven.Weapons
     {
         private OrbitWeapon _weapon;
         private Rigidbody   _body;
-        private int         _index;
-        private bool        _closed;
         private bool        _ready;
 
-        public void Bind(OrbitWeapon weapon, int index)
+        public void Bind(OrbitWeapon weapon)
         {
             _weapon = weapon;
-            _index  = index;
             EnsurePhysics();
         }
-
-        public void SetClosed(bool closed) => _closed = closed;
 
         /// <summary>
         /// Teleport skips interpolation. Used when the body is shown again, so it does not slide in from the last pose.
@@ -44,15 +39,7 @@ namespace BulletHeaven.Weapons
 
         private void Awake() => EnsurePhysics();
 
-        private void OnTriggerEnter(Collider other) => Report(other);
-
-        private void OnTriggerStay(Collider other) => Report(other);
-
-        private void Report(Collider other)
-        {
-            if (_closed) return;
-            _weapon?.NotifyContact(_index, other);
-        }
+        private void OnTriggerEnter(Collider other) => _weapon?.NotifyContact(other);
 
         private void EnsurePhysics()
         {
