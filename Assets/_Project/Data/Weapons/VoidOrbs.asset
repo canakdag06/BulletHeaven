@@ -23,7 +23,7 @@ MonoBehaviour:
     cooldown: 3
     amount: 2
     spread: 2
-    speed: 180
+    speed: 100
     duration: 3
     pierce: 0
   - upgradeDescription: +1 Projectile, +30% Speed
@@ -31,7 +31,7 @@ MonoBehaviour:
     cooldown: 3
     amount: 3
     spread: 2
-    speed: 234
+    speed: 130
     duration: 3
     pierce: 0
   - upgradeDescription: +5 Damage
@@ -39,7 +39,7 @@ MonoBehaviour:
     cooldown: 3
     amount: 3
     spread: 2
-    speed: 234
+    speed: 130
     duration: 3
     pierce: 0
   - upgradeDescription: +1 s Duration, -1 s Cooldown
@@ -47,7 +47,7 @@ MonoBehaviour:
     cooldown: 2
     amount: 3
     spread: 2
-    speed: 234
+    speed: 130
     duration: 4
     pierce: 0
   - upgradeDescription: +1 Projectile
@@ -55,7 +55,7 @@ MonoBehaviour:
     cooldown: 2
     amount: 4
     spread: 2
-    speed: 234
+    speed: 130
     duration: 4
     pierce: 0
   - upgradeDescription: +5 Damage
@@ -63,7 +63,7 @@ MonoBehaviour:
     cooldown: 2
     amount: 4
     spread: 2
-    speed: 234
+    speed: 130
     duration: 4
     pierce: 0
   - upgradeDescription: +1 Projectile, +30% Speed
@@ -71,7 +71,7 @@ MonoBehaviour:
     cooldown: 2
     amount: 5
     spread: 2
-    speed: 304
+    speed: 169
     duration: 4
     pierce: 0
   - upgradeDescription: +1s Duration
@@ -79,6 +79,6 @@ MonoBehaviour:
     cooldown: 2
     amount: 5
     spread: 2
-    speed: 304
+    speed: 169
     duration: 5
     pierce: 0
