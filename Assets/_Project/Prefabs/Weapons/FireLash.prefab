@@ -104,6 +104,10 @@ PrefabInstance:
       value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
+      propertyPath: ShapeModule.donutRadius
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
       propertyPath: ShapeModule.m_Rotation.x
       value: 90
       objectReference: {fileID: 0}
@@ -117,15 +121,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
       propertyPath: ShapeModule.arc.speed.scalar
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075512144, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
+      propertyPath: EmissionModule.rateOverTime.minMaxState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2360655870356088560, guid: d19d4ed1b2526fb42ade28397229abd5, type: 3}
       propertyPath: InitialModule.rotation3D
