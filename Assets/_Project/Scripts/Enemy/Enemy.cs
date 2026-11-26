@@ -188,25 +188,44 @@ namespace BulletHeaven.Enemy
         {
             GameManager.Instance?.OnEnemyDefeated();
             EnemyRegistry.MarkDead(this);
-            DropExperience();
-            DropBoost();
+            Vector3 origin = transform.position;
+
+            if (Definition != null && Definition.TryRollBoost(out BoostKind kind))
+            {
+                Vector3 side = RandomDropSide(0.6f);
+                DropExperience(origin - side);
+                DropBoost(origin + side, kind);
+            }
+            else
+            {
+                DropExperience(origin);
+            }
+
             ChangeState(new EnemyDeadState(this));
         }
 
-        private void DropExperience()
+        private void DropExperience(Vector3 position)
         {
             if (Definition == null) return;
 
             if (PoolManager.Instance.Get(EPoolType.ExpGem) is ExpGem gem)
-                gem.Initialize(transform.position, Definition.RollExpTier());
+                gem.Initialize(position, Definition.RollExpTier());
         }
 
-        private void DropBoost()
+        private void DropBoost(Vector3 position, BoostKind kind)
         {
-            if (Definition == null || !Definition.TryRollBoost(out BoostKind kind)) return;
-
             if (PoolManager.Instance.Get(EPoolType.BoostPickup) is BoostPickup pickup)
-                pickup.Initialize(transform.position, kind);
+                pickup.Initialize(position, kind);
+        }
+
+        private static Vector3 RandomDropSide(float distance)
+        {
+            Vector2 scatter = UnityEngine.Random.insideUnitCircle;
+            if (scatter.sqrMagnitude < 0.0001f)
+                scatter = Vector2.right;
+
+            scatter.Normalize();
+            return new Vector3(scatter.x, 0f, scatter.y) * distance;
         }
 
         private void ApplyBody(EnemyDefinitionSO definition)
