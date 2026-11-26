@@ -19,6 +19,12 @@ MonoBehaviour:
     Weight: 90
   - Tier: 50
     Weight: 10
+  boostDropChance: 0.02
+  boostDrops:
+  - Kind: 0
+    Weight: 70
+  - Kind: 1
+    Weight: 30
   maxHealth: 30
   damage: 10
   moveSpeed: 4

@@ -41,3 +41,7 @@ MonoBehaviour:
     type: 8
     prefab: {fileID: 7348291055827364101, guid: 3e42c4c448f18da44a1c238473ec786c, type: 3}
     initialSize: 30
+  - name: BoostPickup
+    type: 9
+    prefab: {fileID: 7100000000000000004, guid: 5d3a8c1e7b4f42a09e6c2d8b1f4a7e30, type: 3}
+    initialSize: 24

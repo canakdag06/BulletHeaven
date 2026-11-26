@@ -189,6 +189,7 @@ namespace BulletHeaven.Enemy
             GameManager.Instance?.OnEnemyDefeated();
             EnemyRegistry.MarkDead(this);
             DropExperience();
+            DropBoost();
             ChangeState(new EnemyDeadState(this));
         }
 
@@ -198,6 +199,14 @@ namespace BulletHeaven.Enemy
 
             if (PoolManager.Instance.Get(EPoolType.ExpGem) is ExpGem gem)
                 gem.Initialize(transform.position, Definition.RollExpTier());
+        }
+
+        private void DropBoost()
+        {
+            if (Definition == null || !Definition.TryRollBoost(out BoostKind kind)) return;
+
+            if (PoolManager.Instance.Get(EPoolType.BoostPickup) is BoostPickup pickup)
+                pickup.Initialize(transform.position, kind);
         }
 
         private void ApplyBody(EnemyDefinitionSO definition)

@@ -11,6 +11,13 @@ namespace BulletHeaven.Enemy
         [Min(0)] public int Weight;
     }
 
+    [Serializable]
+    public struct BoostDropEntry
+    {
+        public BoostKind Kind;
+        [Min(0)] public int Weight;
+    }
+
     [CreateAssetMenu(menuName = "BulletHeaven/Enemy Definition", fileName = "NewEnemyDefinition")]
     public class EnemyDefinitionSO : ScriptableObject
     {
@@ -22,6 +29,15 @@ namespace BulletHeaven.Enemy
         [SerializeField] private ExpDropEntry[] expDrops =
         {
             new() { Tier = ExpTier.LowEXP, Weight = 100 },
+        };
+
+        [Header("Boosts")]
+        [Tooltip("Chance that a kill also drops a boost, in addition to the EXP gem. 0 disables boosts.")]
+        [SerializeField, Range(0f, 1f)] private float boostDropChance = 0.02f;
+        [SerializeField] private BoostDropEntry[] boostDrops =
+        {
+            new() { Kind = BoostKind.Health, Weight = 70 },
+            new() { Kind = BoostKind.Magnet, Weight = 30 },
         };
 
         [Header("Stats")]
@@ -80,6 +96,44 @@ namespace BulletHeaven.Enemy
 
             return expDrops[expDrops.Length - 1].Tier;
         }
+
+        /// <summary>
+        /// Independent of the EXP roll. Fails when the chance misses or the table is empty.
+        /// </summary>
+        public bool TryRollBoost(out BoostKind kind)
+        {
+            kind = default;
+
+            if (boostDropChance <= 0f || boostDrops == null || boostDrops.Length == 0)
+                return false;
+
+            if (UnityEngine.Random.value > boostDropChance)
+                return false;
+
+            int total = 0;
+            for (int i = 0; i < boostDrops.Length; i++)
+                total += boostDrops[i].Weight;
+
+            if (total <= 0)
+                return false;
+
+            int roll       = UnityEngine.Random.Range(0, total);
+            int cumulative = 0;
+
+            for (int i = 0; i < boostDrops.Length; i++)
+            {
+                cumulative += boostDrops[i].Weight;
+                if (roll < cumulative)
+                {
+                    kind = boostDrops[i].Kind;
+                    return true;
+                }
+            }
+
+            kind = boostDrops[boostDrops.Length - 1].Kind;
+            return true;
+        }
+
         public int    MaxHealth      => maxHealth;
         public int    Damage         => damage;
         public float  MoveSpeed      => moveSpeed;

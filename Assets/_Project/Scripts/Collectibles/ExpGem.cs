@@ -49,12 +49,16 @@ namespace BulletHeaven.Collectibles
             _collector = null;
             _speed     = 0f;
 
+            ExpGemRegistry.Register(this);
+
             if (GameManager.Instance != null)
                 GameManager.Instance.OnRoundReset += _releaseAction;
         }
 
         public override void OnRelease()
         {
+            ExpGemRegistry.Unregister(this);
+
             if (GameManager.Instance != null)
                 GameManager.Instance.OnRoundReset -= _releaseAction;
 

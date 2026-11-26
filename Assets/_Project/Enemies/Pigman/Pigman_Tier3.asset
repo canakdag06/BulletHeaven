@@ -17,6 +17,12 @@ MonoBehaviour:
   expDrops:
   - Tier: 1
     Weight: 100
+  boostDropChance: 0.02
+  boostDrops:
+  - Kind: 0
+    Weight: 70
+  - Kind: 1
+    Weight: 30
   maxHealth: 30
   damage: 15
   moveSpeed: 1

@@ -9,4 +9,5 @@ public enum EPoolType
     ExpGem = 6,
     Thunderbolt = 7,
     DamageText = 8,
+    BoostPickup = 9,
 }
