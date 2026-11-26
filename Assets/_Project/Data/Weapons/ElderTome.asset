@@ -42,7 +42,7 @@ MonoBehaviour:
     speed: 0
     duration: 0
     pierce: 0
-  - upgradeDescription: -0.1 sec Cooldown
+  - upgradeDescription: -0.1s Cooldown
     damage: 8
     cooldown: 1.2
     amount: 1
@@ -66,7 +66,7 @@ MonoBehaviour:
     speed: 0
     duration: 0
     pierce: 0
-  - upgradeDescription: -0.1 sec Cooldown
+  - upgradeDescription: -0.1s Cooldown
     damage: 11
     cooldown: 1.1
     amount: 1

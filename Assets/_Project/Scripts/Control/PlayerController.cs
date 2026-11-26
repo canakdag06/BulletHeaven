@@ -21,6 +21,12 @@ namespace BulletHeaven.Control
 
         public float MoveSpeed => Mathf.Max(0f, stats.Get(StatType.MoveSpeed));
 
+        /// <summary>
+        /// Last move direction on the ground plane. Stays put while the player stands still.
+        /// The body itself turns toward a target, so weapons must not read <c>transform.forward</c>.
+        /// </summary>
+        public Vector3 FacingDirection { get; private set; }
+
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveZHash = Animator.StringToHash("MoveZ");
 
@@ -29,6 +35,10 @@ namespace BulletHeaven.Control
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
             stats = GetComponent<PlayerStats>();
+
+            Vector3 forward = transform.forward;
+            forward.y = 0f;
+            FacingDirection = forward.sqrMagnitude > 0.0001f ? forward.normalized : Vector3.forward;
         }
 
         private void Start()
@@ -58,8 +68,14 @@ namespace BulletHeaven.Control
 
             moveInput = new Vector3(joystick.Horizontal, 0f, joystick.Vertical);
 
-            if (moveInput.magnitude > 1f)
-                moveInput.Normalize();
+            if (moveInput.sqrMagnitude > 0.01f)
+            {
+                Vector3 direction = moveInput.normalized;
+                FacingDirection = direction;
+
+                if (moveInput.sqrMagnitude > 1f)
+                    moveInput = direction;
+            }
         }
 
         private void MovePlayer()

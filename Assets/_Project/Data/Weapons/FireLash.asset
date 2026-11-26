@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71d4c3e8f2b4e9c9b0d6e5f1a2c3b48, type: 3}
+  m_Name: FireLash
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.WeaponDefinitionSO
+  displayName: Firelash
+  icon: {fileID: 21300000, guid: e977c1562987f7e41b442f92c93f4234, type: 3}
+  description: Lashes forward in a fiery sweep, damaging foes in range.
+  weaponPrefab: {fileID: 7300000000000000003, guid: e8b1c4d27a6f4e90b3c5d1a7f8e02c46, type: 3}
+  scaledStats: 15
+  levels:
+  - upgradeDescription: A clean snap of living fire.
+    damage: 10
+    cooldown: 1.3
+    amount: 1
+    spread: 1
+    speed: 0
+    duration: 0
+    pierce: 0
+  - upgradeDescription: -30% Cooldown
+    damage: 10
+    cooldown: 1
+    amount: 1
+    spread: 1
+    speed: 0
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +1 Projectile
+    damage: 10
+    cooldown: 1
+    amount: 2
+    spread: 1
+    speed: 0
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +10 Damage
+    damage: 20
+    cooldown: 1
+    amount: 2
+    spread: 1
+    speed: 0
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +20% Spread
+    damage: 20
+    cooldown: 1
+    amount: 2
+    spread: 1.2
+    speed: 0
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +1 Projectile
+    damage: 20
+    cooldown: 1
+    amount: 3
+    spread: 1.2
+    speed: 0
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +10 Damage
+    damage: 30
+    cooldown: 1
+    amount: 3
+    spread: 1.2
+    speed: 0
+    duration: 0
+    pierce: 0
+  - upgradeDescription: +1 Projectile
+    damage: 30
+    cooldown: 1
+    amount: 4
+    spread: 1.2
+    speed: 0
+    duration: 0
+    pierce: 0
