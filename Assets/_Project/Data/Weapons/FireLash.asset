@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireLash
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.WeaponDefinitionSO
   displayName: Firelash
-  icon: {fileID: 21300000, guid: 4029a9cfeb86f134c9c5af05993eaac8, type: 3}
+  icon: {fileID: 21300000, guid: e977c1562987f7e41b442f92c93f4234, type: 3}
   description: Lashes forward in a fiery sweep, damaging foes in range.
   weaponPrefab: {fileID: 7300000000000000003, guid: e8b1c4d27a6f4e90b3c5d1a7f8e02c46, type: 3}
   scaledStats: 15
