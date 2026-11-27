@@ -10,4 +10,6 @@ public enum EPoolType
     Thunderbolt = 7,
     DamageText = 8,
     BoostPickup = 9,
+    Bottle = 10,
+    ElectricArea = 11,
 }

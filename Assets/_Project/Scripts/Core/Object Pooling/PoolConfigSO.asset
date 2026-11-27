@@ -45,3 +45,11 @@ MonoBehaviour:
     type: 9
     prefab: {fileID: 7100000000000000004, guid: 5d3a8c1e7b4f42a09e6c2d8b1f4a7e30, type: 3}
     initialSize: 24
+  - name: Bottle
+    type: 10
+    prefab: {fileID: 9200000000000000004, guid: 8b4f0d2c5e9a4f7b0c3d6e1f2a5b9c48, type: 3}
+    initialSize: 12
+  - name: ElectricArea
+    type: 11
+    prefab: {fileID: 2400000000000000004, guid: 0d6b2f4e7a1c4b9d2e5f8a3b4c7d1e60, type: 3}
+    initialSize: 20
