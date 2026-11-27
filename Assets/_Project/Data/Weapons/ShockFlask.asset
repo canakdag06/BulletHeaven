@@ -10,75 +10,75 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a71d4c3e8f2b4e9c9b0d6e5f1a2c3b48, type: 3}
-  m_Name: StormFlask
+  m_Name: ShockFlask
   m_EditorClassIdentifier: Assembly-CSharp::BulletHeaven.Weapons.WeaponDefinitionSO
-  displayName: Storm Flask
+  displayName: Shock Flask
   icon: {fileID: 21300000, guid: 51e90e2f352d93d49b72bebce22d5c10, type: 3}
-  description: Throws a bottle that bursts into a shocking pool.
+  description: Throws a flask that creates an electric zone, damaging foes inside.
   weaponPrefab: {fileID: 9100000000000000003, guid: 7a3e9c1b4d8f4e6a9b2c5d0e1f4a8b37, type: 3}
   scaledStats: -1
   levels:
-  - upgradeDescription: Lightning, bottled and thrown.
-    damage: 8
-    cooldown: 3
+  - upgradeDescription: Do not drink. Also, don't ask how it's green.
+    damage: 10
+    cooldown: 4
     amount: 1
-    spread: 1.5
+    spread: 1
+    speed: 8
+    duration: 2
+    pierce: 0
+  - upgradeDescription: +1 Projectile
+    damage: 10
+    cooldown: 4
+    amount: 2
+    spread: 1
+    speed: 8
+    duration: 2
+    pierce: 0
+  - upgradeDescription: +20% Spread
+    damage: 10
+    cooldown: 4
+    amount: 2
+    spread: 1.2
+    speed: 8
+    duration: 2
+    pierce: 0
+  - upgradeDescription: +0.5s Duration
+    damage: 10
+    cooldown: 4
+    amount: 2
+    spread: 1.2
+    speed: 8
+    duration: 2.5
+    pierce: 0
+  - upgradeDescription: +10 Damage
+    damage: 20
+    cooldown: 4
+    amount: 2
+    spread: 1.2
     speed: 8
     duration: 2.5
     pierce: 0
   - upgradeDescription: +1 Projectile
-    damage: 8
-    cooldown: 3
-    amount: 2
+    damage: 20
+    cooldown: 4
+    amount: 3
+    spread: 1.2
+    speed: 8
+    duration: 2.5
+    pierce: 0
+  - upgradeDescription: +10 Damage
+    damage: 30
+    cooldown: 4
+    amount: 3
+    spread: 1.2
+    speed: 8
+    duration: 2.5
+    pierce: 0
+  - upgradeDescription: +1s Duration, +25% Spread
+    damage: 30
+    cooldown: 4
+    amount: 3
     spread: 1.5
     speed: 8
-    duration: 2.5
-    pierce: 0
-  - upgradeDescription: +50% Spread
-    damage: 8
-    cooldown: 3
-    amount: 2
-    spread: 2.25
-    speed: 8
-    duration: 2.5
-    pierce: 0
-  - upgradeDescription: +1s Duration
-    damage: 8
-    cooldown: 3
-    amount: 2
-    spread: 2.25
-    speed: 8
     duration: 3.5
-    pierce: 0
-  - upgradeDescription: +1 Projectile
-    damage: 8
-    cooldown: 3
-    amount: 3
-    spread: 2.25
-    speed: 8
-    duration: 3.5
-    pierce: 0
-  - upgradeDescription: +50% Damage
-    damage: 12
-    cooldown: 3
-    amount: 3
-    spread: 2.25
-    speed: 8
-    duration: 3.5
-    pierce: 0
-  - upgradeDescription: +50% Spread
-    damage: 12
-    cooldown: 3
-    amount: 3
-    spread: 3.375
-    speed: 8
-    duration: 3.5
-    pierce: 0
-  - upgradeDescription: +1s Duration
-    damage: 12
-    cooldown: 3
-    amount: 3
-    spread: 3.375
-    speed: 8
-    duration: 4.5
     pierce: 0

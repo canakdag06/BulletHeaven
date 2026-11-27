@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9100000000000000002}
   - component: {fileID: 9100000000000000003}
   m_Layer: 0
-  m_Name: StormFlask
+  m_Name: ShockFlask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
