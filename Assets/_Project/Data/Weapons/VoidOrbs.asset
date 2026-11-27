@@ -19,65 +19,65 @@ MonoBehaviour:
   scaledStats: -1
   levels:
   - upgradeDescription: Touch them and find out.
-    damage: 3
+    damage: 10
     cooldown: 3
-    amount: 2
+    amount: 1
     spread: 2
     speed: 100
     duration: 3
     pierce: 0
-  - upgradeDescription: +1 Projectile, +30% Speed
-    damage: 3
+  - upgradeDescription: +1 Projectile, +30% Projectile Speed
+    damage: 10
     cooldown: 3
-    amount: 3
+    amount: 2
     spread: 2
     speed: 130
     duration: 3
     pierce: 0
   - upgradeDescription: +5 Damage
-    damage: 8
+    damage: 15
     cooldown: 3
-    amount: 3
+    amount: 2
     spread: 2
     speed: 130
     duration: 3
     pierce: 0
   - upgradeDescription: +1 s Duration, -1 s Cooldown
-    damage: 8
+    damage: 15
+    cooldown: 2
+    amount: 2
+    spread: 2
+    speed: 130
+    duration: 4
+    pierce: 0
+  - upgradeDescription: +1 Projectile
+    damage: 15
     cooldown: 2
     amount: 3
     spread: 2
     speed: 130
     duration: 4
     pierce: 0
-  - upgradeDescription: +1 Projectile
-    damage: 8
-    cooldown: 2
-    amount: 4
-    spread: 2
-    speed: 130
-    duration: 4
-    pierce: 0
   - upgradeDescription: +5 Damage
-    damage: 13
+    damage: 20
     cooldown: 2
-    amount: 4
+    amount: 3
     spread: 2
     speed: 130
     duration: 4
     pierce: 0
-  - upgradeDescription: +1 Projectile, +30% Speed
-    damage: 13
+  - upgradeDescription: +30% Projectile Speed
+    damage: 20
     cooldown: 2
-    amount: 5
+    amount: 3
     spread: 2
     speed: 169
     duration: 4
     pierce: 0
   - upgradeDescription: +1s Duration
-    damage: 13
+    damage: 20
     cooldown: 2
-    amount: 5
+    amount: 3
     spread: 2
     speed: 169
     duration: 5
