@@ -38,6 +38,8 @@ MonoBehaviour:
     weight: 1
   - item: {fileID: 11400000, guid: 743d1c21c075cfa45b41d68e0e4348e1, type: 2}
     weight: 1
+  - item: {fileID: 11400000, guid: 37803b053b2fb3e4b9f7481327f652cc, type: 2}
+    weight: 1
   fallbackHealFraction: 1
   fallbackIcon: {fileID: 21300000, guid: e52ea25af699fd445b7046374f81a5b9, type: 3}
   fallbackName: Heal
